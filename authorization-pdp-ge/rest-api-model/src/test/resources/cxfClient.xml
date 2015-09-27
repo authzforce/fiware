@@ -1,0 +1,87 @@
+<!--
+
+    Copyright (C) 2012-2015 Thales Services SAS.
+
+    This file is part of AuthZForce.
+
+    AuthZForce is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    AuthZForce is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with AuthZForce.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<!-- Copyright (C) 2012-2015 Thales Services SAS. This file is part of AuthZForce. AuthZForce is free 
+	software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+	as published by the Free Software Foundation, either version 3 of the License, or (at your option) any 
+	later version. AuthZForce is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+	without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU 
+	General Public License for more details. You should have received a copy of the GNU General Public License 
+	along with AuthZForce. If not, see <http://www.gnu.org/licenses/>. -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:sec="http://cxf.apache.org/configuration/security" xmlns:http="http://cxf.apache.org/transports/http/configuration"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+      http://cxf.apache.org/configuration/security
+      http://cxf.apache.org/schemas/configuration/security.xsd
+      http://cxf.apache.org/transports/http/configuration
+      http://cxf.apache.org/schemas/configuration/http-conf.xsd
+      http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/util 
+      http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<util:list id="apiSchemaLocations">
+		<value>classpath:/xsd/authz-api.xsd</value>
+	</util:list>
+
+	<bean id="apiSchemaHandler" class="org.apache.cxf.jaxrs.utils.schemas.SchemaHandler">
+		<property name="catalogLocation" value="classpath:META-INF/jax-rs-catalog.xml" />
+		<property name="schemaLocations" ref="apiSchemaLocations" />
+	</bean>
+
+	<bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider">
+		<property name="singleJaxbContext" value="true" />
+		<!-- <property name="extraClass" ref="extensionJaxbClassArray" /> -->
+		<property name="schemaHandler" ref="apiSchemaHandler" />
+	</bean>
+	
+	<bean id="policySetFile" class="org.springframework.core.io.ClassPathResource">
+		<constructor-arg value="/policySet.xml" />
+	</bean>
+	
+	<bean id="xacmlReqPermitFile" class="org.springframework.core.io.ClassPathResource">
+		<constructor-arg value="/xacmlReqPermit.xml" />
+	</bean>
+	
+	<bean id="xacmlReqDenyFile" class="org.springframework.core.io.ClassPathResource">
+		<constructor-arg value="/xacmlReqDeny.xml" />
+	</bean>
+
+	<!-- More info: http://cxf.apache.org/docs/client-http-transport-including-ssl-support.html -->
+	<http:conduit name="*.http-conduit">
+		<http:tlsClientParameters>
+			<!-- <sec:keyManagers keyPassword="changeit"> <sec:keyStore type="JKS" password="password" file="D:\users\XXX\john.doe-taz-client-keystore.jks"/> 
+				</sec:keyManagers> -->
+			<sec:trustManagers>
+				<sec:keyStore type="JKS" password="password" resource="taz-client-truststore.jks" />
+			</sec:trustManagers>
+			<sec:cipherSuitesFilter>
+				<sec:include>.*_WITH_RC4_.*</sec:include>
+				<sec:include>.*_WITH_AES_.*</sec:include>
+				<sec:exclude>.*_MD5</sec:exclude>
+				<sec:exclude>.*_anon_.*</sec:exclude>
+			</sec:cipherSuitesFilter>
+		</http:tlsClientParameters>
+		<!-- HTTP Proxy configuration if needed -->
+		<!-- <http:client AutoRedirect="true" Connection="Keep-Alive" BrowserType="Mozilla/5.0 (Windows NT 
+			5.1; rv:20.0) Gecko/20100101 Firefox/20.0" ProxyServer="myproxy.acme.com" ProxyServerPort="3128" ProxyServerType="HTTP"/> -->
+	</http:conduit>
+</beans>
