@@ -24,7 +24,7 @@
 				</wadl:request>
 				<wadl:response status="200">
 					<wadl:representation mediaType="application/xml" element="atom:link">
-						<wadl:doc>Link to created managed resource</wadl:doc>
+						<wadl:doc>Link to created domain resource</wadl:doc>
 					</wadl:representation>
 				</wadl:response>
 				<wadl:response status="400" />
