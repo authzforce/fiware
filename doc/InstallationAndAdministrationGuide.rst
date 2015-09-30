@@ -74,8 +74,7 @@ The reasons for creating different domains:
 Domain Creation
 +++++++++++++++
 
-You create a domain by doing a HTTP POST request with XML payload to URL: ``http://${SERVER_NAME}:${PORT}/authzforce/domains``. Replace ``${SERVER_NAME}`` and ``${PORT}`` with your server hostname and port for HTTP. You can do it with ``curl`` tool:
-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+You create a domain by doing a HTTP POST request with XML payload to URL: ``http://${SERVER_NAME}:${PORT}/authzforce/domains``. Replace ``${SERVER_NAME}`` and ``${PORT}`` with your server hostname and port for HTTP. You can do it with ``curl`` tool::
 
  $ curl --verbose --trace-ascii - --request POST \ 
  --header "Content-Type: application/xml;charset=UTF-8" \
@@ -108,8 +107,7 @@ Domain Removal
 You remove a domain by doing a HTTP DELETE request with XML payload to URL: 
  ``http://${SERVER_NAME}:${PORT}/authzforce/domains/{domain_ID}``. 
 
-For example with ``curl`` tool:
-:::::::::::::::::::::::::::::::
+For example with ``curl`` tool::
 
  $ curl --verbose --request DELETE --header "Content-Type: application/xml;charset=UTF-8" \
      --header "Accept: application/xml" http://${SERVER_NAME}:${PORT}/authzforce/domains/0ae7f48f-1f13-11e3-a300-eb6797612f3f
@@ -124,8 +122,9 @@ End to End testing
 ------------------
 To check the proper deployment and operation of the Authorization Server, perform the following steps:
 
-#. Get the list of policy administration domains by doing the following HTTP request, replacing ``${host}`` with the server hostname, and ``${port}`` with the HTTP port of the server, for example with ``curl`` tool:
-    ``$ curl --verbose --show-error --write-out '\n' --request GET http://${host}:${port}/authzforce/domains``
+#. Get the list of policy administration domains by doing the following HTTP request, replacing ``${host}`` with the server hostname, and ``${port}`` with the HTTP port of the server, for example with ``curl`` tool::
+
+    $ curl --verbose --show-error --write-out '\n' --request GET http://${host}:${port}/authzforce/domains
 #. Check the response which should have the following headers and body (there may be more headers which do not require checking here)::
 
     Status Code: 200 OK
@@ -135,8 +134,9 @@ To check the proper deployment and operation of the Authorization Server, perfor
        ... list of links to policy domains omitted here... 
     </ns2:resources>
 
-You can check the exact body format in the representation element of response code 200 for method ``getDomains``, and all other API resources and operations in general, in the WADL (Web Application Description Language) document available at the following URL: 
-    ``http://${host}:${port}/authzforce/?_wadl``
+You can check the exact body format in the representation element of response code 200 for method ``getDomains``, and all other API resources and operations in general, in the WADL (Web Application Description Language) document available at the following URL::
+ 
+    http://${host}:${port}/authzforce/?_wadl
 
 List of Running Processes
 -------------------------
@@ -155,13 +155,15 @@ None.
 
 Diagnosis Procedures
 ====================
-#. Perform the test described in [[#End_to_End_testing]].
+#. Perform the test described in `End to End testing`_.
 #. If you get a Connection Refused/error, check whether Tomcat is started::
-    ``$ sudo service tomcat7 status``
+
+    $ sudo service tomcat7 status
 #. If status stopped, start Tomcat::
-    ``$ sudo service tomcat7``
+
+    $ sudo service tomcat7
 #. If Tomcat fails to start, check for any Tomcat high-level error in Tomcat log directory: ``/var/log/tomcat7``
-#. If Tomcat is successfully started (no error in server logs), perform the test described in [[#End_to_End_testing]] again.
+#. If Tomcat is successfully started (no error in server logs), perform the test described in `End to End testing`_ again.
 #. If you still get a Connection Refused/error, check whether Tomcat is not listening on a different port:
     ``$ sudo netstat -lataupen|grep java``
 #. If you still get a connection refused/error, especially if you are connecting remotely, check whether you are able to connect locally, then check the network link, i.e. whether any network filtering is in place on the host or on the access network, or other network issue: network interface status, DNS/IP adress resolution, routing, etc.
@@ -223,7 +225,8 @@ So this section is about creating a local Certificate Authority (CA) for issuing
     $ keytool -genkeypair -keystore taz-ca-keystore.jks -alias taz-ca -dname "CN=Thales AuthzForce CA, O=FIWARE" \
         -keyalg RSA -keysize 2048 -validity 365 -ext bc:c="ca:true,pathlen:0"
 #. Export the CA certificate to PEM format for easier distribution to clients::
-    ``$ keytool -keystore taz-ca-keystore.jks -alias taz-ca -exportcert -rfc > taz-ca-cert.pem``
+
+    $ keytool -keystore taz-ca-keystore.jks -alias taz-ca -exportcert -rfc > taz-ca-cert.pem
 
 
 Server SSL Certificate Setup
