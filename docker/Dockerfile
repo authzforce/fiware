@@ -6,6 +6,16 @@ MAINTAINER Alberto Martín <alberto.martin@bitergia.com>, David Muriel <dmuriel@b
 
 ENV DEBIAN_FRONTEND noninteractive
 
+# Proxy configuration (if you are building from behind a proxy)
+# Next release of docker 1.9.0 should allow you to configure these by passing build-time arguments
+# More info: https://github.com/docker/docker/issues/14634
+
+#ENV http_proxy 'http://user:password@proxy-host:proxy-port'
+#ENV https_proxy 'http://user:password@proxy-host:proxy-port'
+#ENV HTTP_PROXY 'http://user:password@proxy-host:proxy-port'
+#ENV HTTPS_PROXY 'http://user:password@proxy-host:proxy-port'
+
+
 # download and install Authzforce (service starts Automatically)
 
 RUN curl -O -L http://catalogue.fiware.org/sites/default/files/storage/enablers/authzforce_4.2.0-fiware_all.deb && \
