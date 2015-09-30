@@ -15,6 +15,8 @@ User Guide
 
 Since the Authorization PDP is a Generic Enabler which provides backend functionality to other applications (e.g. Generic Enablers or end user facing applications) and security administrators, we do not distinguish between the User and Programmers Guide. Please refer to the Programmers Guide section for more information. 
 
+.. _programmerGuide:
+
 Programmer Guide
 ================
 

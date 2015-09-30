@@ -114,7 +114,7 @@ For example with ``curl`` tool:
  $ curl --verbose --request DELETE --header "Content-Type: application/xml;charset=UTF-8" \
      --header "Accept: application/xml" http://${SERVER_NAME}:${PORT}/authzforce/domains/0ae7f48f-1f13-11e3-a300-eb6797612f3f
 
-Policy administration is part of the Authorization Server API, addressed more extensively in the :ref:`User and Programmer Guide`.
+Policy administration is part of the Authorization Server API, addressed more extensively in the :ref:`programmerGuide`.
 
 Sanity check procedures
 =======================
