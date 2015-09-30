@@ -2,7 +2,7 @@
 # GPLv3 License
 
 FROM tomcat:7.0
-MAINTAINER Alberto Martín <alberto.martin@bitergia.com>, David Muriel <dmuriel@bitergia.com>
+MAINTAINER Cyril Dangerville (Contact via http://catalogue.fiware.org/enablers/authorization-pdp-authzforce)
 
 ENV DEBIAN_FRONTEND noninteractive
 
