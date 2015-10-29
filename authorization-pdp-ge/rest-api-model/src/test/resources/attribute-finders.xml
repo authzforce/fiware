@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:attributeFinders xmlns:tns="http://thalesgroup.com/authz/model/2015/09" xmlns:tns1="http://thalesgroup.com/authz/model/ext/3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<attributeFinder id="" />
+</tns:attributeFinders>
