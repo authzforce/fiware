@@ -4,7 +4,7 @@
 # use ./mycomand || true
 
 export DEBIAN_FRONTEND=noninteractive
-sudo apt-get update -q
-sudo aptitude install gdebi curl
-curl -O -L http://authzforce.github.io/fiware/dist/authzforce_latest_all.deb
-sudo gdebi authzforce_latest_all.deb
+sudo apt-get --assume-yes -qq update
+sudo apt-get --assume-yes -qq install gdebi curl
+curl --silent --remote-name --location http://authzforce.github.io/fiware/dist/authzforce_latest_all.deb > /dev/null
+sudo gdebi --quiet --non-interactive authzforce_latest_all.deb
