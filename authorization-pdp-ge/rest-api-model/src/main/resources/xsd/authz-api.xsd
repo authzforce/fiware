@@ -40,9 +40,9 @@
 			Service
 		</xs:documentation>
 	</xs:annotation>
-	<xs:complexType name="AttributeFinderList">
+	<xs:complexType name="AttributeProviderList">
 		<xs:sequence>
-			<xs:element name="attributeFinder" type="authz-ext:AbstractAttributeFinder" minOccurs="0"
+			<xs:element name="attributeProvider" type="authz-ext:AbstractAttributeProvider" minOccurs="0"
 				maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
@@ -54,5 +54,5 @@
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="domain" type="authz-res:ManagedResource" />
-	<xs:element name="attributeFinders" type="tns:AttributeFinderList" />
+	<xs:element name="attributeProviders" type="tns:AttributeProviderList" />
 </xs:schema>
