@@ -1,5 +1,6 @@
+==================================================
 AuthZForce - Installation and Administration Guide
-__________________________________________________
+==================================================
 
 
 This guide provides the procedure to install the AuthZForce server, including system requirements and troubleshooting instructions. 
