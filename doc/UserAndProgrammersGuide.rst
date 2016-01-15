@@ -55,7 +55,6 @@ You may retrieve the current domain properties as follows:
 * Path: /domains/{domainId}/properties
 * Headers:
     * Accept: application/xml; charset=UTF-8
-* Body: current properties.
 
 For example, this request updates the externalId and the root policy reference some policy 'PolicyABC' that must exist in the domain (added via the PAP API mentioned later) as a prerequisite::
 
@@ -68,13 +67,15 @@ For example, this request updates the externalId and the root policy reference s
    <rootPolicyRef Version="1.0">PolicyABC</rootPolicyRef>
  </ns4:domainProperties> 
 
-You may update the domain properties as follows::
+You may update the domain properties as follows:
 
 * Method: PUT
 * Path: /domains/{domainId}/properties
 * Headers:
-    * Content-Type: application/xml; charset=UTF-8
-    * Accept: application/xml; charset=UTF-8
+
+   * Content-Type: application/xml; charset=UTF-8
+   * Accept: application/xml; charset=UTF-8
+
 * Body: new properties.
 
 For example, this request updates the externalId and the root policy reference some policy 'PolicyABC' that must exist in the domain (added via the PAP API mentioned later) as a prerequisite::
@@ -89,7 +90,7 @@ For example, this request updates the externalId and the root policy reference s
    <rootPolicyRef Version="2.1">PolicyDEF</rootPolicyRef>
  </ns4:domainProperties>
 
-Note that the *Version' attribute is optional here. If omitted, the latest version available is used.
+Note that the *Version* attribute is optional here. If omitted, the latest version available is used.
 
 The response is the new properties.
 
@@ -234,11 +235,12 @@ For example::
 
 The response is the policy document (XACML PolicySet) in this version.
 
-Last but not least, you may get all policies in the domain as follows::
+Last but not least, you may get all policies in the domain as follows:
 
 * Method: GET
 * Path: /domains/{domainId}/pap/policies
 * Headers:
+
     * Accept: application/xml; charset=UTF-8
 
 For example::

@@ -29,7 +29,7 @@ Minimal
     | ``$ sudo gdebi authzforce-ce-server_4.3.0_all.deb``
 #. At the end, you will see a message giving optional instructions to go through. Please follow them as necessary.
 
-Note that Tomcat default configuration may specify a very low value for the Java Xmx flag, causing the authzforce webapp startup to fail. In that case, make sure tomcat with Xmx at 1Go or more (2 Go recommended). For example, for ubuntu 12.04, tomcat default Xmx used to be 128m. You can fix it as follows:
+Note that Tomcat default configuration may specify a very low value for the Java Xmx flag, causing the authzforce webapp startup to fail. In that case, make sure Tomcat with Xmx at 1Go or more (2 Go recommended). For example, for ubuntu 12.04, Tomcat default Xmx used to be 128m. You can fix it as follows:
 | ``$ sudo sed -i "s/-Xmx128m/-Xmx1024m/" /etc/default/tomcat``
 | ``$ sudo service tomcat7 restart``
 
@@ -132,9 +132,10 @@ To check the proper deployment and operation of the Authorization Server, perfor
 
     Status Code: 200 OK
     Content-Type: application/xml
+    
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-   <ns2:resources xmlns:ns2="http://authzforce.github.io/rest-api-model/xmlns/authz/4">
-       ... list of links to policy domains omitted here... 
+    <ns2:resources xmlns:ns2="http://authzforce.github.io/rest-api-model/xmlns/authz/4">
+    ... list of links to policy domains omitted here... 
     </ns2:resources>
 
 You can check the exact body format in the representation element of response code 200 for method ``getDomains``, and all other API resources and operations in general, in the WADL (Web Application Description Language) document available at the following URL::
