@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to AuthZForce's documentation!
-======================================
+AuthZForce FIWARE Documentation
+===============================
 
 Introduction
 ============
@@ -13,19 +13,20 @@ AuthZForce is the reference implementation of the Authorization PDP Generic Enab
 
 To fulfill the XACML architecture, you may need a PEP (Policy Enforcement Point) to protect your application, which is not provided here. For REST APIs, we can use the PEP Proxy (Wilma) available in the FIWARE `catalogue <http://catalogue.fiware.org/enablers/pep-proxy-wilma>`_. 
 
-Contents:
+Contents
+========
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    
    InstallationAndAdministrationGuide.rst
    UserAndProgrammersGuide.rst
 
 
-Indices and tables
-==================
+.. Indices and tables
+.. ==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. * :ref:`genindex`
+.. * :ref:`modindex`
+.. * :ref:`search`
 
