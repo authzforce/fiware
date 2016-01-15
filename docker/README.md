@@ -11,23 +11,23 @@ This image is intended to work together with [Identity Manager - Keyrock](http:/
 ## Image contents
 
 - [x] `tomcat:7.0` official image available [here](https://hub.docker.com/_/tomcat/)
-- [x] Authzforce 4.2.0
+- [x] Authzforce 4.3.0
 
 ## Usage
 
-This image gives you a minimal installation for testing purposes. The [AuthZForce Installation and administration guide](https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/Authorization_PDP_-_AuthZForce_-_Installation_and_Administration_Guide_%28R4.2.0%29#Appendix) provides you a better approach for using it in a production environment.
+This image gives you a minimal installation for testing purposes. The [AuthZForce Installation and administration guide](http://authzforce-ce-fiware.readthedocs.org/en/4.3.0/InstallationAndAdministrationGuide.html) provides you a better approach for using it in a production environment.
 
-This image, if used with the [Chanchan APP](https://github.com/Bitergia/fiware-chanchan), is fully provided for testing. [PEP Proxy Wilma](http://catalogue.fiware.org/enablers/pep-proxy-wilma)incluided in Chanchan APP is aware of the [Domain creation](https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/Authorization_PDP_-_AuthZForce_-_Installation_and_Administration_Guide_%28R4.2.0%29#Domain_Creation). 
+This image, if used with the [Chanchan APP](https://github.com/Bitergia/fiware-chanchan), is fully provided for testing. [PEP Proxy Wilma](http://catalogue.fiware.org/enablers/pep-proxy-wilma) included in Chanchan APP is aware of the [Domain creation](http://authzforce-ce-fiware.readthedocs.org/en/4.3.0/InstallationAndAdministrationGuide.html#domain-creation). 
 
 Still, you can always do it yourself. 
 
-Create a container using `bitergia/authzforce` image by doing:
+Create a container using `fiware/authzforce` image by doing:
 
 ```
-docker run -d --name <container-name> bitergia/authzforce:4.2.0
+docker run -d --name <container-name> fiware/authzforce:latest
 ```
 
-As stands in the [AuthZForce Installation and administration guide](https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/Authorization_PDP_-_AuthZForce_-_Installation_and_Administration_Guide_%28R4.2.0%29#Policy_Domain_Administation) you can:
+As stands in the [AuthZForce Installation and administration guide](http://authzforce-ce-fiware.readthedocs.org/en/latest/InstallationAndAdministrationGuide.html#policy-domain-administration) you can:
 
 * **Create a domain**
 
@@ -35,7 +35,7 @@ As stands in the [AuthZForce Installation and administration guide](https://forg
 curl -s --request POST \
 --header "Accept: application/xml" \
 --header "Content-Type: application/xml;charset=UTF-8" \
---data '<?xml version="1.0" encoding="UTF-8"?><taz:properties xmlns:taz="http://thalesgroup.com/authz/model/3.0/resource"><name>MyDomain</name><description>This is my domain.</description></taz:properties>' \
+--data '<?xml version="1.0" encoding="UTF-8"?><taz:domainProperties xmlns:taz="http://authzforce.github.io/rest-api-model/xmlns/authz/4"><name>MyDomain</name><description>This is my domain.</description></taz:domainProperties>' \
  http://<authzforce-container-ip>:8080/authzforce/domains
 ```
 

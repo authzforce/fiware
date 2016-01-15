@@ -22,12 +22,16 @@ Installation
 Minimal
 -------
 
-#. Download the latest binary (Ubuntu package with ``.deb`` extension) release of AuthZForce from the FIWARE catalogue, in the `Downloads section <http://catalogue.fiware.org/enablers/authorization-pdp-authzforce/downloads>`_. You get a file called ``authzforce_4.2.0-fiware_all.deb``.
+#. Download the binary (Ubuntu package with ``.deb`` extension) release of AuthZForce from `the Github project releases page <https://github.com/authzforce/server/releases/download/release-4.3.0/authzforce-ce-server_4.3.0_all.deb>`_. You get a file called ``authzforce-ce-server_4.3.0_all.deb``.
 #. Copy this file to the host where you want to install the software.
 #. On the host, from the directory where you copied this file, run the following commands:
     | ``$ sudo aptitude install gdebi curl``
-    | ``$ sudo gdebi authzforce_4.2.0-fiware_all.deb``
+    | ``$ sudo gdebi authzforce-ce-server_4.3.0_all.deb``
 #. At the end, you will see a message giving optional instructions to go through. Please follow them as necessary.
+
+Note that Tomcat default configuration may specify a very low value for the Java Xmx flag, causing the authzforce webapp startup to fail. In that case, make sure tomcat with Xmx at 1Go or more (2 Go recommended). For example, for ubuntu 12.04, tomcat default Xmx used to be 128m. You can fix it as follows:
+| ``$ sudo sed -i "s/-Xmx128m/-Xmx1024m/" /etc/default/tomcat``
+| ``$ sudo service tomcat7 restart``
 
 Advanced
 --------
@@ -46,9 +50,9 @@ For configuring and managing Tomcat, please refer to the `official user guide <h
 Authzforce webapp
 -----------------
 
-The Authzforce webapp configuration directory is located here: ``/opt/authzforce/conf``. 
+The Authzforce webapp configuration directory is located here: ``/opt/authzforce-ce-server/conf``. 
 
-In particular, the file ``logback.xml`` configures the logging for the webapp (independently from Tomcat). By default, Authzforce-specific logs go to ``/var/log/tomcat7/authzforce/error.log``.
+In particular, the file ``logback.xml`` configures the logging for the webapp (independently from Tomcat). By default, Authzforce-specific logs go to ``/var/log/tomcat7/authzforce-ce/error.log``.
 
 Restart Tomcat to apply any configuration change:
  ``$ sudo service tomcat7 restart``
@@ -61,10 +65,9 @@ The Concept of Policy Domain
                   
 The application is multi-tenant, i.e. it allows users or organizations to work on authorization policies in complete isolation from each other. In this document, we use the term *domain* instead of *tenant*. In this context, a policy domain consists of:
 
-* Various metadata about the domain: ID, name, description;
-* The root XACML <PolicySet>;
-* Optional <PolicySet>s that may be referenced in <Policy(Set)Reference>s by the aforementioned root <PolicySet>;
-* Attribute Finders configuration: attribute finders resolve attributes from other sources than the PEP's or any other client's XACML <Request>. 
+* Various metadata about the domain: ID assigned by the Authzforce API, external ID (assigned by the provisioning client), description, reference to the (root) active policy in the domain;
+* A policy repository;
+* Attribute Providers configuration: attribute providers provide attributes that the PEP does NOT directly provide in the XACML <Request>. For example, an attribute provider may get attribute values from an external database. 
 
 The reasons for creating different domains: 
 
@@ -78,7 +81,7 @@ You create a domain by doing a HTTP POST request with XML payload to URL: ``http
 
  $ curl --verbose --trace-ascii - --request POST \ 
  --header "Content-Type: application/xml;charset=UTF-8" \
- --data '<?xml version="1.0" encoding="UTF-8"?><taz:properties xmlns:taz="http://thalesgroup.com/authz/model/3.0/resource"> <name>MyDomain</name><description>This is my domain.</description></taz:properties>' \
+ --data '<?xml version="1.0" encoding="UTF-8"?><taz:domainProperties xmlns:taz="http://authzforce.github.io/rest-api-model/xmlns/authz/4"> <name>MyDomain</name><description>This is my domain.</description></taz:domainProperties>' \
  --header "Accept: application/xml" http://${SERVER_NAME}:${PORT}/authzforce/domains
  ...
  > POST /authzforce/domains HTTP/1.1
@@ -95,7 +98,7 @@ You create a domain by doing a HTTP POST request with XML payload to URL: ``http
  < Content-Type: application/xml
  < Transfer-Encoding: chunked
  <
- <?xml version="1.0" encoding="UTF-8" standalone="yes"?><link xmlns="http://www.w3.org/2005/Atom" rel="item" href="0ae7f48f-1f13-11e3-a300-eb6797612f3f"/>
+ <?xml version="1.0" encoding="UTF-8" standalone="yes"?><link xmlns="http://www.w3.org/2005/Atom" rel="item" href="h_D23LsDEeWFwqVFFMDLTQ" title="h_D23LsDEeWFwqVFFMDLTQ"/>
 
 **WARNING**: Mind the leading and trailing single quotes for the ``--data`` argument. Do not use double quotes instead of these single quotes, otherwise curl will remove the double quotes in the XML payload itself, and send invalid XML which will be rejected by the server. The ``--trace-ascii -`` argument (the last dash here means *stdout*) is indeed a way to check the actual request body sent by ``curl``. So use it only if you need to dump the outgoing (and incoming) data, in particular the request body, on *stdout*.  
 
@@ -110,7 +113,7 @@ You remove a domain by doing a HTTP DELETE request with XML payload to URL:
 For example with ``curl`` tool::
 
  $ curl --verbose --request DELETE --header "Content-Type: application/xml;charset=UTF-8" \
-     --header "Accept: application/xml" http://${SERVER_NAME}:${PORT}/authzforce/domains/0ae7f48f-1f13-11e3-a300-eb6797612f3f
+     --header "Accept: application/xml" http://${SERVER_NAME}:${PORT}/authzforce/domains/h_D23LsDEeWFwqVFFMDLTQ
 
 Policy administration is part of the Authorization Server API, addressed more extensively in the :ref:`programmerGuide`.
 
@@ -130,7 +133,7 @@ To check the proper deployment and operation of the Authorization Server, perfor
     Status Code: 200 OK
     Content-Type: application/xml
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-    <ns2:resources xmlns:ns2="http://thalesgroup.com/authzforce/model" xmlns:ns3="http://www.w3.org/2005/Atom">
+   <ns2:resources xmlns:ns2="http://authzforce.github.io/rest-api-model/xmlns/authz/4">
        ... list of links to policy domains omitted here... 
     </ns2:resources>
 
