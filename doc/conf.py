@@ -53,7 +53,7 @@ master_doc = 'index'
 # General information about the project.
 project = u'AuthZForce'
 copyright = u'2015-2016, Thales Services'
-author = u'Cyril Dangerville'
+author = u'Cyril Dangerville, Thales Services'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
