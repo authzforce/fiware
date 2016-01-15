@@ -78,7 +78,7 @@ You may update the domain properties as follows:
 
 * Body: new properties.
 
-For example, this request updates the externalId and the root policy reference some policy 'PolicyABC' that must exist in the domain (added via the PAP API mentioned later) as a prerequisite::
+For example, this request sets/updates the externalId to *my-domain-123* and the root policy reference to some policy *PolicyABC* (in version *2.1*) that must exist in the domain (added via the PAP API mentioned later) as a prerequisite::
 
  PUT /domains/iMnxv7sDEeWFwqVFFMDLTQ/properties
  HTTP/1.1
@@ -86,13 +86,22 @@ For example, this request updates the externalId and the root policy reference s
  Content-Type: application/xml; charset=UTF-8
 
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
- <ns4:domainProperties xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/4" externalId="my-domain-123">
+ <ns4:domainProperties xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/4" 
+   externalId="my-domain-123">
    <rootPolicyRef Version="2.1">PolicyDEF</rootPolicyRef>
  </ns4:domainProperties>
 
 Note that the *Version* attribute is optional here. If omitted, the latest version available is used.
-
 The response is the new properties.
+
+As a result, the policy now enforced by the domain's Policy Decision Point (see the PDP API in the last section of this document) is *PolicyABC* (in version *2.1*) and the domain's external ID *my-domain-123* points to the domain *iMnxv7sDEeWFwqVFFMDLTQ*. Clients may only rely on the externalId under their control to recover the API-defined domain ID, before they begin to use other API operations that require the API-defined domain ID. Indeed, clients may request the API-defined ID corresponding to a given externalId as follows::
+
+ GET /domains?externalId=my-domain-123
+
+ <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+ <ns2:resources xmlns:ns2="http://authzforce.github.io/rest-api-model/xmlns/authz/4" xmlns:ns3="http://www.w3.org/2005/Atom">
+     <ns3:link rel="item" href="iMnxv7sDEeWFwqVFFMDLTQ" title="iMnxv7sDEeWFwqVFFMDLTQ"/>
+ </ns2:resources> 
 
 
 Policy Administration API
