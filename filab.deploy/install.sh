@@ -8,8 +8,8 @@ sudo -E apt-get update --assume-yes -qq
 sudo -E apt-get install --assume-yes -qq gdebi curl debconf-utils
 sudo curl --silent --remote-name --location http://authzforce.github.io/fiware/dist/authzforce_latest_all.deb
 # Prevent Tomcat restart before change to JAVA_OPTS applied later
-sudo bash -c "echo authzforce	authzforce/restartTomcat	boolean	false | debconf-set-selections"
-sudo bash -c "echo authzforce	authzforce/keepSamples	boolean	true | debconf-set-selections"
+sudo bash -c "echo authzforce-ce-server	authzforce-ce-server/restartTomcat	boolean	false | debconf-set-selections"
+sudo bash -c "echo authzforce-ce-server	authzforce-ce-server/keepSamples	boolean	true | debconf-set-selections"
 sudo -E gdebi --quiet --non-interactive authzforce_latest_all.deb
 
 # FIX issue with Tomcat (very) slow startup on Linux KVM since kernel 3.13:

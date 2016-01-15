@@ -22,11 +22,11 @@ Installation
 Minimal
 -------
 
-#. Download the binary (Ubuntu package with ``.deb`` extension) release of AuthZForce from `the Github project releases page <https://github.com/authzforce/server/releases/download/release-4.3.0/authzforce-ce-server_4.3.0_all.deb>`_. You get a file called ``authzforce-ce-server_4.3.0_all.deb``.
+#. Download the binary (Ubuntu package with ``.deb`` extension) release of AuthZForce from `the Github project releases page <https://github.com/authzforce/server/releases/download/release-4.4.0/authzforce-ce-server_4.4.0_all.deb>`_. You get a file called ``authzforce-ce-server_4.4.0_all.deb``.
 #. Copy this file to the host where you want to install the software.
 #. On the host, from the directory where you copied this file, run the following commands:
     | ``$ sudo aptitude install gdebi curl``
-    | ``$ sudo gdebi authzforce-ce-server_4.3.0_all.deb``
+    | ``$ sudo gdebi authzforce-ce-server_4.4.0_all.deb``
 #. At the end, you will see a message giving optional instructions to go through. Please follow them as necessary.
 
 Note that Tomcat default configuration may specify a very low value for the Java Xmx flag, causing the authzforce webapp startup to fail. In that case, make sure Tomcat with Xmx at 1Go or more (2 Go recommended). For example, for ubuntu 12.04, Tomcat default Xmx used to be 128m. You can fix it as follows:
@@ -77,14 +77,14 @@ The reasons for creating different domains:
 Domain Creation
 +++++++++++++++
 
-You create a domain by doing a HTTP POST request with XML payload to URL: ``http://${SERVER_NAME}:${PORT}/authzforce/domains``. Replace ``${SERVER_NAME}`` and ``${PORT}`` with your server hostname and port for HTTP. You can do it with ``curl`` tool::
+You create a domain by doing a HTTP POST request with XML payload to URL: ``http://${SERVER_NAME}:${PORT}/authzforce-ce/domains``. Replace ``${SERVER_NAME}`` and ``${PORT}`` with your server hostname and port for HTTP. You can do it with ``curl`` tool::
 
  $ curl --verbose --trace-ascii - --request POST \ 
  --header "Content-Type: application/xml;charset=UTF-8" \
  --data '<?xml version="1.0" encoding="UTF-8"?><taz:domainProperties xmlns:taz="http://authzforce.github.io/rest-api-model/xmlns/authz/4"> <name>MyDomain</name><description>This is my domain.</description></taz:domainProperties>' \
- --header "Accept: application/xml" http://${SERVER_NAME}:${PORT}/authzforce/domains
+ --header "Accept: application/xml" http://${SERVER_NAME}:${PORT}/authzforce-ce/domains
  ...
- > POST /authzforce/domains HTTP/1.1
+ > POST /authzforce-ce/domains HTTP/1.1
  > User-Agent: curl/7.22.0 (x86_64-pc-linux-gnu) libcurl/7.22.0 OpenSSL/1.0.1 zlib/1.2.3.4 libidn/1.23 librtmp/2.3
  > Host: az.testbed.fi-ware.eu
  > Content-Type: application/xml;charset=UTF-8
@@ -108,12 +108,12 @@ Domain Removal
 ++++++++++++++
 
 You remove a domain by doing a HTTP DELETE request with XML payload to URL: 
- ``http://${SERVER_NAME}:${PORT}/authzforce/domains/{domain_ID}``. 
+ ``http://${SERVER_NAME}:${PORT}/authzforce-ce/domains/{domain_ID}``. 
 
 For example with ``curl`` tool::
 
  $ curl --verbose --request DELETE --header "Content-Type: application/xml;charset=UTF-8" \
-     --header "Accept: application/xml" http://${SERVER_NAME}:${PORT}/authzforce/domains/h_D23LsDEeWFwqVFFMDLTQ
+     --header "Accept: application/xml" http://${SERVER_NAME}:${PORT}/authzforce-ce/domains/h_D23LsDEeWFwqVFFMDLTQ
 
 Policy administration is part of the Authorization Server API, addressed more extensively in the :ref:`programmerGuide`.
 
@@ -127,7 +127,7 @@ To check the proper deployment and operation of the Authorization Server, perfor
 
 #. Get the list of policy administration domains by doing the following HTTP request, replacing ``${host}`` with the server hostname, and ``${port}`` with the HTTP port of the server, for example with ``curl`` tool::
 
-    $ curl --verbose --show-error --write-out '\n' --request GET http://${host}:${port}/authzforce/domains
+    $ curl --verbose --show-error --write-out '\n' --request GET http://${host}:${port}/authzforce-ce/domains
 #. Check the response which should have the following headers and body (there may be more headers which do not require checking here)::
 
     Status Code: 200 OK
@@ -140,7 +140,7 @@ To check the proper deployment and operation of the Authorization Server, perfor
 
 You can check the exact body format in the representation element of response code 200 for method ``getDomains``, and all other API resources and operations in general, in the WADL (Web Application Description Language) document available at the following URL::
  
-    http://${host}:${port}/authzforce/?_wadl
+    http://${host}:${port}/authzforce-ce/?_wadl
 
 List of Running Processes
 -------------------------
@@ -172,7 +172,7 @@ Diagnosis Procedures
     ``$ sudo netstat -lataupen|grep java``
 #. If you still get a connection refused/error, especially if you are connecting remotely, check whether you are able to connect locally, then check the network link, i.e. whether any network filtering is in place on the host or on the access network, or other network issue: network interface status, DNS/IP adress resolution, routing, etc.
 #. If you get an error ``404 Not Found``, make sure the webapp is deployed and enabled in Tomcat. Check for any webapp deployment error in file: 
-    ``/var/log/tomcat7/authzforce/error.log``.
+    ``/var/log/tomcat7/authzforce-ce/error.log``.
 
 
 Resource availability

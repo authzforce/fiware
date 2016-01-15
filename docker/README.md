@@ -11,13 +11,13 @@ This image is intended to work together with [Identity Manager - Keyrock](http:/
 ## Image contents
 
 - [x] `tomcat:7.0` official image available [here](https://hub.docker.com/_/tomcat/)
-- [x] Authzforce 4.3.0
+- [x] Authzforce 4.4.0
 
 ## Usage
 
-This image gives you a minimal installation for testing purposes. The [AuthZForce Installation and administration guide](http://authzforce-ce-fiware.readthedocs.org/en/4.3.0/InstallationAndAdministrationGuide.html) provides you a better approach for using it in a production environment.
+This image gives you a minimal installation for testing purposes. The [AuthZForce Installation and administration guide](http://authzforce-ce-fiware.readthedocs.org/en/4.4.0/InstallationAndAdministrationGuide.html) provides you a better approach for using it in a production environment.
 
-This image, if used with the [Chanchan APP](https://github.com/Bitergia/fiware-chanchan), is fully provided for testing. [PEP Proxy Wilma](http://catalogue.fiware.org/enablers/pep-proxy-wilma) included in Chanchan APP is aware of the [Domain creation](http://authzforce-ce-fiware.readthedocs.org/en/4.3.0/InstallationAndAdministrationGuide.html#domain-creation). 
+This image, if used with the [Chanchan APP](https://github.com/Bitergia/fiware-chanchan), is fully provided for testing. [PEP Proxy Wilma](http://catalogue.fiware.org/enablers/pep-proxy-wilma) included in Chanchan APP is aware of the [Domain creation](http://authzforce-ce-fiware.readthedocs.org/en/4.4.0/InstallationAndAdministrationGuide.html#domain-creation). 
 
 Still, you can always do it yourself. 
 
@@ -36,13 +36,13 @@ curl -s --request POST \
 --header "Accept: application/xml" \
 --header "Content-Type: application/xml;charset=UTF-8" \
 --data '<?xml version="1.0" encoding="UTF-8"?><taz:domainProperties xmlns:taz="http://authzforce.github.io/rest-api-model/xmlns/authz/4"><name>MyDomain</name><description>This is my domain.</description></taz:domainProperties>' \
- http://<authzforce-container-ip>:8080/authzforce/domains
+ http://<authzforce-container-ip>:8080/authzforce-ce/domains
 ```
 
 * **Retrieve the domain ID**
 
 ```
-curl -s --request GET http://<authzforce-container-ip>:8080/authzforce/domains
+curl -s --request GET http://<authzforce-container-ip>:8080/authzforce-ce/domains
 ```
 
 * **Domain removal**
@@ -51,7 +51,7 @@ curl -s --request GET http://<authzforce-container-ip>:8080/authzforce/domains
 curl --verbose --request DELETE \
 --header "Content-Type: application/xml;charset=UTF-8" \
 --header "Accept: application/xml" \
-http://<authzforce-container-ip>:8080/authzforce/domains/<domain-id>
+http://<authzforce-container-ip>:8080/authzforce-ce/domains/<domain-id>
 ```
 
 * **User and Role Management Setup && Domain Role Assignment**
