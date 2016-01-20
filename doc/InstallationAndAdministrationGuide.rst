@@ -23,11 +23,11 @@ Installation
 Minimal
 -------
 
-#. Download the binary (Ubuntu package with ``.deb`` extension) release of AuthZForce from `the Github project releases page <https://github.com/authzforce/server/releases/download/release-4.4.0/authzforce-ce-server_4.4.0_all.deb>`_. You get a file called ``authzforce-ce-server_4.4.0_all.deb``.
+#. Download the binary (Ubuntu package with ``.deb`` extension) release of AuthZForce from `the Github project releases page <https://github.com/authzforce/server/releases/download/release-4.4.1/authzforce-ce-server_4.4.1_all.deb>`_. You get a file called ``authzforce-ce-server_4.4.1_all.deb``.
 #. Copy this file to the host where you want to install the software.
 #. On the host, from the directory where you copied this file, run the following commands:
     | ``$ sudo aptitude install gdebi curl``
-    | ``$ sudo gdebi authzforce-ce-server_4.4.0_all.deb``
+    | ``$ sudo gdebi authzforce-ce-server_4.4.1_all.deb``
 #. At the end, you will see a message giving optional instructions to go through. Please follow them as necessary.
 
 Note that Tomcat default configuration may specify a very low value for the Java Xmx flag, causing the authzforce webapp startup to fail. In that case, make sure Tomcat with Xmx at 1Go or more (2 Go recommended). For example, for ubuntu 12.04, Tomcat default Xmx used to be 128m. You can fix it as follows:
