@@ -4,7 +4,7 @@ AuthZForce - User and Programmers Guide
 
 
 AuthZForce is the reference implementation of the Authorization PDP GE. In this regard, it provides an API to manage XACML-based access control policies and provide authorization decisions based on such policies and the context of a given access request. This guide explains how to use the API.
-
+4.3.
 Background and Detail
 =====================
 
@@ -26,7 +26,7 @@ AuthZForce provides the following APIs:
 * PDP API (PDP = Policy Decision Point in the XACML terminology): provides an API for getting authorization decisions computed by a XACML-compliant access control engine;
 * PAP API (PAP = Policy Administration Point in XACML terminology): provides API for managing XACML policies to be handled by the Authorization Service PDP.
 
-The full API (RESTful) is described by a document written in the Web Application Description Language format (WADL) and associated XML schema files available in `the source release of Github project 'rest-api-model' <https://github.com/authzforce/rest-api-model/archive/release-4.4.0.zip>`_, more specifically in file ``src/main/resources/authz-api.wadl``.
+The full API (RESTful) is described by a document written in the Web Application Description Language format (WADL) and associated XML schema files available in `the source release of Github project 'rest-api-model' <https://github.com/authzforce/rest-api-model/tree/release-4.3.0>`_, more specifically in file ``src/main/resources/authz-api.wadl``.
 
 XACML is the main international OASIS standard for access control language and request-response formats, that addresses most use cases of access control. AuthZForce supports the full core XACML 3.0 language; therefore it allows to enforce very generic and complex access control policies.
 
@@ -567,4 +567,4 @@ The easy way to integrate with IdM is to delegate the integration to the PEP up-
 
 Software Libraries for clients of AuthZForce or other Authorization PDP GEis
 ----------------------------------------------------------------------------
-The full API (RESTful) is described by a document written in the Web Application Description Language format (WADL) and associated XML schema files available in `the source release of Github project 'rest-api-model' <https://github.com/authzforce/rest-api-model/archive/release-4.4.0.zip>`_, more specifically in file ``src/main/resources/authz-api.wadl``. Therefore, you can use any WADL-supporting REST framework for clients; for instance in Java: Jersey, Apache CXF. From that, you can use WADL-to-code generators to generate your client code. For example in Java, 'wadl2java' tools allow to generate code for JAX-RS compatible frameworks such as Apache CXF and Jersey. Actually, we can provide a CXF-based Java library created with this tool to facilitate the development of clients.
+The full API (RESTful) is described by a document written in the Web Application Description Language format (WADL) and associated XML schema files available in `the source release of Github project 'rest-api-model' <https://github.com/authzforce/rest-api-model/tree/release-4.3.0>`_, more specifically in file ``src/main/resources/authz-api.wadl``. Therefore, you can use any WADL-supporting REST framework for clients; for instance in Java: Jersey, Apache CXF. From that, you can use WADL-to-code generators to generate your client code. For example in Java, 'wadl2java' tools allow to generate code for JAX-RS compatible frameworks such as Apache CXF and Jersey. Actually, we can provide a CXF-based Java library created with this tool to facilitate the development of clients.
