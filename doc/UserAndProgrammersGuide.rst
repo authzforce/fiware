@@ -4,7 +4,7 @@ AuthZForce - User and Programmers Guide
 
 
 AuthZForce is the reference implementation of the Authorization PDP GE. In this regard, it provides an API to manage XACML-based access control policies and provide authorization decisions based on such policies and the context of a given access request. This guide explains how to use the API.
-4.3.
+
 Background and Detail
 =====================
 
