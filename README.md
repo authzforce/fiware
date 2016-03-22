@@ -6,4 +6,4 @@ This projects provides the source of various FIWARE-specific documents and packa
 - The source of the GEri's manuals. The generated manuals are available on [readthedocs.org](http://authzforce-ce-fiware.readthedocs.org/) ;
 - The source of the GEri's Docker image published in FIWARE Docker hub.
 
-The actual source code of the GEri is in [server github repository](server).
+The actual source code of the GEri is in [server component's repository](https://github.com/authzforce/server).
