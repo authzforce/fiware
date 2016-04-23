@@ -57,7 +57,7 @@ You may retrieve the current domain properties as follows:
 * Headers:
     * Accept: application/xml; charset=UTF-8
 
-For example, this request updates the externalId and the root policy reference to some policy 'PolicyABC' that must exist in the domain (added via the PAP API mentioned later) as a prerequisite::
+For example, this request gets the properties of domain 'iMnxv7sDEeWFwqVFFMDLTQ', i.e. its externalId and root policy reference. This reference points to some policy 'PolicyABC' that must exist in the domain (added via the PAP API mentioned later) as a prerequisite::
 
  GET /domains/iMnxv7sDEeWFwqVFFMDLTQ/properties
  HTTP/1.1
