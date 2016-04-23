@@ -13,8 +13,8 @@ System Requirements
 * RAM: 4GB min
 * Disk space: 10 GB min
 * Operating System: Ubuntu 14.04 LTS 
-* Java environment (automatically installed with the Ubuntu package): 
-    * JDK 7; 
+* Java environment: 
+    * JDK 7 either from OpenJDK or Oracle; 
     * Tomcat 7.x.
 
 Installation
@@ -23,6 +23,11 @@ Installation
 Minimal
 -------
 
+#. Install a JDK 7 if you don't have one already, using either of these two methods depending on your JDK preference:
+
+   * If you prefer OpenJDK: ``$ sudo aptitude install openjdk-7-jdk``
+   * If you prefer Oracle JDK, follow the instructions from `WEB UPD8 <http://www.webupd8.org/2012/01/install-oracle-java-jdk-7-in-ubuntu-via.html>`_. In the end, you should have the package ``oracle-java7-installer`` installed.
+#. Install Tomcat 7: ``$ sudo aptitude install tomcat7``
 #. Download the binary (Ubuntu package with ``.deb`` extension) release of AuthZForce from `the Github project releases page <https://github.com/authzforce/server/releases/download/release-4.4.1/authzforce-ce-server_4.4.1_all.deb>`_. You get a file called ``authzforce-ce-server_4.4.1_all.deb``.
 #. Copy this file to the host where you want to install the software.
 #. On the host, from the directory where you copied this file, run the following commands:
