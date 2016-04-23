@@ -551,15 +551,13 @@ Response::
  Content-Type: application/xml; charset=UTF-8
 
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
- <Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17">
-    <Result>
-        <Decision>Permit</Decision>
-        <Status>
-            <StatusCode Value="urn:oasis:names:tc:xacml:1.0:status:ok" />
-        </Status>
-    </Result>
- </Response>
+ <ns1:Response xmlns:ns1="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ...>
+    <ns1:Result>
+        <ns1:Decision>Permit</ns1:Decision>
+    </ns1:Result>
+ </ns1:Response>
 
+*NB: the namespace prefix of the ``Response`` element - ``ns1`` in this example - might be different from a run time to another (e.g. ``ns2`` instead), but it is always the same XML element as the prefix is always mapped to ``urn:oasis:names:tc:xacml:3.0:core:schema:wd-17`` (XACML 3.0 namespace).*
 
 Integration with the IdM GE (e.g. for OAuth)
 --------------------------------------------
