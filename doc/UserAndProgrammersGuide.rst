@@ -559,9 +559,13 @@ Response::
 
 *NB: the namespace prefix of the ``Response`` element - ``ns1`` in this example - might be different from a run time to another (e.g. ``ns2`` instead), but it is always the same XML element as the prefix is always mapped to ``urn:oasis:names:tc:xacml:3.0:core:schema:wd-17`` (XACML 3.0 namespace). Therefore, any valid (namespace-aware) XML parser will handle it equally, no matter what the namespace prefix is.*
 
-Integration with the IdM GE (e.g. for OAuth)
+Integration with the IdM and PEP Proxy GEs (e.g. for OAuth)
 --------------------------------------------
-The easy way to integrate with IdM is to delegate the integration to the PEP up-front, i.e. we assume the PEP got all the required IdM-related info and forwards it to the Authorization PDP in the XACML request; the PEP Proxy by UPM can provide such a feature.
+AuthZForce integrates with the Identity Management (KeyRock) and PEP Proxy GE (Wilma) reference implementations. For an overview of the main interactions, please refer to the Basic and Advanced sections of `Wilma programmer guide <http://fiware-pep-proxy.readthedocs.org/en/latest/user_guide/#level-2-basic-authorization>`_.
+
+After you `installed and configured KeyRock <http://fiware-idm.readthedocs.org/en/latest/admin_guide.html>`_, to connect it to Authzforce, you modify the properties with names prefixed by ``ACCESS_CONTROL_`` in the configuration file ``fiware-idm/horizon/openstack_dashboard/local/local_settings.py`` (`example <https://github.com/ging/horizon/blob/master/openstack_dashboard/local/local_settings.py.example>`_) according to your AuthZForce instance properties. Then go to IdM web interface, and check that the permissions and roles are well configured for your application. You may have to 'trigger' the policy generation in IdM by going to your application > *Manage roles* and click 'save' to trigger the XACML generation. More information in `KeyRock installation and administration guide <http://fiware-idm.readthedocs.org/en/latest/admin_guide.html>`_.
+
+Then, after you `installed and configured Wilma <http://fiware-pep-proxy.readthedocs.org/en/latest/admin_guide/>`_, to connect it to Authzforce, you modify the settings in ``config.azf`` object of configuration file ``config.js`` (`example <https://github.com/ging/fiware-pep-proxy/blob/master/config.js.template>`_) according to your AuthZForce instance properties. More information in `Wilma installation and administration guide <http://fiware-pep-proxy.readthedocs.org/en/latest/admin_guide/>`_.
 
 Software Libraries for clients of AuthZForce or other Authorization PDP GEis
 ----------------------------------------------------------------------------
