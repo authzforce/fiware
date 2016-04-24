@@ -55,6 +55,7 @@ You may retrieve the current domain properties as follows:
 * Method: GET
 * Path: /domains/{domainId}/properties
 * Headers:
+
     * Accept: application/xml; charset=UTF-8
 
 For example, this request gets the properties of domain 'iMnxv7sDEeWFwqVFFMDLTQ', i.e. its externalId and root policy reference. This reference points to some policy 'PolicyABC' that must exist in the domain (added via the PAP API mentioned later) as a prerequisite::
@@ -123,6 +124,7 @@ The PAP provides a RESTful API for adding policies to a specific domain.HTTP req
 * Method: POST
 * Path: /domains/{domainId}/pap/policies
 * Headers:
+
     * Content-Type: application/xml; charset=UTF-8
     * Accept: application/xml; charset=UTF-8
 * Body: XACML PolicySet as defined in the XACML 3.0 schema.
@@ -222,6 +224,7 @@ Once added to the domain as shown previously, you can get the policy by its ID a
 * Method: GET
 * Path: /domains/{domainId}/pap/policies/{policyId}
 * Headers:
+
     * Accept: application/xml; charset=UTF-8
 
 For example::
@@ -252,6 +255,7 @@ Therefore, you may get a specific version of the policy as follows:
 * Method: GET
 * Path: /domains/{domainId}/pap/policies/{policyId}/{version}
 * Headers:
+
     * Accept: application/xml; charset=UTF-8
     
 For example::
@@ -295,6 +299,7 @@ You may remove a policy version from the domain as follows:
 * Method: DELETE
 * Path: /domains/{domainId}/pap/policies/{policyId}/{version}
 * Headers:
+
     * Accept: application/xml; charset=UTF-8
 
 For example::
@@ -310,6 +315,7 @@ You may remove all versions of a policy from the domain as follows:
 * Method: DELETE
 * Path: /domains/{domainId}/pap/policies/{policyId}
 * Headers:
+
     * Accept: application/xml; charset=UTF-8
 
 For example::
@@ -475,6 +481,55 @@ You may add more policies for more roles as you wish. Once you are satisfied wit
 The policy is now enforced by the PDP as described in the next section.
 
 
+Attribute Providers
++++++++++++++++++++
+The API also allows to manage PDP attribute providers. These are PDP extensions that enable the PDP to get attributes from other sources than PEPs' requests, such as remote services. 
+
+You may retrieve the current attribute providers as follows:
+
+* Method: GET
+* Path: /domains/{domainId}/pap/attributeProviders
+* Headers:
+
+    * Accept: application/xml; charset=UTF-8
+
+For example, this request gets the PDP attribute providers of domain *iMnxv7sDEeWFwqVFFMDLTQ*::
+
+ GET /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/attributeProviders
+ HTTP/1.1
+ Accept: application/xml; charset=UTF-8
+
+ <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+ <ns4:attributeProviders xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/4">
+   ...
+ </ns4:attributeProviders>
+
+You may update the attribute providers as follows:
+
+* Method: PUT
+* Path: /domains/{domainId}/pap/attributeProviders
+* Headers:
+
+   * Content-Type: application/xml; charset=UTF-8
+   * Accept: application/xml; charset=UTF-8
+
+* Body: new attribute providers.
+
+For example, this request updates the PDP attribute providers of domain *iMnxv7sDEeWFwqVFFMDLTQ*::
+
+ PUT /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/attributeProviders
+ HTTP/1.1
+ Accept: application/xml; charset=UTF-8
+ Content-Type: application/xml; charset=UTF-8
+
+ <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+ <ns4:attributeProviders xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/4">
+   ...
+ </ns4:attributeProviders>
+
+The response is the new attribute providers.
+
+
 Policy Decision API
 -------------------
 
@@ -486,6 +541,7 @@ The HTTP request must be formatted as follows:
 * Method: POST
 * Path: /domains/{domainId}/pdp
 * Headers:
+
     * Content-Type: application/xml; charset=UTF-8
     * Accept: application/xml; charset=UTF-8
 * Body: XACML Request as defined in the XACML 3.0 schema.
