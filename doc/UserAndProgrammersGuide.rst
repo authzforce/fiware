@@ -557,7 +557,7 @@ Response::
     </ns1:Result>
  </ns1:Response>
 
-*NB: the namespace prefix of the ``Response`` element - ``ns1`` in this example - might be different from a run time to another (e.g. ``ns2`` instead), but it is always the same XML element as the prefix is always mapped to ``urn:oasis:names:tc:xacml:3.0:core:schema:wd-17`` (XACML 3.0 namespace).*
+*NB: the namespace prefix of the ``Response`` element - ``ns1`` in this example - might be different from a run time to another (e.g. ``ns2`` instead), but it is always the same XML element as the prefix is always mapped to ``urn:oasis:names:tc:xacml:3.0:core:schema:wd-17`` (XACML 3.0 namespace). Therefore, any valid (namespace-aware) XML parser will handle it equally, no matter what the namespace prefix is.*
 
 Integration with the IdM GE (e.g. for OAuth)
 --------------------------------------------
