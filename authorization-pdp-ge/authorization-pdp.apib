@@ -1,9 +1,9 @@
 FORMAT: 1A
 HOST: http://authzforce.github.io/fiware-authorization-pdp/api/v2/
 TITLE: FIWARE Authorization PDP API Specification
-DATE: 11 September 2015
-VERSION: 4.2
-PREVIOUS_VERSION: 4.1
+DATE: 15 January 2016
+VERSION: 4.4
+PREVIOUS_VERSION: 4.3
 APIARY_PROJECT: authzforce-ce
 
 # Abstract
@@ -22,7 +22,7 @@ This specification is licensed under the [FIWARE Open Specification License](htt
 
 ## Copyright
 
-Copyright © 2014-2015 by [THALES](http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/Thales_sv).
+Copyright © 2014-2016 by [THALES](http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/Thales_sv).
 
 
 # Specification
@@ -35,7 +35,7 @@ The FIWARE Authorization PDP API specification defines a RESTful API of an Autho
 * Requesting authorization decisions based on those policies, in a XACML-compliant request-response format;
 * Managing multiple PDPs, one per domain (aka tenant), in order to provide multi-tenancy.
 
-This APIARY blueprint gives a user-friendly description of the API. However, the official API reference for a specific release is available in a WADL (Web Application Description Language) and XML schema files on the [catalogue entry](http://catalogue.fiware.org/enablers/authorization-pdp-authzforce/downloads) in file `FIWARE-AuthorizationPDP-REST-API-Model-XXX-src.zip` where XXX is the current version of the API. From this WADL (and associated XSD files), you can generate code automatically for various languages, e.g. Apache CXF's WADL2Java plugin for Java.
+This APIARY blueprint gives a user-friendly description of the API. However, the official API reference for a specific release is available in a WADL (Web Application Description Language) and XML schema files on the [catalogue entry](http://catalogue.fiware.org/enablers/authorization-pdp-authzforce/downloads). From this WADL (and associated XSD files), you can generate code automatically for various languages, e.g. Apache CXF's WADL2Java plugin for Java.
 
 ## Conformance
 
@@ -65,137 +65,154 @@ The API is designed to be multi-tenant, i.e. it allows users or organizations to
 Policy administration domains.
 
 ## Add domain [POST]
-Create a new administration domain with defined properties, including one called `externalId`. We use the same definition for this property as in the [SCIM schema, § 3.1](https://tools.ietf.org/html/rfc7643#section-3.1).
+Create a new administration domain with defined properties, including one called `externalId`. We use the same definition for this property as in the [SCIM schema, § 3.1](https://tools.ietf.org/html/rfc7643#section-3.1). The response is the relative link to the REST resource created for the domain with a unique (opaque) ID assigned by the service.
 
 + Request (application/xml)
 
-        <properties xmlns="http://thalesgroup.com/authz/model/2015/09/resource" ... />
+        <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/4" 
+            externalId="my.test.domain">
+            <description>This is a test domain.</description>
+        </domainProperties>
 
 + Response 200 (application/xml)
 
-        <link xmlns="http://www.w3.org/2005/Atom" ... />
+        <link xmlns="http://www.w3.org/2005/Atom" rel="item" href="1234ABCD" title="1234ABCD"/>
 
 ## Get domains [GET /domains{?externalId}]
-Retrieve links to domains.
+Retrieve links to domains. 
 
 + Parameters
-    + externalId: 1234ABCDEF (string, optional) - If specified, only the domain with a matching externalId is returned, or none if no match.
+    + externalId: my.test.domain (string, optional) - If specified, only a link to the domain with a matching `externalId` is returned, or none if no match.
 
 + Response 200 (application/xml)
 
-        <resources xmlns="http://thalesgroup.com/authz/model/2015/09/resource" ... />
+        <resources xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/4" xmlns:atom="http://www.w3.org/2005/Atom"> 
+            <atom:link rel="item" href="1234ABCD" title="1234ABCD"/>
+        </resources>
 
 # Domain [/domains/{domainId}]
 Policy administration domain
 
 + Parameters
-    + domainId: 4567GHIJ (string, required) - Domain ID
-
-## Update domain [PUT]
-Update the properties of the domain.
-
-+ Request (application/xml)
-
-        <properties xmlns="http://thalesgroup.com/authz/model/2015/09/resource" ... />
-
-+ Response 200 (application/xml)
-
-        <properties xmlns="http://thalesgroup.com/authz/model/2015/09/resource" ... />
-
-## Get domain [GET]
-Get the properties of the domain.
-
-+ Response 200 (application/xml)
-
-        <domain xmlns="http://thalesgroup.com/authz/model/2015/09" ... />
+    + domainId: 1234ABCD (string, required) - Domain ID
 
 ## Delete domain [DELETE]
 Delete the domain.
 
 + Response 200 (application/xml)
 
-        <properties xmlns="http://thalesgroup.com/authz/model/2015/09/resource" ... />
+        <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/4" 
+            externalId="my.test.domain">
+            <description>This is a test domain.</description>
+        </domainProperties>
 
-# PAP [/domains/{domainId}/pap]
-Policy Administration Point.
+# Domain properties [/domains/{domainId}/properties]
+Policy administration domain properties
 
-## Get PAP [GET]
-Get the PAP resource.
-
-+ Response 200 (application/xml)
-
-        <resources xmlns="http://thalesgroup.com/authz/model/2015/09/resource" ... />
-
-## Update PDP properties [PUT]
-Update the general properties of the domain's PDP.
+## Update domain properties [PUT]
+Update the properties of the domain. In this example, we change the `externalId` and description.
 
 + Request (application/xml)
 
-        <pdpProperties xmlns="http://thalesgroup.com/authz/model/2015/09/resource" ... />
+        <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/4" 
+            externalId="my.test.domain0">
+            <description>This is a test domain and I want to use it.</description>
+        </domainProperties>
 
 + Response 200 (application/xml)
 
-        <pdpProperties xmlns="http://thalesgroup.com/authz/model/2015/09/resource" ... />
+        <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/4" 
+            externalId="my.test.domain0">
+            <description>This is a test domain and I want to use it.</description>
+        </domainProperties>
 
-# Policies [/domains/{domainId}/pap/policies]
-Policies of the domain.
+## Get domain properties [GET]
+Get the properties of the domain.
 
-## Add Policy [POST]
-Add a XACML PolicySet to the domain's policies.
++ Response 200 (application/xml)
+
+        <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/4" 
+            externalId="my.test.domain0">
+            <description>This is a test domain and I want to use it.</description>
+        </domainProperties>
+
+# Domain PAP - Policies [/domains/{domainId}/pap/policies]
+Policy Administration Point interface to manage the policies of the domain.
+
+## Add/update a policy [POST]
+Add/update a policy (XACML `PolicySet`) in the domain. The response is the relative link to the REST resource created for the policy version. If there is no existing policy with a `PolicySetId` matching the one in the request, this adds a new policy resource. If a policy exists with same `PolicySetId` but a different `Version`, this adds a new resource for this new policy version under the policy resource. If a policy exists with the same `PolicySetId` and `Version`, this must raise a conflict error and the operation must be canceled.
 
 + Request (application/xml)
 
-        <PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ... />
+        <PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicySetId="P1" Version="1.0" ... />
 
 + Response 200 (application/xml)
 
-        <link xmlns="http://www.w3.org/2005/Atom" ... />
+        <link xmlns="http://www.w3.org/2005/Atom" rel="item" href="P1/1.0" title="Policy 'P1' v1.0"/>
 
-## Get policies [GET /domains/{domainId}/pap/policies{?policySetId,version}]
-Get the domain's policies.
-
-+ Parameters
-    + policySetId: P0 (string, optional) - If specified, only XACML PolicySets with matching PolicySetId will be returned, or none if no match.
-    + version: 1.2.3 (string, optional) - If specified, ` policySetId` parameter must be specified as well, and only XACML PolicySets with matching PolicySetId and Version will be returned, or none if no match.
+## Get policies [GET /domains/{domainId}/pap/policies]
+Get the list of domain's policies. The response is the list of links to all policy resources.
 
 + Response 200 (application/xml)
 
-        <resources xmlns="http://thalesgroup.com/authz/model/2015/09/resource" ... />
+        <resources xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/4" xmlns:atom="http://www.w3.org/2005/Atom"> 
+            <atom:link rel="item" href="P1" title="P1"/>
+            <atom:link rel="item" href="P1" title="P2"/>
+            ...
+        </resources>
 
 
-# Policy [/domains/{domainId}/pap/policies/{policyUID}]
+# Domain PAP - Policy [/domains/{domainId}/pap/policies/{policyId}]
 A policy in the domain.
 
 + Parameters
-    + policyUID: P0v1.2.3 (string, required) - PolicySet unique identifier (PolicySet UID). This is the identifier allocated by the Service Provider for the PolicySet resource. Note that this is different from the XACML PolicySetId in at least two ways: 1. It is allocated by the Service Provider whereas the XACML PolicySetId is defined by the Service Consumer. 2. It identifies the XACML PolicySetId AND Version. In other words, you can have two different resources with the same PolicySetId but different Versions (therefore different PolicySet UIDs).
+    + policyId: P1 (string, required) - Policy ID, more precisely the XACML `PolicySetId`.
 
-
-## Update Policy [PUT]
-Update the policy.
-
-+ Request (application/xml)
-
-        <PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ... />
+## Get policy [GET]
+Get the policy, i.e. the links to all versions of the policy.
 
 + Response 200 (application/xml)
 
-        <PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ... />
-
-## Get Policy [GET]
-Get the policy.
-
-+ Response 200 (application/xml)
-
-        <PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ... />
+        <resources xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/4" xmlns:atom="http://www.w3.org/2005/Atom"> 
+            <atom:link rel="item" href="1.0" title="1.0"/>
+            <atom:link rel="item" href="1.1" title="1.1"/>
+            <atom:link rel="item" href="2.0" title="2.0"/>
+            ...
+        </resources>
 
 ## Delete policy [DELETE]
-Delete the policy.
+Delete the policy, i.e. all policy versions. The response is the list of all the versions of the removed policy before removal.
 
 + Response 200 (application/xml)
 
-        <PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ... />
+        <resources xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/4" xmlns:atom="http://www.w3.org/2005/Atom"> 
+            <atom:link rel="item" href="1.0" title="1.0"/>
+            <atom:link rel="item" href="1.1" title="1.1"/>
+            <atom:link rel="item" href="2.0" title="2.0"/>
+            ...
+        </resources>
 
-# PDP [/domains/{domainId}/pdp]
+# Domain PAP - Policy version [/domains/{domainId}/pap/policies/{policyId}/{version}]
+A policy version.
+
++ Parameters
+    + version: 1.0 (string, required) - Policy version, more precisely the XACML `PolicySet` `Version`.
+
+## Get policy version [GET]
+Get a specific version of a policy.
+
++ Response 200 (application/xml)
+
+        <PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicySetId="P1" Version="1.0" ... />
+
+## Delete policy version [DELETE]
+Delete a specific version of a policy. The response is the removed policy version.
+
++ Response 200 (application/xml)
+
+        <PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicySetId="P1" Version="1.0" ... />
+
+# Domain PDP [/domains/{domainId}/pdp]
 Policy Decision Point.
 
 ## Request authorization decision [POST]
