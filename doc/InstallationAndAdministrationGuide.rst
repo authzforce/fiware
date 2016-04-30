@@ -14,23 +14,26 @@ System Requirements
 * Disk space: 10 GB min
 * Operating System: Ubuntu 14.04 LTS 
 * Java environment: 
+
     * JDK 7 either from OpenJDK or Oracle; 
     * Tomcat 7.x.
 
 Installation
 ============
+If you are still using AuthZForce 4.2.0 and want to upgrade, please proceed with the *Minimal setup* below, to install the new version; then the *Upgrade* section that follows, to transfer data from the old version.
 
-Minimal
--------
+Minimal setup
+-------------
 
 #. Install a JDK 7 if you don't have one already, using either of these two methods depending on your JDK preference:
 
    * If you prefer OpenJDK: ``$ sudo aptitude install openjdk-7-jdk``
    * If you prefer Oracle JDK, follow the instructions from `WEB UPD8 <http://www.webupd8.org/2012/01/install-oracle-java-jdk-7-in-ubuntu-via.html>`_. In the end, you should have the package ``oracle-java7-installer`` installed.
-#. Install Tomcat 7: ``$ sudo aptitude install tomcat7``
+#. Install Tomcat 7: ``$ sudo aptitude install tomcat7``.
 #. Download the binary (Ubuntu package with ``.deb`` extension) release of AuthZForce from `the Github project releases page <https://github.com/authzforce/server/releases/download/release-4.4.1/authzforce-ce-server_4.4.1_all.deb>`_. You get a file called ``authzforce-ce-server_4.4.1_all.deb``.
 #. Copy this file to the host where you want to install the software.
 #. On the host, from the directory where you copied this file, run the following commands:
+
     | ``$ sudo aptitude install gdebi curl``
     | ``$ sudo gdebi authzforce-ce-server_4.4.1_all.deb``
 #. At the end, you will see a message giving optional instructions to go through. Please follow them as necessary.
@@ -39,11 +42,16 @@ Note that Tomcat default configuration may specify a very low value for the Java
 | ``$ sudo sed -i "s/-Xmx128m/-Xmx1024m/" /etc/default/tomcat``
 | ``$ sudo service tomcat7 restart``
 
-Advanced
---------
+Upgrade
+-------
+If you are still using AuthZForce 4.2.0 and wish to upgrade, please follow the instructions from `the upgrader tool project<https://github.com/authzforce/server/tree/release-4.4.1/upgrader/src/main/README.md>`_
+
+Advanced setup
+--------------
 
 The previous section gave you minimal installation steps to get started testing the features of the GE API. This may be enough for testing purposes, but barely for production. If you are targeting a production environment, you have to carry out extra installation and configuration steps to address non-functional aspects: security (including availability), performance, etc. 
 The Appendix_ also gives some recommendations on what you should do.
+
 
 Administration
 ==============
