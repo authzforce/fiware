@@ -44,7 +44,7 @@ Note that Tomcat default configuration may specify a very low value for the Java
 
 Upgrade
 -------
-If you are still using AuthZForce 4.2.0 and wish to upgrade, please follow the instructions from `the upgrader tool project<https://github.com/authzforce/server/tree/release-4.4.1/upgrader/src/main/README.md>`_
+If you are still using AuthZForce 4.2.0 and wish to upgrade, please follow the instructions from `the upgrader tool project <https://github.com/authzforce/server/tree/release-4.4.1/upgrader/src/main/README.md>`_.
 
 Advanced setup
 --------------
