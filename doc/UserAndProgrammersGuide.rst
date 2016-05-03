@@ -36,8 +36,7 @@ AuthZForce provides the following APIs:
 
 The full API (RESTful) is described by a document written in the Web Application Description Language format (WADL) and
 associated XML schema files available in
-`the source release of Github project 'rest-api-model' <https://github.com/authzforce/rest-api-model/tree/release-4.3.0>`_,
-more specifically in file ``src/main/resources/authz-api.wadl``.
+`Authzforce rest-api-model project files <https://github.com/authzforce/rest-api-model/tree/release-4.3.0/src/main/resources>`_.
 
 XACML is the main international OASIS standard for access control language and request-response formats, that addresses
 most use cases of access control. AuthZForce supports the full core XACML 3.0 language; therefore it allows to enforce
@@ -76,61 +75,65 @@ guide. The API also allows users to update certain properties of the domain allo
 You may retrieve the current domain properties as follows:
 
 * Method: GET
-* Path: /domains/{domainId}/properties
+* Path: ``/domains/{domainId}/properties``
 * Headers:
 
-    * Accept: application/xml; charset=UTF-8
+    * Accept: ``application/xml; charset=UTF-8``
 
-For example, this request gets the properties of domain 'iMnxv7sDEeWFwqVFFMDLTQ', i.e. its externalId and root policy
-reference. This reference points to some policy 'PolicyABC' that must exist in the domain (added via the PAP API
+For example, this request gets the properties of domain ``iMnxv7sDEeWFwqVFFMDLTQ``, i.e. its externalId and root policy
+reference. This reference points to some policy ``PolicyABC`` that must exist in the domain (added via the PAP API
 mentioned later) as a prerequisite::
 
- GET /domains/iMnxv7sDEeWFwqVFFMDLTQ/properties HTTP/1.1 Accept: application/xml; charset=UTF-8
+  GET /domains/iMnxv7sDEeWFwqVFFMDLTQ/properties 
+  HTTP/1.1 
+  Accept: application/xml; charset=UTF-8
 
- <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-
- <ns4:domainProperties 
-   xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/4"> <rootPolicyRef
-   Version="1.0">PolicyABC</rootPolicyRef>
+  <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
+  <ns4:domainProperties 
+   xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/4"> 
+   <rootPolicyRef Version="1.0">PolicyABC</rootPolicyRef>
  </ns4:domainProperties> 
 
 You may update the domain properties as follows:
 
 * Method: PUT
-* Path: /domains/{domainId}/properties
+* Path: ``/domains/{domainId}/properties``
 * Headers:
 
-   * Content-Type: application/xml; charset=UTF-8
-   * Accept: application/xml; charset=UTF-8
+   * Content-Type: ``application/xml; charset=UTF-8``
+   * Accept: ``application/xml; charset=UTF-8``
 
 * Body: new properties.
 
-For example, this request sets/updates the externalId to *my-domain-123* and the root policy reference to some policy
-*PolicyABC* (in version *2.1*) that must exist in the domain (added via the PAP API mentioned later) as a prerequisite::
+For example, this request sets/updates the ``externalId`` to ``my-domain-123`` and the root policy reference to some
+policy ``PolicyABC`` (in version ``2.1``) that must exist in the domain (added via the PAP API mentioned later) as a
+prerequisite::
 
- PUT /domains/iMnxv7sDEeWFwqVFFMDLTQ/properties HTTP/1.1 Accept: application/xml; charset=UTF-8 Content-Type:
- application/xml; charset=UTF-8
+ PUT /domains/iMnxv7sDEeWFwqVFFMDLTQ/properties 
+ HTTP/1.1 
+ Accept: application/xml; charset=UTF-8 
+ Content-Type: application/xml; charset=UTF-8
 
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
-
  <ns4:domainProperties 
-   xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/4" externalId="my-domain-123"> <rootPolicyRef
-   Version="2.1">PolicyDEF</rootPolicyRef>
+   xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/4" externalId="my-domain-123"> 
+   <rootPolicyRef Version="2.1">PolicyDEF</rootPolicyRef>
  </ns4:domainProperties>
 
-Note that the *Version* attribute is optional here. If omitted, the latest version available is used. The response is
+Note that the ``Version`` attribute is optional here. If omitted, the latest version available is used. The response is
 the new properties.
 
 As a result, the policy now enforced by the domain's Policy Decision Point (see the PDP API in the last section of this
-document) is *PolicyABC* (in version *2.1*) and the domain's external ID *my-domain-123* points to the domain
-*iMnxv7sDEeWFwqVFFMDLTQ*. Clients may only rely on the externalId under their control to recover the API-defined domain
-ID, before they begin to use other API operations that require the API-defined domain ID. Indeed, clients may request
-the API-defined ID corresponding to a given externalId as follows::
+document) is ``PolicyABC`` (in version ``2.1``) and the domain's external ID ``my-domain-123`` points to the domain
+``iMnxv7sDEeWFwqVFFMDLTQ``. Clients may only rely on the externalId under their control to recover the API-defined
+domain ID, before they begin to use other API operations that require the API-defined domain ID. Indeed, clients may
+request the API-defined ID corresponding to a given externalId as follows::
 
  GET /domains?externalId=my-domain-123
-
+ HTTP/1.1 
+ Accept: application/xml; charset=UTF-8
+ 
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
-
  <ns2:resources 
      xmlns:ns2="http://authzforce.github.io/rest-api-model/xmlns/authz/4" xmlns:ns3="http://www.w3.org/2005/Atom">
      <ns3:link rel="item" href="iMnxv7sDEeWFwqVFFMDLTQ" title="iMnxv7sDEeWFwqVFFMDLTQ"/>
@@ -149,43 +152,51 @@ tenant).
 Adding Policies
 +++++++++++++++
 
-The PAP provides a RESTful API for adding policies to a specific domain.HTTP requests to this API must be formatted as
+The PAP provides a RESTful API for adding policies to a specific domain. HTTP requests to this API must be formatted as
 follows:
 
 * Method: POST
-* Path: /domains/{domainId}/pap/policies
+* Path: ``/domains/{domainId}/pap/policies``
 * Headers:
 
-    * Content-Type: application/xml; charset=UTF-8
-    * Accept: application/xml; charset=UTF-8
+    * Content-Type: ``application/xml; charset=UTF-8``
+    * Accept: ``application/xml; charset=UTF-8``
+    
 * Body: XACML PolicySet as defined in the XACML 3.0 schema.
 
 Example of request given below::
 
- POST /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/policies HTTP/1.1 Accept: application/xml; charset=UTF-8 Content-Type:
- application/xml; charset=UTF-8
+ POST /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/policies 
+ HTTP/1.1 
+ Accept: application/xml; charset=UTF-8 
+ Content-Type: application/xml; charset=UTF-8
 
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-
  <PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicySetId="P1"
   Version="1.0" PolicyCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:deny-unless-permit">
-  <Description>Sample PolicySet</Description> <Target /> <Policy PolicyId="MissionManagementApp" Version="1.0"
-   RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-unless-permit"> <Description>Policy
-   for MissionManagementApp</Description> <Target>
+  <Description>Sample PolicySet</Description> 
+  <Target /> 
+  <Policy PolicyId="MissionManagementApp" Version="1.0"
+   RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-unless-permit"> 
+   <Description>Policy for MissionManagementApp</Description> 
+   <Target>
     <AnyOf>
      <AllOf>
       <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
        <AttributeValue 
         DataType="http://www.w3.org/2001/XMLSchema#string">MissionManagementApp</AttributeValue>
-        <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
-         AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" DataType="http://www.w3.org
-         /2001/XMLSchema#string" MustBePresent="true" />
+        <AttributeDesignator 
+         Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+         AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" 
+         DataType="http://www.w3.org/2001/XMLSchema#string" 
+         MustBePresent="true" />
        </Match>
       </AllOf>
      </AnyOf>
     </Target>
    <Rule RuleId="MissionManager_role_can_manage_team" Effect="Permit">
-    <Description>Only MissionManager role authorized to manage the mission team</Description> <Target>
+    <Description>Only MissionManager role authorized to manage the mission team</Description> 
+    <Target>
      <AnyOf>
       <AllOf>
        <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
@@ -227,12 +238,12 @@ Example of request given below::
 The HTTP response status is 200 with a link to manage the new policy, if the request was successfull. The link is made
 of the policy ID and version separated by '/'.
 
-Response ::
+Response::
 
- HTTP/1.1 200 OK Content-Type: application/xml; charset=UTF-8
+ HTTP/1.1 200 OK 
+ Content-Type: application/xml; charset=UTF-8
 
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
-
  <ns3:link xmlns:ns3="http://www.w3.org/2005/Atom" 
    rel="item" href="P1/1.0" title="Policy 'P1' v1.0"/>
  
@@ -243,58 +254,70 @@ Getting Policies and Policy Versions
 Once added to the domain as shown previously, you can get the policy by its ID as follows:
 
 * Method: GET
-* Path: /domains/{domainId}/pap/policies/{policyId}
+* Path: ``/domains/{domainId}/pap/policies/{policyId}``
 * Headers:
 
-    * Accept: application/xml; charset=UTF-8
+    * Accept: ``application/xml; charset=UTF-8``
 
 For example::
  
- GET /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/policies/P1 HTTP/1.1 Accept: application/xml; charset=UTF-8
+ GET /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/policies/P1 
+ HTTP/1.1 
+ Accept: application/xml; charset=UTF-8
 
 The response is the list of links to the versions of the policy available in the domain::
  
- HTTP/1.1 200 OK Content-Type: application/xml; charset=UTF-8
+ HTTP/1.1 200 OK 
+ Content-Type: application/xml; charset=UTF-8
  
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-
  <ns2:resources 
    xmlns:ns2="http://authzforce.github.io/rest-api-model/xmlns/authz/4" xmlns:ns3="http://www.w3.org/2005/Atom">
-     <ns3:link rel="item" href="1.0"/> <ns3:link rel="item" href="1.1"/> <ns3:link rel="item" href="2.0"/>
-     <ns3:link rel="item" href="2.1"/> <ns3:link rel="item" href="2.2"/> ...
+     <ns3:link rel="item" href="1.0"/> 
+     <ns3:link rel="item" href="1.1"/> 
+     <ns3:link rel="item" href="2.0"/>
+     <ns3:link rel="item" href="2.1"/> 
+     <ns3:link rel="item" href="2.2"/> 
+     ...
  </ns2:resources>
 
 Therefore, you may get a specific version of the policy as follows:
 
 * Method: GET
-* Path: /domains/{domainId}/pap/policies/{policyId}/{version}
+* Path: ``/domains/{domainId}/pap/policies/{policyId}/{version}``
 * Headers:
 
-    * Accept: application/xml; charset=UTF-8
+    * Accept: ``application/xml; charset=UTF-8``
     
 For example::
 
- GET /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/policies/P1/1.0 HTTP/1.1 Accept: application/xml; charset=UTF-8
+ GET /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/policies/P1/1.0 
+ HTTP/1.1 
+ Accept: application/xml; charset=UTF-8
 
 The response is the policy document (XACML PolicySet) in this version.
 
 Last but not least, you may get all policies in the domain as follows:
 
 * Method: GET
-* Path: /domains/{domainId}/pap/policies
+* Path: ``/domains/{domainId}/pap/policies``
 * Headers:
 
-    * Accept: application/xml; charset=UTF-8
+    * Accept: ``application/xml; charset=UTF-8``
 
 For example::
 
- GET /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/policies HTTP/1.1 Accept: application/xml; charset=UTF-8
+ GET /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/policies 
+ HTTP/1.1 
+ Accept: application/xml; charset=UTF-8
  
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
-
  <ns2:resources 
    xmlns:ns2="http://authzforce.github.io/rest-api-model/xmlns/authz/4" xmlns:ns3="http://www.w3.org/2005/Atom">
-     <ns3:link rel="item" href="root"/> <ns3:link rel="item" href="P1"/> <ns3:link rel="item" href="P2"/> ...
+     <ns3:link rel="item" href="root"/> 
+     <ns3:link rel="item" href="P1"/> 
+     <ns3:link rel="item" href="P2"/> 
+     ...
  </ns2:resources>
 
 
@@ -304,28 +327,32 @@ Removing Policies and Policy Versions
 You may remove a policy version from the domain as follows:
 
 * Method: DELETE
-* Path: /domains/{domainId}/pap/policies/{policyId}/{version}
+* Path: ``/domains/{domainId}/pap/policies/{policyId}/{version}``
 * Headers:
 
-    * Accept: application/xml; charset=UTF-8
+    * Accept: ``application/xml; charset=UTF-8``
 
 For example::
  
- DELETE /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/policies/P1/1.0 HTTP/1.1 Accept: application/xml; charset=UTF-8
+ DELETE /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/policies/P1/1.0 
+ HTTP/1.1 
+ Accept: application/xml; charset=UTF-8
  
 The response is the removed policy document (XACML PolicySet) in this version.
 
 You may remove all versions of a policy from the domain as follows:
 
 * Method: DELETE
-* Path: /domains/{domainId}/pap/policies/{policyId}
+* Path: ``/domains/{domainId}/pap/policies/{policyId}``
 * Headers:
 
-    * Accept: application/xml; charset=UTF-8
+    * Accept: ``application/xml; charset=UTF-8``
 
 For example::
  
- DELETE /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/policies/P1 HTTP/1.1 Accept: application/xml; charset=UTF-8
+ DELETE /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/policies/P1 
+ HTTP/1.1 
+ Accept: application/xml; charset=UTF-8
 
 The response is the list of links to all the removed versions of the policy, similar to the the GET request on the same
 URL.
@@ -336,32 +363,34 @@ Re-usable Policies (e.g. for Hierarchical RBAC)
 
 The PAP API supports policies that have references to other policies existing in the domain. This allows to
 include/reuse a given policy from multiple policies, or multiple parts of the same policy, by means of XACML
-<PolicySetIdReference>s. One major application of this is Hierarchical RBAC. You can refer to the ''Core and
-hierarchical role based access control (RBAC) profile of XACML v3.0'' specification for how to achieve Hierarchical
-RBAC with <PolicySetIdReference>s.
+``<PolicySetIdReference>`` elements. One major application of this is Hierarchical RBAC. You can refer to the
+*Core and hierarchical role based access control (RBAC) profile of XACML v3.0* specification for how to achieve
+hierarchical RBAC with ``<PolicySetIdReference>`` elements.
 
 For example, I want to define a role *Employee* and a role *Manager* derived  from *Employee*. In other words,
 permissions of an *Employee* are included in the permissions of a *Manager*.
 
 In order to create this role hierarchy, we first add the Employee's *Permission PolicySet*::
 
- POST /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/policies HTTP/1.1 Accept: application/xml; charset=UTF-8 Content-Type:
- application/xml; charset=UTF-8
+ POST /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/policies 
+ HTTP/1.1 
+ Accept: application/xml; charset=UTF-8 
+ Content-Type: application/xml; charset=UTF-8
 
  <?xml version="1.0" encoding="UTF-8"?>
-
  <PolicySet PolicySetId="PPS:Employee" Version="1.0"
   PolicyCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:deny-unless-permit">
-  <Description>Permissions specific to the Employee role</Description> <Target /> <Policy PolicyId="PP:Employee"
-  Version="1.0"
-   RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-unless-permit"> <Target /> <Rule
-   RuleId="Permission_to_create_issue_ticket" Effect="Permit">
+  <Description>Permissions specific to the Employee role</Description> 
+  <Target /> 
+  <Policy PolicyId="PP:Employee" Version="1.0"
+   RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-unless-permit"> 
+   <Target /> 
+   <Rule RuleId="Permission_to_create_issue_ticket" Effect="Permit">
     <Target>
      <AnyOf>
       <AllOf>
        <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
-        <AttributeValue 
- DataType="http://www.w3.org/2001/XMLSchema#string">https://acme.com/tickets</AttributeValue>
+        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">https://acme.com/tickets</AttributeValue>
         <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
          AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
          DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
@@ -384,18 +413,21 @@ In order to create this role hierarchy, we first add the Employee's *Permission 
  </PolicySet>
 
 Then we add the role-based hierarchical policy defining the Employee role and the Manager role, both with a reference
-(<PolicySetIdReference>) to the Employee's *Permission PolicySet* added previously; except the Manager role one policy
-more, so more permissions::
+(``<PolicySetIdReference>``) to the Employee's *Permission PolicySet* added previously; except the Manager role one
+policy more, so more permissions::
 
- POST /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/policies HTTP/1.1 Accept: application/xml; charset=UTF-8 Content-Type:
- application/xml; charset=UTF-8
+ POST /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/policies 
+ HTTP/1.1 
+ Accept: application/xml; charset=UTF-8 
+ Content-Type: application/xml; charset=UTF-8
 
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
-
  <PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" 
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" PolicySetId="rbac:policyset" Version="1.0"
-  PolicyCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:deny-unless-permit"> <Description>Root
-  PolicySet</Description> <Target /> <PolicySet PolicySetId="RPS:Employee" Version="1.0"
+  PolicyCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:deny-unless-permit"> 
+  <Description>Root PolicySet</Description> 
+  <Target /> 
+  <PolicySet PolicySetId="RPS:Employee" Version="1.0"
    PolicyCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:deny-unless-permit">
    <Description>Employee Role PolicySet</Description> <Target>
     <AnyOf>
@@ -410,10 +442,13 @@ more, so more permissions::
       </Match>
      </AllOf>
     </AnyOf>
-   </Target> <PolicySetIdReference>PPS:Employee</PolicySetIdReference>
-  </PolicySet> <PolicySet PolicySetId="RPS:Manager" Version="1.0"
+   </Target> 
+   <PolicySetIdReference>PPS:Employee</PolicySetIdReference>
+  </PolicySet> 
+  <PolicySet PolicySetId="RPS:Manager" Version="1.0"
    PolicyCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:deny-unless-permit">
-   <Description>Manager Role PolicySet</Description> <Target>
+   <Description>Manager Role PolicySet</Description> 
+   <Target>
     <AnyOf>
      <AllOf>
       <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
@@ -425,23 +460,26 @@ more, so more permissions::
       </Match>
      </AllOf>
     </AnyOf>
-   </Target> <Policy PolicyId="PP1:Manager" Version="1.0"
+   </Target> 
+   <Policy PolicyId="PP1:Manager" Version="1.0"
     RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-unless-permit">
-    <Description>Permissions specific to Manager Role</Description> <Target /> <Rule
+    <Description>Permissions specific to Manager Role</Description> 
+    <Target /> 
+    <Rule
     RuleId="Permission_to_create_new_project" Effect="Permit">
      <Target>
       <AnyOf>
        <AllOf>
         <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
-         <AttributeValue 
- DataType="http://www.w3.org/2001/XMLSchema#string">https://acme.com/projects</AttributeValue>
+         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">https://acme.com/projects</AttributeValue>
          <AttributeDesignator 
           Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
           AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
           DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
         </Match>
        </AllOf>
-      </AnyOf> <AnyOf>
+      </AnyOf> 
+      <AnyOf>
        <AllOf>
         <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
          <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">POST</AttributeValue>
@@ -454,8 +492,8 @@ more, so more permissions::
       </AnyOf>
      </Target>
     </Rule>
-   </Policy> <!-- This role is senior to the Employee role, 
-     therefore includes the Employee role Permission PolicySet -->
+   </Policy> 
+   <!-- This role is senior to the Employee role, therefore includes the Employee role Permission PolicySet -->
    <PolicySetIdReference>PPS:Employee</PolicySetIdReference>
   </PolicySet>
  </PolicySet>
@@ -464,13 +502,13 @@ You may add more policies for more roles as you wish. Once you are satisfied wit
 your new RBAC policy by updating the domain's root policy reference (this may not be necessary if you reused the same
 root policy ID as before, in which case your policy is already active by now)::
 
- PUT /domains/iMnxv7sDEeWFwqVFFMDLTQ/properties HTTP/1.1 Accept: application/xml; charset=UTF-8 Content-Type:
- application/xml; charset=UTF-8
+ PUT /domains/iMnxv7sDEeWFwqVFFMDLTQ/properties 
+ HTTP/1.1 
+ Accept: application/xml; charset=UTF-8 
+ Content-Type: application/xml; charset=UTF-8
 
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
-
- <ns4:domainProperties
- xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/4">
+ <ns4:domainProperties xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/4">
    <rootPolicyRef>rbac:policyset</rootPolicyRef>
  </ns4:domainProperties>
 
@@ -552,11 +590,11 @@ Making and integrating an Attribute Provider
    folder ``target/generated-sources/xjc``, one of which corresponds to your attribute provider XML type defined in the
    second step, therefore has the same name and also extends
    ``org.ow2.authzforce.xmlns.pdp.ext.AbstractAttributeProvider`` class corresponding to ``AbstractAttributeProvider``
-   type in the XML schema. For instance, in the Authzforce example aforementioned, this class is
-   ``org.ow2.authzforce.core.xmlns.test.TestAttributeProvider``. In your case, we will refer to it as your
+   type in the XML schema. For example, in the case of the Authzforce *Test Attribute Provider* aforementioned, the corresponding generated class is
+   ``org.ow2.authzforce.core.xmlns.test.TestAttributeProvider``. In your case and in general, we will refer to it as your
    *Attribute Provider Model Class*.
 
-#. Create the Attribute Provider implementation class. This Java class must extend
+#. Create your Attribute Provider factory and concrete implementation class (as in the *Factory* design pattern). The Java class must extend
    ``org.ow2.authzforce.core.pdp.api.CloseableAttributeProviderModule.FactoryBuilder<APM>``, where ``APM`` stands for
    your *Attribute Provider Model Class*. You may use the
    `AuthZForce TestAttributeProviderModule class <https://github.com/authzforce/core/blob/release-3.7.0/src/test/java/org/ow2/authzforce/core/test/utils/TestAttributeProviderModule.java>`_
@@ -564,10 +602,10 @@ Making and integrating an Attribute Provider
    extending ``CloseableAttributeProviderModule.FactoryBuilder<TestAttributeProvider>``. Such a class has a factory
    method ``getInstance(APM configuration)`` (``getInstance(TestAttributeProvider conf)`` in the example) that, from an
    instance of your ``APM`` representing the XML input (``TestAttributeProvider`` in the example), creates an instance
-   of your Attribute Provider (``TestAttributeProviderModule`` in the example) with method
+   of your Attribute Provider implementation class (``TestAttributeProviderModule`` in the example). The latter must implement a method
    ``get(attributeGUID, attributeDatatype, context))`` in charge of actually retrieving the extra attributes
    (``TestAttributeProviderModule#get(...)`` in the example). The ``attributeGUID`` identifies an XACML attribute
-   category, ID and Issuer that the PDP is looking for; the ``attributeDatatype`` is the expected attribute datatype;
+   category, ID and Issuer that the PDP is requesting from your attribute provider; the ``attributeDatatype`` is the expected attribute datatype;
    and ``context`` is the request context, including the content from the current XACML Request and possibly extra
    attributes retrieved so far by other Attribute Providers.
 
@@ -590,9 +628,9 @@ Making and integrating an Attribute Provider
     <xs:import namespace="http://authzforce.github.io/core/xmlns/test/3" />
 
 #. Add a ``uri`` element to XML catalog file ``/opt/authzforce-ce-server/conf/catalog.xml``, with your attribute
-   Provider XML namespace as ``name`` attribute value, and, as ``uri` attribute value, the location of your XML schema
+   Provider XML namespace as ``name`` attribute value, and, as ``uri`` attribute value, the location of your XML schema
    file within the JAR, prefixed by ``classpath:``. For example, in the
-   `example from Authzforce source code <https://github.com/authzforce/server/blob/release-4.4.1/rest-service/src/test/resources/server/conf/catalog.xml>`,
+   `sample XML catalog from Authzforce source code <https://github.com/authzforce/server/blob/release-4.4.1/rest-service/src/test/resources/server/conf/catalog.xml>`_,
    we add the following line for Authzforce ``TestAttributeProvider``::
 
    <uri name="http://authzforce.github.io/core/xmlns/test/3" uri="classpath:org.ow2.authzforce.core.test.xsd"/>
@@ -606,28 +644,31 @@ Once you have deployed a new attribute provider extension on Authzforce, followi
 to use it on a domain:
 
 * Method: PUT
-* Path: /domains/{domainId}/pap/attributeProviders
+* Path: ``/domains/{domainId}/pap/attributeProviders``
 * Headers:
 
-   * Content-Type: application/xml; charset=UTF-8
-   * Accept: application/xml; charset=UTF-8
+   * Content-Type: ``application/xml; charset=UTF-8``
+   * Accept: ``application/xml; charset=UTF-8``
 
 * Body: new attribute providers.
 
 For example, this request instantiates a specific ``TestAttributeProvider`` configuration on domain
-*iMnxv7sDEeWFwqVFFMDLTQ* (as mentioned in the previous section, ``TestAttributeProvider`` is merely an example for
+``iMnxv7sDEeWFwqVFFMDLTQ`` (as mentioned in the previous section, ``TestAttributeProvider`` is merely an example for
 testing and documentation purposes, it is not available in a default installation of Authzforce)::
 
- PUT /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/attributeProviders HTTP/1.1 Accept: application/xml; charset=UTF-8
+ PUT /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/attributeProviders 
+ HTTP/1.1 
+ Accept: application/xml; charset=UTF-8
  Content-Type: application/xml; charset=UTF-8
 
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
-
  <ns4:attributeProviders 
   xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/4"
-  xmlns:ns3="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"> <attributeProvider 
+  xmlns:ns3="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"> 
+  <attributeProvider 
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://authzforce.github.io/core/xmlns/test/3"
-   xsi:type="ns5:TestAttributeProvider" id="test"> <ns3:Attributes
+   xsi:type="ns5:TestAttributeProvider" id="test"> 
+   <ns3:Attributes
    Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
     <ns3:Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:example:attribute:role" IncludeInResult="false">
      <ns3:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Physician</ns3:AttributeValue>
@@ -638,33 +679,33 @@ testing and documentation purposes, it is not available in a default installatio
 
 The response is the new attribute provider configuration we just dit.
 
-In this second example, we disable all PDP attribute providers of domain *iMnxv7sDEeWFwqVFFMDLTQ* by sending an empty
+In this second example, we disable all PDP attribute providers of domain ``iMnxv7sDEeWFwqVFFMDLTQ`` by sending an empty
 element::
 
- PUT /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/attributeProviders HTTP/1.1 Accept: application/xml; charset=UTF-8
+ PUT /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/attributeProviders 
+ HTTP/1.1 
+ Accept: application/xml; charset=UTF-8
  Content-Type: application/xml; charset=UTF-8
 
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
-
- <ns4:attributeProviders
- xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/4" />
+ <ns4:attributeProviders xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/4" />
 
 Finally, you may get the current attribute providers anytime as follows:
 
 * Method: GET
-* Path: /domains/{domainId}/pap/attributeProviders
+* Path: ``/domains/{domainId}/pap/attributeProviders``
 * Headers:
 
-    * Accept: application/xml; charset=UTF-8
+    * Accept: ``application/xml; charset=UTF-8``
 
-For example, this request gets the PDP attribute providers of domain *iMnxv7sDEeWFwqVFFMDLTQ*::
+For example, this request gets the PDP attribute providers of domain ``iMnxv7sDEeWFwqVFFMDLTQ``::
 
- GET /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/attributeProviders HTTP/1.1 Accept: application/xml; charset=UTF-8
+ GET /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/attributeProviders 
+ HTTP/1.1 
+ Accept: application/xml; charset=UTF-8
 
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
-
- <ns4:attributeProviders
- xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/4">
+ <ns4:attributeProviders xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/4">
    ...
  </ns4:attributeProviders>
 
@@ -673,78 +714,86 @@ Policy Decision API
 -------------------
 
 The PDP API returns an authorization decision based on the currently enforced policy, access control attributes provided
-in the request and possibly other attributes resolved by the PDP itself. The Authorization decision is typically Permit
-or Deny. The PDP is able to resolve extra attributes not provided directly in the request, such as the current
+in the request and possibly other attributes resolved by the PDP itself. The Authorization decision is typically ``Permit``
+or ``Deny``. The PDP is able to resolve extra attributes not provided directly in the request, such as the current
 date/time (environment attribute).
 
 The PDP provides an HTTP RESTful API for requesting authorization decisions. The HTTP request must be formatted as
 follows:
 
 * Method: POST
-* Path: /domains/{domainId}/pdp
+* Path: ``/domains/{domainId}/pdp``
 * Headers:
 
-    * Content-Type: application/xml; charset=UTF-8
-    * Accept: application/xml; charset=UTF-8
+    * Content-Type: ``application/xml; charset=UTF-8``
+    * Accept: ``application/xml; charset=UTF-8``
+    
 * Body: XACML Request as defined in the XACML 3.0 schema.
 
 The HTTP response body is a XACML Response as defined in the XACML 3.0 schema.
 
 Example of request given below::
 
- POST /domains/iMnxv7sDEeWFwqVFFMDLTQ/pdp HTTP/1.1 Host: 127.0.0.1:8080 Accept: application/xml; charset=UTF-8
- Accept-Encoding: gzip, deflate Connection: keep-alive Content-Type: application/xml; charset=UTF-8 Content-Length: 954
+ POST /domains/iMnxv7sDEeWFwqVFFMDLTQ/pdp 
+ HTTP/1.1 
+ Accept: application/xml; charset=UTF-8
+ Content-Type: application/xml; charset=UTF-8
 
  <?xml version='1.0' encoding='UTF-8' standalone='yes'?> 
-
- <Request
- xmlns='urn:oasis:names:tc:xacml:3.0:core:schema:wd-17' 
-  CombinedDecision="false" ReturnPolicyIdList="false"> <Attributes 
-   Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"> <Attribute
+ <Request xmlns='urn:oasis:names:tc:xacml:3.0:core:schema:wd-17' 
+  CombinedDecision="false" ReturnPolicyIdList="false"> 
+  <Attributes 
+   Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"> 
+   <Attribute
    AttributeId='urn:oasis:names:tc:xacml:1.0:subject:subject-id'
     IncludeInResult="false"> <AttributeValue 
      DataType='http://www.w3.org/2001/XMLSchema#string'>joe</AttributeValue>
-   </Attribute> <Attribute AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" 
+   </Attribute> 
+   <Attribute AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" 
     IncludeInResult="false"> <AttributeValue 
      DataType='http://www.w3.org/2001/XMLSchema#string'>Manager</AttributeValue>
    </Attribute>
-  </Attributes> <Attributes 
+  </Attributes> 
+  <Attributes 
    Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"> <Attribute
    AttributeId='urn:oasis:names:tc:xacml:1.0:resource:resource-id'
     IncludeInResult="false"> <AttributeValue 
      DataType='http://www.w3.org/2001/XMLSchema#string'>MissionManagementApp</AttributeValue>
-   </Attribute> <Attribute 
-    AttributeId='urn:thales:xacml:2.0:resource:sub-resource-id' IncludeInResult="false"> <AttributeValue
+   </Attribute> 
+   <Attribute 
+    AttributeId='urn:thales:xacml:2.0:resource:sub-resource-id' IncludeInResult="false"> 
+    <AttributeValue
     DataType='http://www.w3.org/2001/XMLSchema#string'>Team</AttributeValue>
    </Attribute>
-  </Attributes> <Attributes 
+  </Attributes> 
+  <Attributes 
    Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"> <Attribute
    AttributeId='urn:oasis:names:tc:xacml:1.0:action:action-id'
-    IncludeInResult="false"> <AttributeValue 
+    IncludeInResult="false"> 
+    <AttributeValue 
      DataType='http://www.w3.org/2001/XMLSchema#string'>manage</AttributeValue>
    </Attribute>
-  </Attributes> <Attributes 
+  </Attributes> 
+  <Attributes 
    Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment" />
  </Request>
 
 Response::
 
- HTTP/1.1 200 OK Content-Type: application/xml; charset=UTF-8
+ HTTP/1.1 200 OK 
+ Content-Type: application/xml; charset=UTF-8
 
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
-
- <ns1:Response
- xmlns:ns1="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ...>
+ <ns1:Response xmlns:ns1="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ...>
     <ns1:Result>
         <ns1:Decision>Permit</ns1:Decision>
     </ns1:Result>
  </ns1:Response>
 
-*NB: the namespace prefix of the ``Response`` element - ``ns1`` in this example - might be different from a run time to 
-
-another (e.g. ``ns2`` instead), but it is always the same XML element as the prefix is always mapped to
-``urn:oasis:names:tc:xacml:3.0:core:schema:wd-17`` (XACML 3.0 namespace). Therefore, any valid (namespace-aware) XML
-parser will handle it equally, no matter what the namespace prefix is.*
+*Note for developers parsing XML manually or with namespace-UNaware parsers: the namespace prefix of the* ``Response`` *element -* ``ns1``
+*in this example - might vary from a run time to another, but it is always the same XML element as the prefix is always mapped to*
+``urn:oasis:names:tc:xacml:3.0:core:schema:wd-17``
+*(XACML 3.0 namespace). Therefore, any valid (namespace-aware) XML parser will handle it equally, no matter what the namespace prefix is.*
 
 Integration with the IdM and PEP Proxy GEs (e.g. for OAuth)
 -----------------------------------------------------------
