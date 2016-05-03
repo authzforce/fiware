@@ -529,13 +529,17 @@ The policy is now enforced by the PDP as described in the next section.
 
 Attribute Providers
 +++++++++++++++++++
-The API allows to manage PDP attribute providers. These are PDP extensions that enable the PDP to get attributes from
-other sources than PEPs' requests. Such sources may be remote services, databases, etc. AuthZForce does not provide
-attribute providers out of the box, but allows you to plug in your own custom-made one(s). The next section describes
-the process to make your own attribute provider, and how to plug it into AuthZForce.
 
-Making and integrating an Attribute Provider
-############################################
+The API allows to manage PDP attribute providers. These are PDP extensions that enable the PDP to get attributes from
+other sources than PEPs' requests. Such sources may be remote services, databases, etc. The AuthZForce Server distribution does not provide
+attribute providers out of the box, but allows you to plug in custom-made one(s) from your own invention or from third parties. 
+The AuthZForce project also provides a separate Attribute Provider example, for testing and documentation purposes only.
+If you wish to make your own attribute provider, read on the next section.
+If you wish to test the example provided by AuthZForce or have another one ready for use, you may jump to the section `Integrating an Attribute Provider into AuthZForce Server`_.
+
+Making an Attribute Provider
+############################
+The steps to make your own PDP Attribute Provider extension for AuthZForce go as follows:
 
 #. Create a Maven project with ``jar`` packaging type.
 
@@ -627,21 +631,36 @@ Making and integrating an Attribute Provider
    `example from Authzforce source code <https://github.com/authzforce/core/blob/release-3.7.0/src/test/resources/META-INF/services/org.ow2.authzforce.core.pdp.api.PdpExtension>`_.
    
 
-#. Run Maven ``package`` to produce a JAR from the Maven project, and make this JAR - and any extra dependency -
-   visible from the AuthZForce webapp in Tomcat. One way to do it consists to copy the JAR into
-   ``/opt/authzforce-ce-server/webapp/WEB-INF/lib``. For other ways, please refer to
+#. Run Maven ``package`` to produce a JAR from the Maven project.
+
+Now you have an Attribute Provider extension ready for integration into AuthZForce Server, as explained in the next section.
+
+
+.. _Integrating_an_Attribute_Provider_into_AuthZForce_Server:
+
+Integrating an Attribute Provider into AuthZForce Server
+########################################################
+
+This section assumes you have an Attribute Provider extension in form of a JAR, typically produced by the process in the previous section. 
+You may use AuthZForce Test Attribute Provider JAR if you only wish to test the examples in this documentation. 
+This JAR is available on `Maven Central <http://search.maven.org/>`_ with the following artifact information: 
+groupId ``org.ow2.authzforce``, artifactId ``authzforce-ce-core``, version ``3.7.0``, packaging ``jar``, classifier ``tests``.
+
+The steps to integrate the extension into the AuthZForce Server go as follows:
+
+#. Make the JAR - and any extra dependency - visible from the AuthZForce webapp in Tomcat. One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-3.7.0-tests.jar`` in our example) 
+   into ``/opt/authzforce-ce-server/webapp/WEB-INF/lib``. For other ways, please refer to
    `Tomcat HowTo <http://wiki.apache.org/tomcat/HowTo#How_do_I_add_JARs_or_classes_to_the_common_classloader_without_adding_them_to_.24CATALINA_HOME.2Flib.3F>`_.
 
-#. Import your attribute provider XML schema in XML schema file
-   ``/opt/authzforce-ce-server/conf/authzforce-ext.xsd``, using ``namespace`` only (no ``schemaLocation``), like in the
-   `example from Authzforce code <https://github.com/authzforce/server/blob/release-4.4.1/rest-service/src/test/resources/server/conf/authzforce-ext.xsd>`_
+#. Import your attribute provider XML schema in the XML schema file ``/opt/authzforce-ce-server/conf/authzforce-ext.xsd``, using ``namespace`` **only** (no ``schemaLocation``), like in 
+   the `example from Authzforce code <https://github.com/authzforce/server/blob/release-4.4.1/rest-service/src/test/resources/server/conf/authzforce-ext.xsd>`_
    with this schema import for Authzforce ``TestAttributeProvider``::
 
     <xs:import namespace="http://authzforce.github.io/core/xmlns/test/3" />
 
 #. Add a ``uri`` element to XML catalog file ``/opt/authzforce-ce-server/conf/catalog.xml``, with your attribute
-   Provider XML namespace as ``name`` attribute value, and, as ``uri`` attribute value, the location of your XML schema
-   file within the JAR, prefixed by ``classpath:``. For example, in the
+   Provider XML namespace as ``name`` attribute value, and, the location of your XML schema
+   file within the JAR, as ``uri`` attribute value, prefixed by ``classpath:``. For example, in the
    `sample XML catalog from Authzforce source code <https://github.com/authzforce/server/blob/release-4.4.1/rest-service/src/test/resources/server/conf/catalog.xml>`_,
    we add the following line for Authzforce ``TestAttributeProvider``::
 
@@ -692,7 +711,7 @@ testing and documentation purposes, it is not available in a default installatio
   </attributeProvider>
  </ns4:attributeProviders>
 
-The response is the new attribute provider configuration we just dit.
+The response is the new attribute provider configuration from the request.
 
 In this second example, we disable all PDP attribute providers of domain ``iMnxv7sDEeWFwqVFFMDLTQ`` by sending an empty
 element::
