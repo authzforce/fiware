@@ -835,8 +835,7 @@ Software Libraries for clients of AuthZForce or other Authorization PDP GEis
 ----------------------------------------------------------------------------
 The full API (RESTful) is described by a document written in the Web Application Description Language format (WADL) and
 associated XML schema files available in
-`the source release of Github project 'rest-api-model' <https://github.com/authzforce/rest-api-model/tree/release-4.3.0>`_,
-more specifically in file ``src/main/resources/authz-api.wadl``. Therefore, you can use any WADL-supporting REST
+`Authzforce rest-api-model project files <https://github.com/authzforce/rest-api-model/tree/release-4.3.0/src/main/resources>`_. Therefore, you can use any WADL-supporting REST
 framework for clients; for instance in Java: Jersey, Apache CXF. From that, you can use WADL-to-code generators to
 generate your client code. For example in Java, 'wadl2java' tools allow to generate code for JAX-RS compatible
 frameworks such as Apache CXF and Jersey. Actually, we can provide a CXF-based Java library created with this tool to
