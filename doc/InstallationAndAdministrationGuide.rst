@@ -20,7 +20,6 @@ System Requirements
 
 Installation
 ============
-If you are still using AuthZForce 4.2.0 and want to upgrade, please proceed with the *Minimal setup* below, to install the new version; then the *Upgrade* section that follows, to transfer data from the old version.
 
 Minimal setup
 -------------
@@ -42,9 +41,6 @@ Note that Tomcat default configuration may specify a very low value for the Java
 | ``$ sudo sed -i "s/-Xmx128m/-Xmx1024m/" /etc/default/tomcat``
 | ``$ sudo service tomcat7 restart``
 
-Upgrade
--------
-If you are still using AuthZForce 4.2.0 and wish to upgrade, please follow the instructions from `the upgrader tool project <https://github.com/authzforce/server/tree/release-4.4.1/upgrader/src/main/README.md>`_.
 
 Advanced setup
 --------------
