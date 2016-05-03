@@ -135,7 +135,8 @@ request the API-defined ID corresponding to a given externalId as follows::
  
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
  <ns2:resources 
-     xmlns:ns2="http://authzforce.github.io/rest-api-model/xmlns/authz/4" xmlns:ns3="http://www.w3.org/2005/Atom">
+     xmlns:ns2="http://authzforce.github.io/rest-api-model/xmlns/authz/4" 
+     xmlns:ns3="http://www.w3.org/2005/Atom">
      <ns3:link rel="item" href="iMnxv7sDEeWFwqVFFMDLTQ" title="iMnxv7sDEeWFwqVFFMDLTQ"/>
  </ns2:resources> 
 
@@ -173,7 +174,8 @@ Example of request given below::
 
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
  <PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicySetId="P1"
-  Version="1.0" PolicyCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:deny-unless-permit">
+  Version="1.0" 
+  PolicyCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:deny-unless-permit">
   <Description>Sample PolicySet</Description> 
   <Target /> 
   <Policy PolicyId="MissionManagementApp" Version="1.0"
@@ -204,7 +206,8 @@ Example of request given below::
          DataType="http://www.w3.org/2001/XMLSchema#string">Team</AttributeValue>
         <AttributeDesignator 
          Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
-         AttributeId="urn:thales:xacml:2.0:resource:sub-resource-id" DataType="http://www.w3.org/2001/XMLSchema#string"
+         AttributeId="urn:thales:xacml:2.0:resource:sub-resource-id" 
+         DataType="http://www.w3.org/2001/XMLSchema#string"
          MustBePresent="true" />
        </Match>
       </AllOf>
@@ -215,7 +218,8 @@ Example of request given below::
          DataType="http://www.w3.org/2001/XMLSchema#string">manage</AttributeValue>
         <AttributeDesignator 
          Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
-         AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"
+         AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" 
+         DataType="http://www.w3.org/2001/XMLSchema#string"
          MustBePresent="true" />
        </Match>
       </AllOf>
@@ -272,7 +276,8 @@ The response is the list of links to the versions of the policy available in the
  
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
  <ns2:resources 
-   xmlns:ns2="http://authzforce.github.io/rest-api-model/xmlns/authz/4" xmlns:ns3="http://www.w3.org/2005/Atom">
+   xmlns:ns2="http://authzforce.github.io/rest-api-model/xmlns/authz/4" 
+   xmlns:ns3="http://www.w3.org/2005/Atom">
      <ns3:link rel="item" href="1.0"/> 
      <ns3:link rel="item" href="1.1"/> 
      <ns3:link rel="item" href="2.0"/>
@@ -313,7 +318,8 @@ For example::
  
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
  <ns2:resources 
-   xmlns:ns2="http://authzforce.github.io/rest-api-model/xmlns/authz/4" xmlns:ns3="http://www.w3.org/2005/Atom">
+   xmlns:ns2="http://authzforce.github.io/rest-api-model/xmlns/authz/4" 
+   xmlns:ns3="http://www.w3.org/2005/Atom">
      <ns3:link rel="item" href="root"/> 
      <ns3:link rel="item" href="P1"/> 
      <ns3:link rel="item" href="P2"/> 
@@ -390,7 +396,8 @@ In order to create this role hierarchy, we first add the Employee's *Permission 
      <AnyOf>
       <AllOf>
        <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
-        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">https://acme.com/tickets</AttributeValue>
+        <AttributeValue 
+         DataType="http://www.w3.org/2001/XMLSchema#string">https://acme.com/tickets</AttributeValue>
         <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
          AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
          DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
@@ -402,7 +409,8 @@ In order to create this role hierarchy, we first add the Employee's *Permission 
         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">POST</AttributeValue>
         <AttributeDesignator 
          Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
-         AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"
+         AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" 
+         DataType="http://www.w3.org/2001/XMLSchema#string"
          MustBePresent="true" />
        </Match>
       </AllOf>
@@ -437,7 +445,8 @@ policy more, so more permissions::
         DataType="http://www.w3.org/2001/XMLSchema#string">Employee</AttributeValue>
        <AttributeDesignator 
         Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
-        AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" DataType="http://www.w3.org/2001/XMLSchema#string"
+        AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" 
+        DataType="http://www.w3.org/2001/XMLSchema#string"
         MustBePresent="true" />
       </Match>
      </AllOf>
@@ -455,7 +464,8 @@ policy more, so more permissions::
        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Manager</AttributeValue>
        <AttributeDesignator 
         Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
-        AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" DataType="http://www.w3.org/2001/XMLSchema#string"
+        AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" 
+        DataType="http://www.w3.org/2001/XMLSchema#string"
         MustBePresent="true" />
       </Match>
      </AllOf>
@@ -471,7 +481,8 @@ policy more, so more permissions::
       <AnyOf>
        <AllOf>
         <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
-         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">https://acme.com/projects</AttributeValue>
+         <AttributeValue 
+          DataType="http://www.w3.org/2001/XMLSchema#string">https://acme.com/projects</AttributeValue>
          <AttributeDesignator 
           Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
           AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
@@ -493,7 +504,8 @@ policy more, so more permissions::
      </Target>
     </Rule>
    </Policy> 
-   <!-- This role is senior to the Employee role, therefore includes the Employee role Permission PolicySet -->
+   <!-- This role is senior to the Employee role, therefore includes the Employee role Permission 
+    PolicySet -->
    <PolicySetIdReference>PPS:Employee</PolicySetIdReference>
   </PolicySet>
  </PolicySet>
@@ -666,12 +678,15 @@ testing and documentation purposes, it is not available in a default installatio
   xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/4"
   xmlns:ns3="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"> 
   <attributeProvider 
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="http://authzforce.github.io/core/xmlns/test/3"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+   xmlns:ns5="http://authzforce.github.io/core/xmlns/test/3"
    xsi:type="ns5:TestAttributeProvider" id="test"> 
    <ns3:Attributes
    Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
-    <ns3:Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:example:attribute:role" IncludeInResult="false">
-     <ns3:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Physician</ns3:AttributeValue>
+    <ns3:Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:example:attribute:role" 
+     IncludeInResult="false">
+     <ns3:AttributeValue 
+      DataType="http://www.w3.org/2001/XMLSchema#string">Physician</ns3:AttributeValue>
     </ns3:Attribute>
    </ns3:Attributes>
   </attributeProvider>
