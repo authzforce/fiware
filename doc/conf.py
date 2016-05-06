@@ -68,7 +68,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'AuthZForce'
+project = u'AuthZForce CE'
 copyright = u'2015-2016, Thales Services'
 author = u'Cyril Dangerville, Thales Services'
 
@@ -246,7 +246,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc, 'AuthZForce.tex', u'AuthZForce Documentation',
+  (master_doc, 'AuthZForce.tex', u'AuthZForce CE Documentation',
    u'Cyril Dangerville, Thales Services', 'manual'),
 ]
 
@@ -276,7 +276,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'authzforce', u'AuthZForce Documentation',
+    (master_doc, 'authzforce', u'AuthZForce CE Documentation',
      [author], 1)
 ]
 
@@ -290,8 +290,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'AuthZForce', u'AuthZForce Documentation',
-   author, 'AuthZForce', 'One line description of project.',
+  (master_doc, 'AuthZForce CE', u'AuthZForce CE Documentation',
+   author, 'AuthZForce CE', 'AuthZForce Community Edition',
    'Miscellaneous'),
 ]
 
