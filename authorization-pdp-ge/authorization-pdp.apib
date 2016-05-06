@@ -2,8 +2,8 @@ FORMAT: 1A
 HOST: http://authzforce.github.io/fiware-authorization-pdp/api/v2/
 TITLE: FIWARE Authorization PDP API Specification
 DATE: 15 January 2016
-VERSION: 4.4
-PREVIOUS_VERSION: 4.3
+VERSION: 5.1
+PREVIOUS_VERSION: 4.4
 APIARY_PROJECT: authzforce-ce
 
 # Abstract
@@ -35,7 +35,10 @@ The FIWARE Authorization PDP API specification defines a RESTful API of an Autho
 * Requesting authorization decisions based on those policies, in a XACML-compliant request-response format;
 * Managing multiple PDPs, one per domain (aka tenant), in order to provide multi-tenancy.
 
-This APIARY blueprint gives a user-friendly description of the API. However, the official API reference for a specific release is available in a WADL (Web Application Description Language) and XML schema files on the [catalogue entry](http://catalogue.fiware.org/enablers/authorization-pdp-authzforce/downloads). From this WADL (and associated XSD files), you can generate code automatically for various languages, e.g. Apache CXF's WADL2Java plugin for Java.
+This APIARY blueprint gives a user-friendly description of the API. 
+However, the official API reference for a specific release is available in a WADL (Web Application Description Language) 
+and XML schema files on the [catalogue entry](http://catalogue.fiware.org/enablers/authorization-pdp-authzforce/downloads). 
+From this WADL (and associated XSD files), you can generate code automatically for various languages, e.g. Apache CXF's WADL2Java plugin for Java.
 
 ## Conformance
 
@@ -45,19 +48,27 @@ All the interfaces described by this specification are mandatory and must be imp
 
 ### Policy and PolicySet
 
- A *Policy* is a set of *Rules*, and a *PolicySet* is a set of *Policy* elements. A *Rule* consists of a condition on the access request attributes, and a decision – *Permit* or *Deny* - to apply if the condition holds true for the request. A *Policy* (resp. *PolicySet*) combines multiple *Rules* (resp. *Policies*) and therefore multiple decisions together in various ways (defined in the standard) to make the final decision. 
+A *Policy* is a set of *Rules*, and a *PolicySet* is a set of *Policy* elements. 
+A *Rule* consists of a condition on the access request attributes, and a decision – *Permit* or *Deny* - to apply if the condition holds true for the request. 
+A *Policy* (resp. *PolicySet*) combines multiple *Rules* (resp. *Policies*) and therefore multiple decisions together in various ways (defined in the standard) to make the final decision. 
 
 ### PDP (Policy Decision Point)
 
-The PDP provides authorization decisions based on various attributes given at runtime by PEPs (Policy Enforcement Points) about each incoming access request, and XACML policies that define multiple rules checking whether those attributes (and therefore the access request) satisfy certain conditions. The attributes provided by the PEP (see below) about each access request may be attributes about the request itself: The request URL, the HTTP method; about the requester: The access requester ID, requester role. The PDP may add attributes to the context on its own, such as the current date and time when the requested is received. By replacing all the attribute references in the policy with these input values, PDP is able to evaluate the policy and determine whether the access should be granted. 
+The PDP provides authorization decisions based on various attributes given at runtime by PEPs (Policy Enforcement Points) about each incoming access request, 
+and XACML policies that define multiple rules checking whether those attributes (and therefore the access request) satisfy certain conditions. 
+The attributes provided by the PEP (see below) about each access request may be attributes about the request itself: The request URL, the HTTP method; 
+about the requester: The access requester ID, requester role. The PDP may add attributes to the context on its own, such as the current date and time when the requested is received. 
+By replacing all the attribute references in the policy with these input values, PDP is able to evaluate the policy and determine whether the access should be granted. 
 
 ### PAP (Policy Administration Point)
 
-The PAP provides an interface for policy administrators to manage XACML policies to be enforced by the PDP. This endpoint is provided by the Authorization PDP GE as well as a RESTful API interface. The IdM GE also provides a form of graphical interface for the PAP, as part of its access management feature. This feature actually uses the Authorization PDP GE’s PAP API as backend. 
+The PAP provides an interface for policy administrators to manage XACML policies to be enforced by the PDP. This endpoint is provided by the Authorization PDP GE as well as a RESTful API interface. 
+The IdM GE also provides a form of graphical interface for the PAP, as part of its access management feature. This feature actually uses the Authorization PDP GE’s PAP API as backend. 
 
 ### Domain
 
-The API is designed to be multi-tenant, i.e. it allows users or organizations to work on authorization policies in complete isolation from each other. In this document, we use the term *domain* instead of *tenant*. In this context, a domain mostly consists of a specific dedicated PDP with specific policies. We may use the terms *domain*, *administration domain* and *policy administration domain* interchangeably in this document. 
+The API is designed to be multi-tenant, i.e. it allows users or organizations to work on authorization policies in complete isolation from each other. In this document, we use the term *domain* instead of *tenant*. 
+In this context, a domain mostly consists of a specific dedicated PDP with specific policies. We may use the terms *domain*, *administration domain* and *policy administration domain* interchangeably in this document. 
 
 # REST API
 
@@ -65,11 +76,12 @@ The API is designed to be multi-tenant, i.e. it allows users or organizations to
 Policy administration domains.
 
 ## Add domain [POST]
-Create a new administration domain with defined properties, including one called `externalId`. We use the same definition for this property as in the [SCIM schema, § 3.1](https://tools.ietf.org/html/rfc7643#section-3.1). The response is the relative link to the REST resource created for the domain with a unique (opaque) ID assigned by the service.
+Create a new administration domain with defined properties, including one called `externalId`. We use the same definition for this property as in the [SCIM schema, § 3.1](https://tools.ietf.org/html/rfc7643#section-3.1).
+The response is the relative link to the REST resource created for the domain with a unique (opaque) ID assigned by the service.
 
 + Request (application/xml)
 
-        <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/4" 
+        <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
             externalId="my.test.domain">
             <description>This is a test domain.</description>
         </domainProperties>
@@ -86,7 +98,7 @@ Retrieve links to domains.
 
 + Response 200 (application/xml)
 
-        <resources xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/4" xmlns:atom="http://www.w3.org/2005/Atom"> 
+        <resources xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:atom="http://www.w3.org/2005/Atom"> 
             <atom:link rel="item" href="1234ABCD" title="1234ABCD"/>
         </resources>
 
@@ -101,7 +113,7 @@ Delete the domain.
 
 + Response 200 (application/xml)
 
-        <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/4" 
+        <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
             externalId="my.test.domain">
             <description>This is a test domain.</description>
         </domainProperties>
@@ -114,14 +126,14 @@ Update the properties of the domain. In this example, we change the `externalId`
 
 + Request (application/xml)
 
-        <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/4" 
+        <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
             externalId="my.test.domain0">
             <description>This is a test domain and I want to use it.</description>
         </domainProperties>
 
 + Response 200 (application/xml)
 
-        <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/4" 
+        <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
             externalId="my.test.domain0">
             <description>This is a test domain and I want to use it.</description>
         </domainProperties>
@@ -131,7 +143,7 @@ Get the properties of the domain.
 
 + Response 200 (application/xml)
 
-        <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/4" 
+        <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
             externalId="my.test.domain0">
             <description>This is a test domain and I want to use it.</description>
         </domainProperties>
@@ -140,7 +152,10 @@ Get the properties of the domain.
 Policy Administration Point interface to manage the policies of the domain.
 
 ## Add/update a policy [POST]
-Add/update a policy (XACML `PolicySet`) in the domain. The response is the relative link to the REST resource created for the policy version. If there is no existing policy with a `PolicySetId` matching the one in the request, this adds a new policy resource. If a policy exists with same `PolicySetId` but a different `Version`, this adds a new resource for this new policy version under the policy resource. If a policy exists with the same `PolicySetId` and `Version`, this must raise a conflict error and the operation must be canceled.
+Add/update a policy (XACML `PolicySet`) in the domain. The response is the relative link to the REST resource created for the policy version. 
+If there is no existing policy with a `PolicySetId` matching the one in the request, this adds a new policy resource. 
+If a policy exists with same `PolicySetId` but a different `Version`, this adds a new resource for this new policy version under the policy resource. 
+If a policy exists with the same `PolicySetId` and `Version`, this must raise a conflict error and the operation must be canceled.
 
 + Request (application/xml)
 
@@ -155,7 +170,7 @@ Get the list of domain's policies. The response is the list of links to all poli
 
 + Response 200 (application/xml)
 
-        <resources xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/4" xmlns:atom="http://www.w3.org/2005/Atom"> 
+        <resources xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:atom="http://www.w3.org/2005/Atom"> 
             <atom:link rel="item" href="P1" title="P1"/>
             <atom:link rel="item" href="P1" title="P2"/>
             ...
@@ -173,7 +188,7 @@ Get the policy, i.e. the links to all versions of the policy.
 
 + Response 200 (application/xml)
 
-        <resources xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/4" xmlns:atom="http://www.w3.org/2005/Atom"> 
+        <resources xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:atom="http://www.w3.org/2005/Atom"> 
             <atom:link rel="item" href="1.0" title="1.0"/>
             <atom:link rel="item" href="1.1" title="1.1"/>
             <atom:link rel="item" href="2.0" title="2.0"/>
@@ -185,7 +200,7 @@ Delete the policy, i.e. all policy versions. The response is the list of all the
 
 + Response 200 (application/xml)
 
-        <resources xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/4" xmlns:atom="http://www.w3.org/2005/Atom"> 
+        <resources xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:atom="http://www.w3.org/2005/Atom"> 
             <atom:link rel="item" href="1.0" title="1.0"/>
             <atom:link rel="item" href="1.1" title="1.1"/>
             <atom:link rel="item" href="2.0" title="2.0"/>

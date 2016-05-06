@@ -1,16 +1,16 @@
 #!/bin/bash -ex
 # As a guideline to do an unattended installation, see http://www.microhowto.info/howto/perform_an_unattended_installation_of_a_debian_package.html
-# The script is aborted if any command fails. If it is OK that a comand fails,
-# use ./mycomand || true
+# The script is aborted if any command fails. If it is OK that a command fails,
+# use ./mycommand || true
 
 export DEBIAN_FRONTEND=noninteractive
 sudo -E apt-get update --assume-yes -qq
 sudo -E apt-get install --assume-yes -qq gdebi curl debconf-utils
-sudo curl --silent --remote-name --location http://authzforce.github.io/fiware/dist/authzforce_latest_all.deb
+sudo curl --silent --remote-name --location http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/5.1.2/authzforce-ce-server-dist-5.1.2.deb
 # Prevent Tomcat restart before change to JAVA_OPTS applied later
 sudo bash -c "echo authzforce-ce-server	authzforce-ce-server/restartTomcat	boolean	false | debconf-set-selections"
 sudo bash -c "echo authzforce-ce-server	authzforce-ce-server/keepSamples	boolean	true | debconf-set-selections"
-sudo -E gdebi --quiet --non-interactive authzforce_latest_all.deb
+sudo -E gdebi --quiet --non-interactive authzforce-ce-server-dist-5.1.2.deb
 
 # FIX issue with Tomcat (very) slow startup on Linux KVM since kernel 3.13:
 # https://ask.openstack.org/en/question/51617/launching-apache-tomcat-inside-vm-takes-up-to-47-minutes/
