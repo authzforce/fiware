@@ -714,9 +714,9 @@ The steps to make your own PDP Attribute Provider extension for AuthZForce go as
    ``org.ow2.authzforce.core.xmlns.test.TestAttributeProvider``. In your case and in general, we will refer to it as your
    *Attribute Provider Model Class*.
 
-#. Create your Attribute Provider factory and concrete implementation class (as in the *Factory* design pattern). The Java class must extend
+#. Create your Attribute Provider factory and concrete implementation class (as in the *Factory* design pattern). The Java class must be public, and extend
    ``org.ow2.authzforce.core.pdp.api.CloseableAttributeProviderModule.FactoryBuilder<APM>``, where ``APM`` stands for
-   your *Attribute Provider Model Class*. You may use the
+   your *Attribute Provider Model Class*; and the class must have a public no-argument constructor or no constructor. You may use the
    `AuthZForce TestAttributeProviderModule class <https://github.com/authzforce/core/blob/release-3.8.3/src/test/java/org/ow2/authzforce/core/test/utils/TestAttributeProviderModule.java>`_
    (used for AuthZForce unit tests only) as an example. In this example, the static nested class ``Factory`` is the one
    extending ``CloseableAttributeProviderModule.FactoryBuilder<TestAttributeProvider>``. Such a class has a factory
