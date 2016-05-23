@@ -46,7 +46,8 @@ For example, for Ubuntu 12.04, Tomcat default ``Xmx`` used to be 128m. You can f
  
  $ sudo sed -i "s/-Xmx128m/-Xmx1024m/" /etc/default/tomcat
  $ sudo service tomcat7 restart
-
+ 
+**Known issue: lack of entropy may cause delays in Tomcat 7+ start up on virtual machines in particular: [more info on Entropy Source issue](https://wiki.apache.org/tomcat/HowTo/FasterStartUp#Entropy_Source). So beware.**
 
 Upgrade
 -------
