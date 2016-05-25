@@ -140,7 +140,7 @@ Policy Administration API
 
 The PAP is used by policy administrators to manage the policy repository from which the PDP loads the enforced policies.
 The PAP supports multi-tenancy in the form of generic administration domains that are separate from each other. Each
-policy administrsator (except the Superadmin) is in fact a domain administrator, insofar as he is allowed to manage the
+policy administrator (except the Superadmin) is in fact a domain administrator, insofar as he is allowed to manage the
 policy for one or more specific domains. Domains are typically used to support isolation of tenants (one domain per
 tenant).
 
