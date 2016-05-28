@@ -21,7 +21,7 @@ System Requirements
 
 Installation
 ============
-If you are still using AuthZForce 4.2.0 and want to upgrade, please proceed with the `Minimal setup`_ below, to install the new version; then the `Upgrade`_ section that follows, to transfer data from the old version.
+If you are still using a R4 version (4.2.x, 4.3.x or 4.4.x) of AuthZForce and wish to upgrade, please proceed with the `Minimal setup`_ below, to install the new version; then the `Upgrade`_ section that follows, to transfer data from the old version.
 
 Minimal setup
 -------------
@@ -51,7 +51,7 @@ For example, for Ubuntu 12.04, Tomcat default ``Xmx`` used to be 128m. You can f
 
 Upgrade
 -------
-If you are still using AuthZForce 4.2.0 and wish to upgrade, please download AuthZForce server `upgrader tool 
+If you are still using a R4 version (4.2.x, 4.3.x or 4.4.x) of AuthZForce and wish to upgrade, please download AuthZForce server `upgrader tool 
 distribution <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-upgrader/5.1.2/authzforce-ce-server-upgrader-5.1.2.tar.gz>`_ and follow the instructions from 
 the `upgrader tool README <https://github.com/authzforce/server/blob/release-5.1.2/upgrader/src/README.md>`_, starting with step 3. You may also find the ``README`` inside the downloaded ``tar.gz`` file itself.
 
@@ -158,11 +158,11 @@ You create a domain by doing a HTTP POST request with XML payload to URL: ``http
 You can do it with ``curl`` tool::
 
  $ export domainProperties="<?xml version="1.0" encoding="UTF-8" standalone="yes"?> \
-   <ns4:domainProperties \ 
-     xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/5" \
+   <domainProperties \ 
+     xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" \
      externalId="external0"> \
      <description>This is my domain</description> \
-   </ns4:domainProperties>"
+   </domainProperties>"
  
  $ curl --verbose --request POST \ 
    --header "Content-Type: application/xml;charset=UTF-8" \
@@ -463,4 +463,4 @@ For Tomcat and JVM tuning, we strongly recommend reading and applying - when rel
 * `How to optimize tomcat performance in production <http://www.genericarticles.com/mediawiki/index.php?title=How_to_optimize_tomcat_performance_in_production>`_;
 * `Apache Tomcat Tuning Guide for REST/HTTP APIs <https://javamaster.wordpress.com/2013/03/13/apache-tomcat-tuning-guide/>`_.
 
-Last but not least, consider tuning the OS, hardware, network, using load-balancing, high-availability solutions, and so on.
+Last but not least, consider tuning the OS, hardware (CPU, RAM...), network, using load-balancing, high-availability solutions, and so on.
