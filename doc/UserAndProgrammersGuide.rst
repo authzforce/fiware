@@ -6,13 +6,14 @@ AuthZForce is the reference implementation of the Authorization PDP GE. In this 
 XACML-based access control policies and provide authorization decisions based on such policies and the context of a
 given access request. This guide explains how to use the API.
 
-**If you have been using a previous version of AuthZForce, check the** `release notes <https://github.com/authzforce/server/blob/release-5.1.2/CHANGELOG.md#512>`_ **
-to know what is changed and what is new.**
+**If you have been using a previous version of AuthZForce, check the** 
+`release notes <https://github.com/authzforce/server/blob/release-5.2.0/CHANGELOG.md#512>`_ 
+**to know what is changed and what is new.**
 
 Background and Detail
 =====================
 
-This User and Programmers Guide relates to the reference implementation of the Authorization PDP GE which is part of
+This User and Programmers Guide applies to the reference implementation of the Authorization PDP GE which is part of
 `FIWARE Security Architecture <https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/Security_Architecture>`_.
 Please find more information about this Generic Enabler in the following
 `Open Specification <http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FIWARE.OpenSpecification.Security.AuthorizationPDP_R4>`_.
@@ -38,7 +39,7 @@ AuthZForce provides the following APIs:
 
 The full API (RESTful) is described by a document written in the Web Application Description Language format (WADL) and
 associated XML schema files available in
-`Authzforce rest-api-model project files <https://github.com/authzforce/rest-api-model/tree/release-5.1.2/src/main/resources>`_.
+`Authzforce rest-api-model project files <https://github.com/authzforce/rest-api-model/tree/release-5.2.0/src/main/resources>`_.
 
 XACML is the main international OASIS standard for access control language and request-response formats, that addresses
 most use cases of access control. AuthZForce supports the full core XACML 3.0 language; therefore it allows to enforce
@@ -546,7 +547,7 @@ Administrators (global or domain-specific) may configure the policy repository w
  * ``maxPolicyCount``: optional, stricly positive integer that indicates the maximum number of policies on a domain, no limit if undefined.
  * ``maxVersionCountPerPolicy``: optional, stricly positive integer that indicates the maximum number of versions per policy, no limit if undefined.
  * ``versionRollingEnabled``: boolean, true if and only if policy versions should be rolled over, i.e. when ``maxVersionCountPerPolicy`` has been reached, 
- oldest versions are automatically removed to make place.
+   oldest versions are automatically removed to make place.
 
 For example, below is a HTTP GET request and response for the policy repository properties of domain ``iMnxv7sDEeWFwqVFFMDLTQ``::
 
@@ -588,15 +589,14 @@ Administrators (global or domain-specific) may configure the PDP engine with the
   to the root policy. The root policy is the policy from which the PDP starts the evaluation. 
   A policy matching this reference must exist on the domain, therefore it must have been added in the way described in `Adding and updating Policies`_.
   If there is no specific ``Version`` in the reference, the latest matching policy version is selected.  
-* ``feature``(s): optional, enables particular PDP features. Each ``feature`` has an ID, ``type`` and ``enabled`` flag saying whether the feature is enabled or not.
+* ``feature`` elements: enable particular PDP features. Each ``feature`` has an ID, ``type`` and ``enabled`` flag saying whether the feature is enabled or not.
 
 Supported PDP features (IDs) by ``type``: 
 
-* Type ``urn:ow2:authzforce:feature-type:pdp:core``: PDP core engine features, as opposed to extensions below.
+* Type ``urn:ow2:authzforce:feature-type:pdp:core``: PDP core engine features (as opposed to other types related to PDP extensions ).
 
-    * ``urn:ow2:authzforce:feature:pdp:core:strict-attribute-issuer-match``: strict matching of attribute ``Issuer``s in XACML Requests against corresponding ``AttributeDesignator`` 
-      Issuers in policies. 
-      This means that an ``<AttributeDesignator>`` without ``Issuer`` only matches request Attributes without Issuer (and same AttributeId, Category...). 
+    * ``urn:ow2:authzforce:feature:pdp:core:strict-attribute-issuer-match``: strict matching of attribute ``Issuer`` values in XACML Requests against corresponding attribute designators' ``Issuer`` values in policies. 
+      This means that an ``<AttributeDesignator>`` without ``Issuer`` only matches request Attributes without ``Issuer`` (and same AttributeId, Category...). 
       This mode is not fully compliant with 
       `XACML 3.0 Core specifcation of AttributeDesignator (§5.29) <http://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html#_Toc325047134>`_, 
       in the case that the Issuer is indeed not present on a AttributeDesignator, but it may perform better and is recommended when all AttributeDesignators have an
@@ -606,7 +606,7 @@ Supported PDP features (IDs) by ``type``:
       ``urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression``. If this feature is disabled, only 
       standard `XACML 3.0 Core datatypes <http://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html#_Toc325047233>`_ marked *M*, i.e. mandatory, 
       are supported. Since ``xpathExpression`` is optional in the standard, it is therefore not supported unless this feature is enabled. 
-      This feature is experimental and may have a negative impact on performance. Use with caution. 
+      **This feature is experimental and may have a negative impact on performance. Use with caution.** 
       
 * Type ``urn:ow2:authzforce:feature-type:pdp:request-filter``: XACML (Individual) Request filter 
   (*Individual* means that even if the XACML Multiple Decision Profile is active, the request filter applies to each *Individual* Decision Request as defined in the Profile).
@@ -619,7 +619,10 @@ Supported PDP features (IDs) by ``type``:
   However, they perform usually better than their ``-lax`` counterparts since it simplifies the Request and allows parsing optimizations by the PDP.
   Below is an example of Request that would not be accepted by a ``-strict`` request filter because of duplicate Attribute::
   
-     <Request xmlns:xacml="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ReturnPolicyIdList="false" CombinedDecision="false">
+     <Request 
+      xmlns:xacml="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" 
+      ReturnPolicyIdList="false" 
+      CombinedDecision="false">
       <Attributes Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
          <Attribute AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" IncludeInResult="false">
             <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">CSO</AttributeValue>
@@ -634,7 +637,10 @@ Supported PDP features (IDs) by ``type``:
   
   Below is the equivalent of the previous Request in a form that is accepted by a ``-strict`` request filter (no duplicate Attribute)::
   
-     <Request xmlns:xacml="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ReturnPolicyIdList="false" CombinedDecision="false">
+     <Request 
+      xmlns:xacml="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" 
+      ReturnPolicyIdList="false" 
+      CombinedDecision="false">
       <Attributes Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
          <Attribute AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" IncludeInResult="false">
             <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">CSO</AttributeValue>
@@ -675,21 +681,31 @@ Follow the example of request/response below to get the current PDP properties i
  
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
    <ns2:pdpProperties 
-      xmlns:ns2="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
-      lastModifiedTime="2016-05-28T14:21:35.730Z">
-      <feature type="urn:ow2:authzforce:feature-type:pdp:core" enabled="false">urn:ow2:authzforce:feature:pdp:core:strict-attribute-issuer-match</feature>
-      <feature type="urn:ow2:authzforce:feature-type:pdp:request-filter" enabled="true">urn:ow2:authzforce:xacml:request-filter:default-lax</feature>
-      <feature type="urn:ow2:authzforce:feature-type:pdp:request-filter" enabled="false">urn:ow2:authzforce:xacml:request-filter:default-strict</feature>
-      <feature type="urn:ow2:authzforce:feature-type:pdp:request-filter" enabled="false">urn:ow2:authzforce:xacml:request-filter:multiple:repeated-attribute-categories-strict</feature>
-      <feature type="urn:ow2:authzforce:feature-type:pdp:request-filter" enabled="false">urn:ow2:authzforce:xacml:request-filter:multiple:repeated-attribute-categories-lax</feature>
-      ...(content omitted)...
-      <rootPolicyRefExpression>root</rootPolicyRefExpression>
-      <applicablePolicies>
-         <rootPolicyRef Version="0.1.0">root</rootPolicyRef>
-         <refPolicyRef Version="1.0">PPS:Employee</refPolicyRef>
-         <refPolicyRef Version="1.0">PPS:Manager</refPolicyRef>
-         ...(content omitted)...
-      </applicablePolicies>
+    xmlns:ns2="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+    lastModifiedTime="2016-05-28T14:21:35.730Z">
+    <feature 
+     type="urn:ow2:authzforce:feature-type:pdp:core" 
+     enabled="false">urn:ow2:authzforce:feature:pdp:core:strict-attribute-issuer-match</feature>
+    <feature 
+     type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
+     enabled="true">urn:ow2:authzforce:xacml:request-filter:default-lax</feature>
+    <feature 
+     type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
+     enabled="false">urn:ow2:authzforce:xacml:request-filter:default-strict</feature>
+    <feature 
+     type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
+     enabled="false">urn:ow2:authzforce:xacml:request-filter:multiple:repeated-attribute-categories-strict</feature>
+    <feature 
+     type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
+     enabled="false">urn:ow2:authzforce:xacml:request-filter:multiple:repeated-attribute-categories-lax</feature>
+    ...(content omitted)...
+    <rootPolicyRefExpression>root</rootPolicyRefExpression>
+    <applicablePolicies>
+     <rootPolicyRef Version="0.1.0">root</rootPolicyRef>
+     <refPolicyRef Version="1.0">PPS:Employee</refPolicyRef>
+     <refPolicyRef Version="1.0">PPS:Manager</refPolicyRef>
+     ...(content omitted)...
+    </applicablePolicies>
    </ns2:pdpProperties>  
 
 As you can see, the GET response provides extra information such as:
@@ -705,8 +721,10 @@ The HTTP PUT request to update the PDP properties goes as follows::
  
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
    <pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
-      <feature type="urn:ow2:authzforce:feature-type:pdp:request-filter" enabled="true">urn:ow2:authzforce:xacml:request-filter:multiple:repeated-attribute-categories-lax</feature>
-      <rootPolicyRefExpression>root</rootPolicyRefExpression>
+    <feature 
+     type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
+     enabled="true">urn:ow2:authzforce:xacml:request-filter:multiple:repeated-attribute-categories-lax</feature>
+    <rootPolicyRefExpression>root</rootPolicyRefExpression>
    </pdpPropertiesUpdate>
 
 This example sets the root policy reference to the latest version of the policy with ``PolicySetId = 'root'`` that must exist in the domain (see `Adding and updating Policies`_), 
@@ -723,6 +741,7 @@ Non-core (not defined in XACML 3.0 Core standard) PDP behavior and features may 
 * Attribute Datatypes: to support extra XACML datatypes, e.g. from DLP/NAC Profile;
 * Functions: to support extra XACML functions, e.g. from DLP/NAC Profile;
 * Attribute Providers: to customize the way attribute value are retrieved outside the PEP's Request.
+
 .. * Request filter: to customize the processing of individual decision requests;
 .. * Combining algorithms: Additional alg profile
 
@@ -771,11 +790,11 @@ The steps to make your own Attribute Datatype extension for AuthZForce go as fol
      `XACML Data Loss Prevention / Network Access Control (DLP/NAC) Profile Version 1.0 <http://docs.oasis-open.org/xacml/xacml-3.0-dlp-nac/v1.0/xacml-3.0-dlp-nac-v1.0.html>`_. 
      In this example, the static nested class ``Factory`` is the one
      extending ``org.ow2.authzforce.core.pdp.api.value.SimpleValue.StringContentOnlyFactory<TestDNSNameWithPortValue>``. Such a class has a factory
-     method (``TestDNSNameWithPortValue getInstance(String val)``) that is simpler than in previous cases since it only takes a string as argument.
+     method (``TestDNSNameWithPortValue getInstance(String val)``) that takes a string argument corresponding to the text in the XACML AttributeValue (which must not contain any XML element or attribute).
    * ``org.ow2.authzforce.core.pdp.api.value.SimpleValue.Factory<AV>``: to be extended for implementing primitive XACML datatypes with XML attributes
      (equivalent to complex XML types with simple content). An example of such datatype is ``xpathExpression`` which requires an XML attribute named ``XPathCategory``. 
      Note that the datatype ``xpathExpression`` is natively supported but enabled only if feature ``urn:ow2:authzforce:feature:pdp:core:xpath-eval`` is enabled, 
-     as shown in section `Policy Decision (PDP) Properties`_.
+     as mentioned in section `Policy Decision (PDP) Properties`_.
    * ``org.ow2.authzforce.core.pdp.api.value.BaseDatatypeFactory<AV>``: to be extended for implementing
      `structured attributes (XACML 3.0 Core, §8.2) <http://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html#_Toc325047203>`_ 
      (equivalent to complex XML types with complex content).
@@ -785,7 +804,7 @@ The steps to make your own Attribute Datatype extension for AuthZForce go as fol
      extending ``org.ow2.authzforce.core.pdp.api.value.BaseDatatypeFactory<TestXACMLPolicyAttributeValue>``. Such a class has a factory method 
      ``TestXACMLPolicyAttributeValue getInstance(List<Serializable> content, Map<QName, String> otherAttributes, ...)`` 
      that creates an instance of your *AttributeValue Implementation Class*, i.e. ``TestXACMLPolicyAttributeValue`` in this case.
-     where the input argument ``other attributes`` represent the input XML attributes and input ``content`` the mixed content of a XACML AttributeValue 
+     where the argument ``otherAttributes`` represents the XML attributes and argument ``content`` the mixed content of a XACML AttributeValue 
      `parsed by JAXB <https://jaxb.java.net/tutorial/section_2_2_12_7-Mixed-Content.html>`_. 
 
 #. When your implementation class is ready, create a text file ``org.ow2.authzforce.core.pdp.api.PdpExtension`` in
@@ -819,14 +838,16 @@ Enabling an Attribute Datatype extension on a domain
 Once you have deployed the extension on Authzforce, following previous instructions, 
 you are ready to enable it on a specific domain's PDP by updating the PDP properties with an enabled 
 ``feature`` of type ``urn:ow2:authzforce:feature-type:pdp:data-type`` and value equal to the ID returned by the method ``getId()`` of the extension's factory implementation class. 
-This example enables the datatype ``dnsName-value`` (defined in DLP/NAC profile) on the PDP, provided that the AuthZForce PDP Core Tests JAR has been deployed (see previous section)::
+The following example enables the datatype ``dnsName-value`` (defined in DLP/NAC profile) on the PDP, provided that the AuthZForce PDP Core Tests JAR has been deployed (see previous section)::
 
    PUT /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/pdp.properties
    Content-Type: application/xml
  
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
    <pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
-      <feature type="urn:ow2:authzforce:feature-type:pdp:data-type" enabled="true">urn:oasis:names:tc:xacml:3.0:data-type:dnsName-value</feature>
+    <feature 
+     type="urn:ow2:authzforce:feature-type:pdp:data-type" 
+     enabled="true">urn:oasis:names:tc:xacml:3.0:data-type:dnsName-value</feature>
       <rootPolicyRefExpression>root</rootPolicyRefExpression>
    </pdpPropertiesUpdate>
 
@@ -862,14 +883,13 @@ The steps to make your own Function extension go as follows:
 
 #. If you want to implement one/some/all of the equivalent of XACML 3.0 standard bag functions (§A.3.10) or set functions (§A.3.11) 
    for a new attribute datatype (provided by an Attribute Datatype extension), create a Java class extending class ``org.ow2.authzforce.core.pdp.api.func.BaseFunctionSet``,
-   and use ``org.ow2.authzforce.core.pdp.api.func.FirstOrderBagFunctions#getFunctions(DatatypeFactory<AV>)`` to create all the bag functions from the new attribute datatype factory
-   (example).
+   and use ``org.ow2.authzforce.core.pdp.api.func.FirstOrderBagFunctions#getFunctions(DatatypeFactory<AV>)`` to create all the bag functions from the new attribute datatype factory. 
    
    Else create a Java class implementing interface ``org.ow2.authzforce.core.pdp.api.func.BaseFunction``; this class must have a public no-argument constructor or no constructor.
    Instead of implementing this ``Function`` interface directly, you should extend one of the following ``Function`` sub-classes when it applies:
    
    * ``org.ow2.authzforce.core.pdp.api.func.ComparisonFunction``: to be extended for implementing comparison functions 
-     ``*-greater-than``, ``*-greater-than-or-equal``, ``*-less-than`` and ``*-less-than-or-equal``. 
+     ``type-greater-than``, ``type-greater-than-or-equal``, ``type-less-than`` and ``type-less-than-or-equal``. 
      Examples from XACML 3.0 Core standard: see §A.3.6 and §A.3.8.
    * ``org.ow2.authzforce.core.pdp.api.func.EqualTypeMatchFunction``: to be extended for implementing match functions with two parameters of same type`. Examples from 
      XACML 3.0 Core standard: equality functions in §A.3.1, ``x500name-match``, ``string-starts-with``.
@@ -886,7 +906,7 @@ The steps to make your own Function extension go as follows:
      Examples from XACML 3.0 Core standard are logical ``and``, ``or`` or ``not`` in §A.3.5.
    * ``org.ow2.authzforce.core.pdp.api.func.FirstOrderFunction.MultiParameterTyped``: 
      to be extended for implementing first-order functions having at least two different types of parameters, when previous cases do not apply.
-     Examples from XACML 3.0 Core standard are logical ``n-of`` and ``*-substring```functions.
+     Examples from XACML 3.0 Core standard are logical ``n-of`` and ``*-substring`` functions.
    * ``org.ow2.authzforce.core.pdp.api.func.FirstOrderFunction.BaseFunction``: 
      to be extended for implementing functions when none of the previous cases apply.
 
@@ -920,10 +940,9 @@ Enabling a Function extension on a domain
 
 Once you have deployed the extension on Authzforce, following previous instructions, 
 you are ready to enable it on a specific domain's PDP by updating the PDP properties with an enabled 
-``feature`` of type ``urn:ow2:authzforce:feature-type:pdp:function`` if the extension extends ``BaseFunction`` class 
-or ``urn:ow2:authzforce:feature-type:pdp:function-set`` if the extension extends ``BaseFunctionSet`` class, 
+``feature`` of type ``urn:ow2:authzforce:feature-type:pdp:function-set`` if the extension extends ``BaseFunctionSet`` class else ``urn:ow2:authzforce:feature-type:pdp:function``, 
 and value equal to the ID returned by the method ``getId()`` of the extension implementation class. 
-This example enables the function ``dnsName-value-equal`` and required datatype ``dnsName-value`` (defined in DLP/NAC profile) on the PDP, 
+The following example enables the function ``dnsName-value-equal`` and required datatype ``dnsName-value`` (defined in DLP/NAC profile) on the PDP, 
 provided that the AuthZForce PDP Core Tests JAR has been deployed (see previous section)::
 
    PUT /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/pdp.properties
@@ -931,9 +950,13 @@ provided that the AuthZForce PDP Core Tests JAR has been deployed (see previous 
  
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
    <pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
-      <feature type="urn:ow2:authzforce:feature-type:pdp:data-type" enabled="true">urn:oasis:names:tc:xacml:3.0:data-type:dnsName-value</feature>
-      <feature type="urn:ow2:authzforce:feature-type:pdp:data-type" enabled="true">urn:oasis:names:tc:xacml:3.0:data-type:dnsName-value-equal</feature>
-      <rootPolicyRefExpression>root</rootPolicyRefExpression>
+    <feature 
+     type="urn:ow2:authzforce:feature-type:pdp:data-type" 
+     enabled="true">urn:oasis:names:tc:xacml:3.0:data-type:dnsName-value</feature>
+    <feature 
+     type="urn:ow2:authzforce:feature-type:pdp:data-type" 
+     enabled="true">urn:oasis:names:tc:xacml:3.0:data-type:dnsName-value-equal</feature>
+    <rootPolicyRefExpression>root</rootPolicyRefExpression>
    </pdpPropertiesUpdate>
 
 
@@ -1062,7 +1085,7 @@ The steps to integrate the extension into the AuthZForce Server go as follows:
    `Tomcat HowTo <http://wiki.apache.org/tomcat/HowTo#How_do_I_add_JARs_or_classes_to_the_common_classloader_without_adding_them_to_.24CATALINA_HOME.2Flib.3F>`_.
 
 #. Import your attribute provider XML schema in the XML schema file ``/opt/authzforce-ce-server/conf/authzforce-ext.xsd``, using ``namespace`` **only** (no ``schemaLocation``), 
-   like in the `example from Authzforce code <https://github.com/authzforce/server/blob/release-5.1.2/webapp/src/test/server.conf/authzforce-ce/authzforce-ext.xsd>`_
+   like in the `example from Authzforce code <https://github.com/authzforce/server/blob/release-5.2.0/webapp/src/test/server.conf/authzforce-ce/authzforce-ext.xsd>`_
    with this schema import for Authzforce ``TestAttributeProvider``::
 
     <xs:import namespace="http://authzforce.github.io/core/xmlns/test/3" />
@@ -1070,10 +1093,12 @@ The steps to integrate the extension into the AuthZForce Server go as follows:
 #. Add a ``uri`` element to XML catalog file ``/opt/authzforce-ce-server/conf/catalog.xml``, with your attribute
    Provider XML namespace as ``name`` attribute value, and, the location of your XML schema
    file within the JAR, as ``uri`` attribute value, prefixed by ``classpath:``. For example, in the
-   `sample XML catalog from Authzforce source code <https://github.com/authzforce/server/blob/release-5.1.2/webapp/src/test/server.conf/authzforce-ce/catalog.xml>`_,
+   `sample XML catalog from Authzforce source code <https://github.com/authzforce/server/blob/release-5.2.0/webapp/src/test/server.conf/authzforce-ce/catalog.xml>`_,
    we add the following line for Authzforce ``TestAttributeProvider``::
 
-   <uri name="http://authzforce.github.io/core/xmlns/test/3" uri="classpath:org.ow2.authzforce.core.test.xsd"/>
+    <uri 
+     name="http://authzforce.github.io/core/xmlns/test/3" 
+     uri="classpath:org.ow2.authzforce.core.test.xsd"/>
 
 #. Finally, restart Tomcat to apply changes.
 

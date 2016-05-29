@@ -33,12 +33,12 @@ Minimal setup
      In the end, you should have the package ``oracle-java7-installer`` installed.
 #. Install Tomcat 7: ``$ sudo aptitude install tomcat7``.
 #. Download the binary (Ubuntu package with ``.deb`` extension) release of AuthZForce 
-   from `Maven Central Repository <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/5.1.2/>`_. You get a file called ``authzforce-ce-server-dist-5.1.2.deb``.
+   from `Maven Central Repository <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/5.2.0/>`_. You get a file called ``authzforce-ce-server-dist-5.2.0.deb``.
 #. Copy this file to the host where you want to install the software.
 #. On the host, from the directory where you copied this file, run the following commands::
 
     $ sudo aptitude install gdebi curl
-    $ sudo gdebi authzforce-ce-server-dist-5.1.2.deb
+    $ sudo gdebi authzforce-ce-server-dist-5.2.0.deb
 #. At the end, you will see a message giving optional instructions to go through. Please follow them as necessary.
 
 Note that Tomcat default configuration may specify a very low value for the Java ``Xmx`` flag, causing the Authzforce webapp startup to fail. In that case, make sure Tomcat with ``Xmx`` at 1Go or more (2 Go recommended). 
@@ -47,13 +47,19 @@ For example, for Ubuntu 12.04, Tomcat default ``Xmx`` used to be 128m. You can f
  $ sudo sed -i "s/-Xmx128m/-Xmx1024m/" /etc/default/tomcat
  $ sudo service tomcat7 restart
  
-**Known issue: lack of entropy may cause delays in Tomcat 7+ start up on virtual machines in particular: [more info on Entropy Source issue](https://wiki.apache.org/tomcat/HowTo/FasterStartUp#Entropy_Source). So beware.**
+**Known issue: lack of entropy may cause delays in Tomcat 7+ start up on virtual machines in particular**: `more info on Entropy Source issue <https://wiki.apache.org/tomcat/HowTo/FasterStartUp#Entropy_Source>`_. **So beware.**
 
 Upgrade
 -------
-If you are still using a R4 version (4.2.x, 4.3.x or 4.4.x) of AuthZForce and wish to upgrade, please download AuthZForce server `upgrader tool 
-distribution <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-upgrader/5.1.2/authzforce-ce-server-upgrader-5.1.2.tar.gz>`_ and follow the instructions from 
-the `upgrader tool README <https://github.com/authzforce/server/blob/release-5.1.2/upgrader/src/README.md>`_, starting with step 3. You may also find the ``README`` inside the downloaded ``tar.gz`` file itself.
+If you are still using a R4 version (4.2.x, 4.3.x or 4.4.x) of AuthZForce and wish to upgrade, follow these steps:
+
+#. Download AuthZForce server `upgrader distribution from Maven Central Repository <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-upgrader/5.2.0/authzforce-ce-server-upgrader-5.2.0.tar.gz>`_. You get a file called ``authzforce-ce-server-upgrader-5.2.0.tar.gz``.
+#. Copy this file to the host where the old AuthZForce Server is installed, and unzip it and change directory::
+
+    $ tar xvzf authzforce-ce-server-upgrader-5.2.0.tar.gz
+    $ cd authzforce-ce-server-upgrader-5.2.0
+
+#. Follow the instructions in file ``README.html``.
 
 Advanced setup
 --------------
