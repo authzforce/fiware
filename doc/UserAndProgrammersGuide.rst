@@ -7,7 +7,7 @@ XACML-based access control policies and provide authorization decisions based on
 given access request. This guide explains how to use the API.
 
 **If you have been using a previous version of AuthZForce, check the** 
-`release notes <https://github.com/authzforce/server/blob/release-5.2.0/CHANGELOG.md#512>`_ 
+`release notes <https://github.com/authzforce/server/blob/release-5.3.0/CHANGELOG.md#530>`_ 
 **to know what is changed and what is new.**
 
 Background and Detail
@@ -653,12 +653,12 @@ Supported PDP features (IDs) by ``type``:
         
   Available request filter IDs: 
 
-   * ``urn:ow2:authzforce:xacml:request-filter:default-lax`` and ``urn:ow2:authzforce:xacml:request-filter:default-strict``: 
+   * ``urn:ow2:authzforce:feature:pdp:request-filter:default-lax`` and ``urn:ow2:authzforce:feature:pdp:request-filter:default-strict``: 
      supports only XACML Request elements marked as *mandatory* in 
      `XACML 3.0 Core specification (§10.2.1) <http://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html#_Toc325047227>`_ 
      (in particular, **no** support for Multiple Decision Profile);
-   * ``urn:ow2:authzforce:xacml:request-filter:multiple:repeated-attribute-categories-lax`` and 
-     ``urn:ow2:authzforce:xacml:request-filter:multiple:repeated-attribute-categories-strict``: 
+   * ``urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-lax`` and 
+     ``urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-strict``: 
      Provides the functionality identified by *urn:oasis:names:tc:xacml:3.0:profile:multiple:repeated-attribute-categories* 
      in `XACML v3.0 Multiple Decision Profile Version 1.0 (§3.3) <http://docs.oasis-open.org/xacml/3.0/multiple/v1.0/cs02/xacml-3.0-multiple-v1.0-cs02.html#_Toc388943334>`_
    
@@ -688,16 +688,16 @@ Follow the example of request/response below to get the current PDP properties i
      enabled="false">urn:ow2:authzforce:feature:pdp:core:strict-attribute-issuer-match</feature>
     <feature 
      type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
-     enabled="true">urn:ow2:authzforce:xacml:request-filter:default-lax</feature>
+     enabled="true">urn:ow2:authzforce:feature:pdp:request-filter:default-lax</feature>
     <feature 
      type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
-     enabled="false">urn:ow2:authzforce:xacml:request-filter:default-strict</feature>
+     enabled="false">urn:ow2:authzforce:feature:pdp:request-filter:default-strict</feature>
     <feature 
      type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
-     enabled="false">urn:ow2:authzforce:xacml:request-filter:multiple:repeated-attribute-categories-strict</feature>
+     enabled="false">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-strict</feature>
     <feature 
      type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
-     enabled="false">urn:ow2:authzforce:xacml:request-filter:multiple:repeated-attribute-categories-lax</feature>
+     enabled="false">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-lax</feature>
     ...(content omitted)...
     <rootPolicyRefExpression>root</rootPolicyRefExpression>
     <applicablePolicies>
@@ -723,7 +723,7 @@ The HTTP PUT request to update the PDP properties goes as follows::
    <pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
     <feature 
      type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
-     enabled="true">urn:ow2:authzforce:xacml:request-filter:multiple:repeated-attribute-categories-lax</feature>
+     enabled="true">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-lax</feature>
     <rootPolicyRefExpression>root</rootPolicyRefExpression>
    </pdpPropertiesUpdate>
 
@@ -768,7 +768,7 @@ The steps to make your own Attribute Datatype extension for AuthZForce go as fol
      <dependency>
       <groupId>org.ow2.authzforce</groupId>
       <artifactId>authzforce-ce-core-pdp-api</artifactId>
-      <version>3.8.0</version>
+      <version>4.0.0</version>
      </dependency>
      ...
     </dependencies> 
@@ -785,7 +785,7 @@ The steps to make your own Attribute Datatype extension for AuthZForce go as fol
    * ``org.ow2.authzforce.core.pdp.api.value.SimpleValue.StringContentOnlyFactory<AV>``: to be extended for implementing text-only primitive datatypes 
      (equivalent to simple XML types).
      You may use 
-     `AuthZForce TestDNSNameWithPortValue class <https://github.com/authzforce/core/blob/release-3.9.0/src/test/java/org/ow2/authzforce/core/test/custom/TestDNSNameWithPortValue.java>`_
+     `AuthZForce TestDNSNameWithPortValue class <https://github.com/authzforce/core/blob/release-4.0.0/src/test/java/org/ow2/authzforce/core/test/custom/TestDNSNameWithPortValue.java>`_
      (used for AuthZForce unit tests) as an example. This example provides a test implementation of datatype ``dnsName-value`` defined in 
      `XACML Data Loss Prevention / Network Access Control (DLP/NAC) Profile Version 1.0 <http://docs.oasis-open.org/xacml/xacml-3.0-dlp-nac/v1.0/xacml-3.0-dlp-nac-v1.0.html>`_. 
      In this example, the static nested class ``Factory`` is the one
@@ -799,7 +799,7 @@ The steps to make your own Attribute Datatype extension for AuthZForce go as fol
      `structured attributes (XACML 3.0 Core, §8.2) <http://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html#_Toc325047203>`_ 
      (equivalent to complex XML types with complex content).
      You may use
-     `AuthZForce TestXACMLPolicyAttributeValue class <https://github.com/authzforce/core/blob/release-3.9.0/src/test/java/org/ow2/authzforce/core/test/custom/TestXACMLPolicyAttributeValue.java>`_
+     `AuthZForce TestXACMLPolicyAttributeValue class <https://github.com/authzforce/core/blob/release-4.0.0/src/test/java/org/ow2/authzforce/core/test/custom/TestXACMLPolicyAttributeValue.java>`_
      (used for AuthZForce unit tests) as an example. In this example, the static nested class ``Factory`` is the one
      extending ``org.ow2.authzforce.core.pdp.api.value.BaseDatatypeFactory<TestXACMLPolicyAttributeValue>``. Such a class has a factory method 
      ``TestXACMLPolicyAttributeValue getInstance(List<Serializable> content, Map<QName, String> otherAttributes, ...)`` 
@@ -810,7 +810,7 @@ The steps to make your own Attribute Datatype extension for AuthZForce go as fol
 #. When your implementation class is ready, create a text file ``org.ow2.authzforce.core.pdp.api.PdpExtension`` in
    folder ``src/main/resources/META-INF/services`` (you have to create the folder first) and put the fully qualified
    name of your implementation class on the first line of this file, like in the
-   `example from Authzforce source code <https://github.com/authzforce/core/blob/release-3.9.0/src/test/resources/META-INF/services/org.ow2.authzforce.core.pdp.api.PdpExtension>`_.
+   `example from Authzforce source code <https://github.com/authzforce/core/blob/release-4.0.0/src/test/resources/META-INF/services/org.ow2.authzforce.core.pdp.api.PdpExtension>`_.
    
 #. Run Maven ``package`` to produce a JAR from the Maven project.
 
@@ -821,12 +821,12 @@ Integrating an Attribute Datatype extension into AuthZForce Server
 
 This section assumes you have an Attribute Datatype extension in form of a JAR, typically produced by the process described in the previous section. 
 You may use AuthZForce PDP Core Tests JAR if you only wish to test the examples in this documentation. 
-This JAR is `available on Maven Central <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core/3.9.0/authzforce-ce-core-3.9.0-tests.jar>`_.
+This JAR is `available on Maven Central <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core/4.0.0/authzforce-ce-core-4.0.0-tests.jar>`_.
 
 The steps to integrate the extension into the AuthZForce Server go as follows:
 
 #. Make the JAR - and any extra dependency - visible from the AuthZForce webapp in Tomcat. 
-   One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-3.9.0-tests.jar`` in our example) 
+   One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-4.0.0-tests.jar`` in our example) 
    into ``/opt/authzforce-ce-server/webapp/WEB-INF/lib``. For other ways, please refer to
    `Tomcat HowTo <http://wiki.apache.org/tomcat/HowTo#How_do_I_add_JARs_or_classes_to_the_common_classloader_without_adding_them_to_.24CATALINA_HOME.2Flib.3F>`_.
 
@@ -875,17 +875,21 @@ The steps to make your own Function extension go as follows:
      <dependency>
       <groupId>org.ow2.authzforce</groupId>
       <artifactId>authzforce-ce-core-pdp-api</artifactId>
-      <version>3.8.0</version>
+      <version>4.0.0</version>
      </dependency>
      ...
     </dependencies> 
     ...
 
 #. If you want to implement one/some/all of the equivalent of XACML 3.0 standard bag functions (§A.3.10) or set functions (§A.3.11) 
-   for a new attribute datatype (provided by an Attribute Datatype extension), create a Java class extending class ``org.ow2.authzforce.core.pdp.api.func.BaseFunctionSet``,
-   and use ``org.ow2.authzforce.core.pdp.api.func.FirstOrderBagFunctions#getFunctions(DatatypeFactory<AV>)`` to create all the bag functions from the new attribute datatype factory. 
+   for a new attribute datatype (provided by an Attribute Datatype extension), create a Java class either extending class 
+   ``org.ow2.authzforce.core.pdp.api.func.BaseFunctionSet`` or, as second resort, implementing interface 
+   ``org.ow2.authzforce.core.pdp.api.func.FunctionSet``,
+   and, in either case, use ``org.ow2.authzforce.core.pdp.api.func.FirstOrderBagFunctions#getFunctions(DatatypeFactory<AV>)`` 
+   to create all the bag functions from the new attribute datatype factory. 
    
-   Else create a Java class implementing interface ``org.ow2.authzforce.core.pdp.api.func.BaseFunction``; this class must have a public no-argument constructor or no constructor.
+   Else create a Java class either extending class ``org.ow2.authzforce.core.pdp.api.func.BaseFunction`` 
+   or, as second resort, implementing interface ``org.ow2.authzforce.core.pdp.api.func.Function``; this class must have a public no-argument constructor or no constructor.
    Instead of implementing this ``Function`` interface directly, you should extend one of the following ``Function`` sub-classes when it applies:
    
    * ``org.ow2.authzforce.core.pdp.api.func.ComparisonFunction``: to be extended for implementing comparison functions 
@@ -894,7 +898,7 @@ The steps to make your own Function extension go as follows:
    * ``org.ow2.authzforce.core.pdp.api.func.EqualTypeMatchFunction``: to be extended for implementing match functions with two parameters of same type`. Examples from 
      XACML 3.0 Core standard: equality functions in §A.3.1, ``x500name-match``, ``string-starts-with``.
      You may use 
-     `AuthZForce TestDNSNameValueEqualFunction class <https://github.com/authzforce/core/blob/release-3.9.0/src/test/java/org/ow2/authzforce/core/test/custom/TestDNSNameValueEqualFunction.java>`_
+     `AuthZForce TestDNSNameValueEqualFunction class <https://github.com/authzforce/core/blob/release-4.0.0/src/test/java/org/ow2/authzforce/core/test/custom/TestDNSNameValueEqualFunction.java>`_
      (used for AuthZForce unit tests) as an example. This example provides a test implementation of function ``dnsName-value-equal`` defined in 
      `XACML Data Loss Prevention / Network Access Control (DLP/NAC) Profile Version 1.0 <http://docs.oasis-open.org/xacml/xacml-3.0-dlp-nac/v1.0/xacml-3.0-dlp-nac-v1.0.html>`_. 
    * ``org.ow2.authzforce.core.pdp.api.func.NonEqualTypeMatchFunction``: to be extended for implementing match functions with two parameters of different type. 
@@ -913,7 +917,7 @@ The steps to make your own Function extension go as follows:
 #. When your implementation class is ready, create a text file ``org.ow2.authzforce.core.pdp.api.PdpExtension`` in
    folder ``src/main/resources/META-INF/services`` (you have to create the folder first) and put the fully qualified
    name of your implementation class on the first line of this file, like in the
-   `example from Authzforce source code <https://github.com/authzforce/core/blob/release-3.9.0/src/test/resources/META-INF/services/org.ow2.authzforce.core.pdp.api.PdpExtension>`_.
+   `example from Authzforce source code <https://github.com/authzforce/core/blob/release-4.0.0/src/test/resources/META-INF/services/org.ow2.authzforce.core.pdp.api.PdpExtension>`_.
    
 #. Run Maven ``package`` to produce a JAR from the Maven project.
 
@@ -924,12 +928,12 @@ Integrating a Function extension into AuthZForce Server
 
 This section assumes you have a Function extension in form of a JAR, typically produced by the process described in the previous section. 
 You may use AuthZForce PDP Core Tests JAR if you only wish to test the examples in this documentation. 
-This JAR is `available on Maven Central <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core/3.9.0/authzforce-ce-core-3.9.0-tests.jar>`_.
+This JAR is `available on Maven Central <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core/4.0.0/authzforce-ce-core-4.0.0-tests.jar>`_.
 
 The steps to integrate the extension into the AuthZForce Server go as follows:
 
 #. Make the JAR - and any extra dependency - visible from the AuthZForce webapp in Tomcat. 
-   One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-3.9.0-tests.jar`` in our example) 
+   One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-4.0.0-tests.jar`` in our example) 
    into ``/opt/authzforce-ce-server/webapp/WEB-INF/lib``. For other ways, please refer to
    `Tomcat HowTo <http://wiki.apache.org/tomcat/HowTo#How_do_I_add_JARs_or_classes_to_the_common_classloader_without_adding_them_to_.24CATALINA_HOME.2Flib.3F>`_.
 
@@ -940,7 +944,8 @@ Enabling a Function extension on a domain
 
 Once you have deployed the extension on Authzforce, following previous instructions, 
 you are ready to enable it on a specific domain's PDP by updating the PDP properties with an enabled 
-``feature`` of type ``urn:ow2:authzforce:feature-type:pdp:function-set`` if the extension extends ``BaseFunctionSet`` class else ``urn:ow2:authzforce:feature-type:pdp:function``, 
+``feature`` of type ``urn:ow2:authzforce:feature-type:pdp:function-set`` if the extension extends ``BaseFunctionSet`` class
+or implements directly its superinterface ``FunctionSet``; else use the feature type ``urn:ow2:authzforce:feature-type:pdp:function``, 
 and value equal to the ID returned by the method ``getId()`` of the extension implementation class. 
 The following example enables the function ``dnsName-value-equal`` and required datatype ``dnsName-value`` (defined in DLP/NAC profile) on the PDP, 
 provided that the AuthZForce PDP Core Tests JAR has been deployed (see previous section)::
@@ -956,6 +961,268 @@ provided that the AuthZForce PDP Core Tests JAR has been deployed (see previous 
     <feature 
      type="urn:ow2:authzforce:feature-type:pdp:data-type" 
      enabled="true">urn:oasis:names:tc:xacml:3.0:data-type:dnsName-value-equal</feature>
+    <rootPolicyRefExpression>root</rootPolicyRefExpression>
+   </pdpPropertiesUpdate>
+
+
+Combining Algorithm Extensions
+##############################
+
+The XACML 3.0 Core standard allows to use extra policy/rule combining algorithms not defined in the standard. 
+Before you can use such algorithms in Authzforce API,
+you must implement and provide it as an Combining Algorithm extension, or get it from a third party as such; 
+and then you deploy it on Authzforce server and enable it on a specific domain. 
+The AuthZForce project also provides a separate Combining Algorithm extension example for documentation and testing purposes.
+If you wish to make your own Combining Algorithm extension, read on the next section.
+If you wish to test the example provided by AuthZForce or if you have another one ready for use, you may jump to the section 
+`Integrating a Combining Algorithm extension into AuthZForce Server`_.
+
+Making a Combining Algorithm extension
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The steps to make your own Combining Algorithm extension go as follows:
+
+#. Create a Maven project with ``jar`` packaging type and following Maven dependency::
+   
+    ...
+    <dependencies>
+     <dependency>
+      <groupId>org.ow2.authzforce</groupId>
+      <artifactId>authzforce-ce-core-pdp-api</artifactId>
+      <version>4.0.0</version>
+     </dependency>
+     ...
+    </dependencies> 
+    ...
+
+#. Create the Java implementation class, either extending class ``org.ow2.authzforce.core.pdp.api.combining.BaseCombiningAlg<D>`` 
+   or, as second resort, implementing interface ``org.ow2.authzforce.core.pdp.api.combining.CombiningAlg<D>``,
+   where the type parameter ``D`` represents the type of elements combined by the algorithm implementation (policy or rule), 
+   more precisely ``D`` must be one of the following:
+   
+   * ``org.ow2.authzforce.core.pdp.api.Decidable`` (recommended option) for a policy/rule combining algorithm implementation, 
+     i.e. combining policies and rules equally. 
+     For example, although the XACML standard specifies two distinct identifiers for the policy combining version and rule combining version of
+     the *deny-unless-permit* algorithm, the normative algorithm specification in pseudo-code is the same, 
+     and is actually implemented by one single Java class in AuthZForce. 
+     We strongly recommend this type parameter for your implementation as it makes it more generic and maximizes its reuse.  
+   * ``org.ow2.authzforce.core.pdp.api.policy.PolicyEvaluator`` for a policy-only combining algorithm, 
+     e.g. the XACML Core standard *only-one-applicable* algorithm, or
+     the *on-permit-apply-second* policy combining algorithm from 
+     `XACML 3.0 Additional Combining Algorithms Profile Version 1.0 <http://docs.oasis-open.org/xacml/xacml-3.0-combalgs/v1.0/xacml-3.0-combalgs-v1.0.html>`_.
+     You may use 
+     `AuthZForce TestOnPermitApplySecondCombiningAlg class <https://github.com/authzforce/core/blob/release-4.0.0/src/test/java/org/ow2/authzforce/core/test/custom/TestOnPermitApplySecondCombiningAlg.java>`_
+     (used for AuthZForce unit tests) as an example of implementation for this algorithm.
+    
+   This class must have a public no-argument constructor or no constructor.
+
+#. When your implementation class is ready, create a text file ``org.ow2.authzforce.core.pdp.api.PdpExtension`` in
+   folder ``src/main/resources/META-INF/services`` (you have to create the folder first) and put the fully qualified
+   name of your implementation class on the first line of this file, like in the
+   `example from Authzforce source code <https://github.com/authzforce/core/blob/release-4.0.0/src/test/resources/META-INF/services/org.ow2.authzforce.core.pdp.api.PdpExtension>`_.
+   
+#. Run Maven ``package`` to produce a JAR from the Maven project.
+
+Now you have a Combining Algorithm extension ready for integration into AuthZForce Server, as explained in the next section.
+
+Integrating a Combining Algorithm extension into AuthZForce Server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This section assumes you have a Combining Algorithm extension in form of a JAR, typically produced by the process described in the previous section. 
+You may use AuthZForce PDP Core Tests JAR if you only wish to test the examples in this documentation. 
+This JAR is `available on Maven Central <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core/4.0.0/authzforce-ce-core-4.0.0-tests.jar>`_.
+
+The steps to integrate the extension into the AuthZForce Server go as follows:
+
+#. Make the JAR - and any extra dependency - visible from the AuthZForce webapp in Tomcat. 
+   One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-4.0.0-tests.jar`` in our example) 
+   into ``/opt/authzforce-ce-server/webapp/WEB-INF/lib``. For other ways, please refer to
+   `Tomcat HowTo <http://wiki.apache.org/tomcat/HowTo#How_do_I_add_JARs_or_classes_to_the_common_classloader_without_adding_them_to_.24CATALINA_HOME.2Flib.3F>`_.
+
+#. Finally, restart Tomcat to apply changes.
+
+Enabling a Combining Algorithm extension on a domain
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Once you have deployed the extension on Authzforce, following previous instructions, 
+you are ready to enable it on a specific domain's PDP by updating the PDP properties with an enabled 
+``feature`` of type ``urn:ow2:authzforce:feature-type:pdp:combining-algorithm``. 
+The following example enables the combining algorithm ``on-permit-apply-second`` on the PDP, 
+provided that the AuthZForce PDP Core Tests JAR has been deployed (see previous section)::
+
+   PUT /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/pdp.properties
+   Content-Type: application/xml
+ 
+   <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+   <pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+    <feature 
+     type="urn:ow2:authzforce:feature-type:pdp:combining-algorithm" 
+     enabled="true">urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:on-permit-apply-second</feature>
+    <rootPolicyRefExpression>root</rootPolicyRefExpression>
+   </pdpPropertiesUpdate>
+
+
+Request Filter Extensions
+#########################
+
+With AuthZForce *Request Filter* extensions, you can customize the way XACML ``<Request>`` elements are processed 
+before they are evaluated by the PDP against policies.
+Before you can use such extensions in Authzforce API,
+you must implement one or get it from a third party as such; 
+and then you deploy it on Authzforce server and enable it on a specific domain. 
+Beware that AuthZForce already provides a Request Filter implementing the functionality identified by 
+*urn:oasis:names:tc:xacml:3.0:profile:multiple:repeated-attribute-categories* 
+in `XACML v3.0 Multiple Decision Profile Version 1.0 (§3.3)`_. 
+More information in section `Policy Decision (PDP) Properties`_.
+If you wish to make your own Request Filter extension, read on the next section.
+If you wish to test the example provided by AuthZForce or if you have another one ready for use, you may jump to the section 
+`Integrating a Request Filter extension into AuthZForce Server`_.
+
+Making a Request Filter extension
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The steps to make your own Request Filter extension for AuthZForce go as follows:
+
+#. Create a Maven project with ``jar`` packaging type and following Maven dependency::
+   
+    ...
+    <dependencies>
+     <dependency>
+      <groupId>org.ow2.authzforce</groupId>
+      <artifactId>authzforce-ce-core-pdp-api</artifactId>
+      <version>4.0.0</version>
+     </dependency>
+     ...
+    </dependencies> 
+    ...
+
+#. Create a Java class implementing interface ``org.ow2.authzforce.core.pdp.api.RequestFilter.Factory``.    
+   This class must have a public no-argument constructor or no constructor.
+   This factory class's main goal is to create instances of ``org.ow2.authzforce.core.pdp.api.RequestFilter``.
+   As the latter is an interface, you need a concrete subclass for your implementation. 
+   Instead of implementing the interface ``RequestFilter`` directly to do so, you should extend class 
+   ``org.ow2.authzforce.core.pdp.api.BaseRequestFilter`` to facilitate the process whenever possible.
+   You may use AuthZForce 
+   `DefaultRequestFilter.LaxFilterFactory (resp. DefaultRequestFilter.StrictFilterFactory) class <https://github.com/authzforce/core/blob/release-4.0.0/src/main/java/org/ow2/authzforce/core/pdp/impl/DefaultRequestFilter.java>`_
+   as an example for *-lax* (resp. *-strict*) request filter. 
+   This class implements the minimal XACML 3.0 Core-compliant request filter identified by 
+   ``urn:ow2:authzforce:feature:pdp:request-filter:default-lax`` (resp. ``urn:ow2:authzforce:feature:pdp:request-filter:default-strict``).
+   For more information on this request filter and *-lax* versus *-strict*, please refer to section `Policy Decision (PDP) Properties`_. 
+
+#. When your implementation class is ready, create a text file ``org.ow2.authzforce.core.pdp.api.PdpExtension`` in
+   folder ``src/main/resources/META-INF/services`` (you have to create the folder first) and put the fully qualified
+   name of your implementation class on the first line of this file, like in the
+   `example from Authzforce source code <https://github.com/authzforce/core/blob/release-4.0.0/src/test/resources/META-INF/services/org.ow2.authzforce.core.pdp.api.PdpExtension>`_.
+   
+#. Run Maven ``package`` to produce a JAR from the Maven project.
+
+Now you have a Request Filter extension ready for integration into AuthZForce Server, as explained in the next section.
+
+Integrating a Request Filter extension into AuthZForce Server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This section assumes you have a Request Filter extension in form of a JAR, typically produced by the process described in the previous section. 
+The steps to integrate the extension into the AuthZForce Server go as follows:
+
+#. Make the JAR - and any extra dependency - visible from the AuthZForce webapp in Tomcat. 
+   One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-4.0.0-tests.jar`` in our example) 
+   into ``/opt/authzforce-ce-server/webapp/WEB-INF/lib``. For other ways, please refer to
+   `Tomcat HowTo <http://wiki.apache.org/tomcat/HowTo#How_do_I_add_JARs_or_classes_to_the_common_classloader_without_adding_them_to_.24CATALINA_HOME.2Flib.3F>`_.
+
+#. Finally, restart Tomcat to apply changes.
+
+Enabling a Request Filter extension on a domain
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Once you have deployed the extension on Authzforce, following previous instructions, 
+you are ready to enable it on a specific domain's PDP by updating the PDP properties with an enabled 
+``feature`` of type ``urn:ow2:authzforce:feature-type:pdp:request-filter`` and value equal to the ID returned by the method ``getId()`` of the extension's factory implementation class. 
+Please refer to `Policy Decision (PDP) Properties`_ for examples.
+
+
+Result Filter Extensions
+########################
+
+With AuthZForce *Result Filter* extensions, you can customize the way the PDP's decision ``<Result>`` elements are processed 
+before making the final XACML ``<Response>`` returned to the client, e.g. PEPs.
+Before you can use such extensions in Authzforce API,
+you must implement one or get it from a third party as such; 
+and then you deploy it on Authzforce server and enable it on a specific domain. 
+The AuthZForce project also provides a separate Result Filter extension example for documentation and testing purposes.
+If you wish to make your own Result Filter extension, read on the next section.
+If you wish to test the example provided by AuthZForce or if you have another one ready for use, you may jump to the section 
+`Integrating a Result Filter extension into AuthZForce Server`_.
+
+Making a Result Filter extension
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The steps to make your own Result Filter extension go as follows:
+
+#. Create a Maven project with ``jar`` packaging type and following Maven dependency::
+   
+    ...
+    <dependencies>
+     <dependency>
+      <groupId>org.ow2.authzforce</groupId>
+      <artifactId>authzforce-ce-core-pdp-api</artifactId>
+      <version>4.0.0</version>
+     </dependency>
+     ...
+    </dependencies> 
+    ...
+
+#. Create a Java implementation class implementing interface ``org.ow2.authzforce.core.pdp.api.DecisionResultFilter``.    
+   This class must have a public no-argument constructor or no constructor.
+   You may use 
+   `AuthZForce TestCombinedDecisionResultFilter class <https://github.com/authzforce/core/blob/release-4.0.0/src/test/java/org/ow2/authzforce/core/test/custom/TestCombinedDecisionResultFilter.java>`_
+   (used for AuthZForce unit tests) as an example. This example provides a test implementation of feature 
+   ``urn:oasis:names:tc:xacml:3.0:profile:multiple:combined-decision`` from 
+   `XACML v3.0 Multiple Decision Profile Version 1.0 <http://docs.oasis-open.org/xacml/3.0/multiple/v1.0/xacml-3.0-multiple-v1.0.html>`_. 
+
+#. When your implementation class is ready, create a text file ``org.ow2.authzforce.core.pdp.api.PdpExtension`` in
+   folder ``src/main/resources/META-INF/services`` (you have to create the folder first) and put the fully qualified
+   name of your implementation class on the first line of this file, like in the
+   `example from Authzforce source code <https://github.com/authzforce/core/blob/release-4.0.0/src/test/resources/META-INF/services/org.ow2.authzforce.core.pdp.api.PdpExtension>`_.
+   
+#. Run Maven ``package`` to produce a JAR from the Maven project.
+
+Now you have a Result Filter extension ready for integration into AuthZForce Server, as explained in the next section.
+
+Integrating a Result Filter extension into AuthZForce Server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This section assumes you have a Combining Algorithm extension in form of a JAR, typically produced by the process described in the previous section. 
+You may use AuthZForce PDP Core Tests JAR if you only wish to test the examples in this documentation. 
+This JAR is `available on Maven Central <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core/4.0.0/authzforce-ce-core-4.0.0-tests.jar>`_.
+
+The steps to integrate the extension into the AuthZForce Server go as follows:
+
+#. Make the JAR - and any extra dependency - visible from the AuthZForce webapp in Tomcat. 
+   One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-4.0.0-tests.jar`` in our example) 
+   into ``/opt/authzforce-ce-server/webapp/WEB-INF/lib``. For other ways, please refer to
+   `Tomcat HowTo <http://wiki.apache.org/tomcat/HowTo#How_do_I_add_JARs_or_classes_to_the_common_classloader_without_adding_them_to_.24CATALINA_HOME.2Flib.3F>`_.
+
+#. Finally, restart Tomcat to apply changes.
+
+Enabling a Result Filter extension on a domain
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Once you have deployed the extension on Authzforce, following previous instructions, 
+you are ready to enable it on a specific domain's PDP by updating the PDP properties with an enabled 
+``feature`` of type ``urn:ow2:authzforce:feature-type:pdp:result-filter``. 
+The following example enables Authzforce combined decision result filter 
+(implementing the feature ``urn:oasis:names:tc:xacml:3.0:profile:multiple:combined-decision``
+from `XACML v3.0 Multiple Decision Profile Version 1.0`_ for testing) on the PDP, 
+provided that the AuthZForce PDP Core Tests JAR has been deployed (see previous section)::
+
+   PUT /domains/iMnxv7sDEeWFwqVFFMDLTQ/pap/pdp.properties
+   Content-Type: application/xml
+ 
+   <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+   <pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+    <feature 
+     type="urn:ow2:authzforce:feature-type:pdp:result-filter" 
+     enabled="true">urn:ow2:authzforce:feature:pdp:result-filter:multiple:test-combined-decision</feature>
     <rootPolicyRefExpression>root</rootPolicyRefExpression>
    </pdpPropertiesUpdate>
 
@@ -983,13 +1250,13 @@ The steps to make your own PDP Attribute Provider extension for AuthZForce go as
    `Java package naming conventions <https://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html>`_. In this
    schema file, define an XML type for your attribute provider configuration format. This type must extend
    ``AbstractAttributeProvider`` from namespace ``http://authzforce.github.io/xmlns/pdp/ext/3``. You may use the
-   `schema of AuthZForce Test Attribute Provider <https://github.com/authzforce/core/blob/release-3.9.0/src/test/resources/org.ow2.authzforce.core.test.xsd>`_
+   `schema of AuthZForce Test Attribute Provider <https://github.com/authzforce/core/blob/release-4.0.0/src/test/resources/org.ow2.authzforce.core.test.xsd>`_
    (used for AuthZForce unit tests only) as an example. In this example, the XSD filename is
    ``org.ow2.authzforce.core.test.xsd`` and the defined XML type extending ``AbstractAttributeProvider`` is
    ``TestAttributeProvider``.
 
 #. Copy the files ``bindings.xjb`` and ``catalog.xml``
-   `from Authzforce source code <https://github.com/authzforce/core/blob/release-3.9.0/src/main/jaxb>`_ into the
+   `from Authzforce source code <https://github.com/authzforce/core/blob/release-4.0.0/src/main/jaxb>`_ into the
    ``src/main/jaxb`` folder (you have to create this folder first) of your Maven project.
 
 #. Add the following Maven dependency and build plugin configuration to your Maven POM::
@@ -1047,7 +1314,7 @@ The steps to make your own PDP Attribute Provider extension for AuthZForce go as
 #. Create your Attribute Provider factory and concrete implementation class (as in the *Factory* design pattern). The factory class must be public, and extend
    ``org.ow2.authzforce.core.pdp.api.CloseableAttributeProviderModule.FactoryBuilder<APM>``, where ``APM`` stands for
    your *Attribute Provider Model Class*; and the factory class must have a public no-argument constructor or no constructor. You may use the
-   `AuthZForce TestAttributeProviderModule class <https://github.com/authzforce/core/blob/release-3.9.0/src/test/java/org/ow2/authzforce/core/test/utils/TestAttributeProviderModule.java>`_
+   `AuthZForce TestAttributeProviderModule class <https://github.com/authzforce/core/blob/release-4.0.0/src/test/java/org/ow2/authzforce/core/test/utils/TestAttributeProviderModule.java>`_
    (used for AuthZForce unit tests only) as an example. In this example, the static nested class ``Factory`` is the one
    extending ``CloseableAttributeProviderModule.FactoryBuilder<TestAttributeProvider>``. Such a class has a factory
    method ``getInstance(APM configuration)`` (``getInstance(TestAttributeProvider conf)`` in the example) that, from an
@@ -1062,7 +1329,7 @@ The steps to make your own PDP Attribute Provider extension for AuthZForce go as
 #. When your implementation class is ready, create a text file ``org.ow2.authzforce.core.pdp.api.PdpExtension`` in
    folder ``src/main/resources/META-INF/services`` (you have to create the folder first) and put the fully qualified
    name of your implementation class on the first line of this file, like in the
-   `example from Authzforce source code <https://github.com/authzforce/core/blob/release-3.9.0/src/test/resources/META-INF/services/org.ow2.authzforce.core.pdp.api.PdpExtension>`_.
+   `example from Authzforce source code <https://github.com/authzforce/core/blob/release-4.0.0/src/test/resources/META-INF/services/org.ow2.authzforce.core.pdp.api.PdpExtension>`_.
    
 
 #. Run Maven ``package`` to produce a JAR from the Maven project.
@@ -1075,17 +1342,17 @@ Integrating an Attribute Provider into AuthZForce Server
 
 This section assumes you have an Attribute Provider extension in form of a JAR, typically produced by the process in the previous section. 
 You may use AuthZForce PDP Core Tests JAR if you only wish to test the examples in this documentation. 
-This JAR is `available on Maven Central <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core/3.9.0/authzforce-ce-core-3.9.0-tests.jar>`_.
+This JAR is `available on Maven Central <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core/4.0.0/authzforce-ce-core-4.0.0-tests.jar>`_.
 
 The steps to integrate the extension into the AuthZForce Server go as follows:
 
 #. Make the JAR - and any extra dependency - visible from the AuthZForce webapp in Tomcat. 
-   One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-3.9.0-tests.jar`` in our example) 
+   One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-4.0.0-tests.jar`` in our example) 
    into ``/opt/authzforce-ce-server/webapp/WEB-INF/lib``. For other ways, please refer to
    `Tomcat HowTo <http://wiki.apache.org/tomcat/HowTo#How_do_I_add_JARs_or_classes_to_the_common_classloader_without_adding_them_to_.24CATALINA_HOME.2Flib.3F>`_.
 
 #. Import your attribute provider XML schema in the XML schema file ``/opt/authzforce-ce-server/conf/authzforce-ext.xsd``, using ``namespace`` **only** (no ``schemaLocation``), 
-   like in the `example from Authzforce code <https://github.com/authzforce/server/blob/release-5.2.0/webapp/src/test/server.conf/authzforce-ce/authzforce-ext.xsd>`_
+   like in the `example from Authzforce code <https://github.com/authzforce/server/blob/release-5.3.0/webapp/src/test/server.conf/authzforce-ce/authzforce-ext.xsd>`_
    with this schema import for Authzforce ``TestAttributeProvider``::
 
     <xs:import namespace="http://authzforce.github.io/core/xmlns/test/3" />
@@ -1093,7 +1360,7 @@ The steps to integrate the extension into the AuthZForce Server go as follows:
 #. Add a ``uri`` element to XML catalog file ``/opt/authzforce-ce-server/conf/catalog.xml``, with your attribute
    Provider XML namespace as ``name`` attribute value, and, the location of your XML schema
    file within the JAR, as ``uri`` attribute value, prefixed by ``classpath:``. For example, in the
-   `sample XML catalog from Authzforce source code <https://github.com/authzforce/server/blob/release-5.2.0/webapp/src/test/server.conf/authzforce-ce/catalog.xml>`_,
+   `sample XML catalog from Authzforce source code <https://github.com/authzforce/server/blob/release-5.3.0/webapp/src/test/server.conf/authzforce-ce/catalog.xml>`_,
    we add the following line for Authzforce ``TestAttributeProvider``::
 
     <uri 

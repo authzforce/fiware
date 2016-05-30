@@ -18,13 +18,13 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # download and install Authzforce (service starts Automatically)
 
-RUN curl -O -L https://github.com/authzforce/server/releases/download/release-4.4.1/authzforce-ce-server_4.4.1_all.deb && \
-    dpkg --extract authzforce-ce-server_4.4.1_all.deb /root/authzforce/ && \
+RUN curl -O -L http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/5.3.0/authzforce-ce-server-dist-5.3.0.deb && \
+    dpkg --extract authzforce-ce-server-dist-5.3.0.deb /root/authzforce/ && \
     mv /root/authzforce/etc/tomcat7/Catalina /usr/local/tomcat/conf/ && \
     mv /root/authzforce/opt/* /opt/ && \
     rm -rf /opt/authzforce-ce-server/data/domains/* && \
     rm -rf /root/authzforce && \
-    rm -f authzforce-ce-server_4.4.1_all.deb
+    rm -f authzforce-ce-server-dist-5.3.0.deb
 
 ### Exposed ports
 # - App server
