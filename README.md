@@ -13,7 +13,7 @@ Checkout this git repository, go to the `doc` directory of the local copy, then
 for HTML output, run: 
 
  ```shell
- make clean singlehtml
+ make clean html
  ```
 
 For PDF output, if you do it for the first time, install the requirements (instructions for Ubuntu 14.04+):
