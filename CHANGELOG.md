@@ -1,6 +1,6 @@
 # Change log 
 
-# Unreleased
+# 5.3.0
 - Documentation for Authzforce Server v5.3.0
 
 
