@@ -118,7 +118,7 @@ The Concept of Policy Domain
 The application is multi-tenant, i.e. it allows users or organizations to work on authorization policies in complete isolation from each other. In this document, we use the term *domain* instead of *tenant*. 
 In this context, a policy domain consists of:
 
-* Various metadata about the domain: ID assigned by the Authzforce API, external ID (assigned by the provisioning client), description, reference to the (root) active policy in the domain;
+* Various metadata about the domain: ID assigned by the Authzforce API, external ID (assigned by the provisioning client), description;
 * A policy repository;
 * Attribute Providers configuration: attribute providers provide attributes that the PEP does NOT directly provide in the XACML <Request>. 
   For example, an attribute provider may get attribute values from an external database. 
