@@ -1480,36 +1480,37 @@ Example of request given below::
   <Attributes 
    Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"> 
    <Attribute
-    AttributeId='urn:oasis:names:tc:xacml:1.0:subject:subject-id'
-    IncludeInResult="false"> <AttributeValue 
-    DataType='http://www.w3.org/2001/XMLSchema#string'>joe</AttributeValue>
+    AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+    IncludeInResult="false"> 
+    <AttributeValue 
+    DataType="http://www.w3.org/2001/XMLSchema#string">joe</AttributeValue>
    </Attribute> 
    <Attribute AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" 
     IncludeInResult="false"> <AttributeValue 
-    DataType='http://www.w3.org/2001/XMLSchema#string'>Manager</AttributeValue>
+    DataType="http://www.w3.org/2001/XMLSchema#string">Manager</AttributeValue>
    </Attribute>
   </Attributes> 
   <Attributes 
    Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"> 
    <Attribute
-    AttributeId='urn:oasis:names:tc:xacml:1.0:resource:resource-id'
+    AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
     IncludeInResult="false"> 
     <AttributeValue 
-     DataType='http://www.w3.org/2001/XMLSchema#string'>MissionManagementApp</AttributeValue>
+     DataType="http://www.w3.org/2001/XMLSchema#string">MissionManagementApp</AttributeValue>
    </Attribute> 
    <Attribute 
-    AttributeId='urn:thales:xacml:2.0:resource:sub-resource-id' IncludeInResult="false"> 
+    AttributeId="urn:thales:xacml:2.0:resource:sub-resource-id" IncludeInResult="false"> 
     <AttributeValue
-     DataType='http://www.w3.org/2001/XMLSchema#string'>Team</AttributeValue>
+     DataType="http://www.w3.org/2001/XMLSchema#string">Team</AttributeValue>
    </Attribute>
   </Attributes> 
   <Attributes 
    Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"> 
    <Attribute
-    AttributeId='urn:oasis:names:tc:xacml:1.0:action:action-id'
+    AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
     IncludeInResult="false"> 
     <AttributeValue 
-     DataType='http://www.w3.org/2001/XMLSchema#string'>manage</AttributeValue>
+     DataType="http://www.w3.org/2001/XMLSchema#string">manage</AttributeValue>
    </Attribute>
   </Attributes> 
   <Attributes 
