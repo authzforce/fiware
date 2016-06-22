@@ -161,19 +161,20 @@ Domain Creation
 +++++++++++++++
 
 You create a domain by doing a HTTP POST request with XML payload to URL: ``http://${SERVER_NAME}:${PORT}/authzforce-ce/domains``. Replace ``${SERVER_NAME}`` and ``${PORT}`` with your server hostname and port for HTTP. 
-You can do it with ``curl`` tool::
+You can do it with ``curl`` tool with the the following content in a XML file (``domainProperties.xml`` in this example) as the HTTP request body::
 
- $ export domainProperties="<?xml version="1.0" encoding="UTF-8" standalone="yes"?> \
-   <domainProperties \ 
-     xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" \
-     externalId="external0"> \
-     <description>This is my domain</description> \
-   </domainProperties>"
+ $ cat domainProperties.xml
+ <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
+ <domainProperties 
+  xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
+  externalId="external0"> 
+  <description>This is my domain</description> 
+ </domainProperties>
  
- $ curl --verbose --request POST \ 
-   --header "Content-Type: application/xml;charset=UTF-8" \
-   --data "$domainProperties" \
-   --header "Accept: application/xml" \
+ $ curl --verbose --request "POST" \
+ --header "Content-Type: application/xml;charset=UTF-8" \
+ --data @domainProperties.xml \
+ --header "Accept: application/xml" \
    http://${SERVER_NAME}:${PORT}/authzforce-ce/domains
  
  ...
