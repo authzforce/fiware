@@ -165,11 +165,11 @@ You can do it with ``curl`` tool with the the following content in a XML file (`
 
  $ cat domainProperties.xml
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
- <domainProperties 
-  xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
+ <az:domainProperties 
+  xmlns:az="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
   externalId="external0"> 
   <description>This is my domain</description> 
- </domainProperties>
+ </az:domainProperties>
  
  $ curl --verbose --request "POST" \
  --header "Content-Type: application/xml;charset=UTF-8" \
@@ -191,12 +191,12 @@ You can do it with ``curl`` tool with the the following content in a XML file (`
  < Transfer-Encoding: chunked
  <
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-   <link xmlns="http://www.w3.org/2005/Atom" 
+ <link xmlns="http://www.w3.org/2005/Atom" 
    rel="item" href="h_D23LsDEeWFwqVFFMDLTQ" 
    title="h_D23LsDEeWFwqVFFMDLTQ"/>
 
 **WARNING**: Mind the leading and trailing single quotes for the ``--data`` argument. Do not use double quotes instead of these single quotes, otherwise curl will remove the double quotes in the XML payload itself, 
-and send invalid XML which will be rejected by the server. You may use the ``--trace-ascii -`` argument (the last dash here means *stdout*) to check the actual request body sent by ``curl``. 
+and send invalid XML which will be rejected by the server. You may use the ``--trace-ascii -`` argument (the last dash here means *stdout*) instead of ``--verbose``, in order to check the actual request body sent by ``curl``. 
 So use it only if you need to dump the outgoing (and incoming) data, in particular the request body, on *stdout*.  
 
 The ``href`` value in the response above gives you the domain ID (in the form of a Base64-encoded UUID) assigned by the API. You need this ID for any further operation on the domain.
