@@ -1,7 +1,27 @@
-# Copyright (C) 2015 Bitergia
-# GPLv3 License
+# Copyright (C) 2012-2016 Thales Services SAS.
+#
+# This file is part of AuthZForce CE.
+#
+# AuthZForce CE is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# AuthZForce CE is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with AuthZForce CE.  If not, see <http://www.gnu.org/licenses/>.
 
-FROM tomcat:7.0
+# Best practices for writing Dockerfiles:
+# https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/
+
+# Tips to do an unattended installation on Debian/Ubuntu: 
+# http://www.microhowto.info/howto/perform_an_unattended_installation_of_a_debian_package.html
+
+FROM ubuntu:14.04
 MAINTAINER Cyril Dangerville (Contact via http://catalogue.fiware.org/enablers/authorization-pdp-authzforce)
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -16,15 +36,19 @@ ENV DEBIAN_FRONTEND noninteractive
 #ENV HTTPS_PROXY 'http://user:password@proxy-host:proxy-port'
 
 
-# download and install Authzforce (service starts Automatically)
-
-RUN curl -O -L http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/5.3.0/authzforce-ce-server-dist-5.3.0.deb && \
-    dpkg --extract authzforce-ce-server-dist-5.3.0.deb /root/authzforce/ && \
-    mv /root/authzforce/etc/tomcat7/Catalina /usr/local/tomcat/conf/ && \
-    mv /root/authzforce/opt/* /opt/ && \
-    rm -rf /opt/authzforce-ce-server/data/domains/* && \
-    rm -rf /root/authzforce && \
-    rm -f authzforce-ce-server-dist-5.3.0.deb
+# Download and install Authzforce Server (service starts automatically)
+RUN apt-get update --assume-yes -qq && apt-get install --assume-yes -qq \
+        debconf-utils \
+        gdebi \
+        curl \
+ && rm -rf /var/lib/apt/lists/* \
+ && curl --silent --remote-name --location http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/5.3.0/authzforce-ce-server-dist-5.3.0.deb \
+ && bash -c "echo authzforce-ce-server	authzforce-ce-server/restartTomcat	boolean	false | debconf-set-selections" \
+ && bash -c "echo authzforce-ce-server	authzforce-ce-server/keepSamples	boolean	true | debconf-set-selections" \
+ && gdebi --quiet --non-interactive authzforce-ce-server-dist-5.3.0.deb \
+ && sed -i 's|^JAVA_OPTS\s*=.*$|JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Xms1024m -Xmx1024m -XX:+UseConcMarkSweepGC -XX:MaxNewSize=384m -XX:MaxPermSize=128m -server"|' /etc/default/tomcat7 \
+ && service tomcat7 restart \
+ && rm -f authzforce-ce-server-dist-5.3.0.deb
 
 ### Exposed ports
 # - App server
