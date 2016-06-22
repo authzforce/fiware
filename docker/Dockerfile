@@ -49,8 +49,8 @@ RUN apt-get update --assume-yes -qq && apt-get install --assume-yes -qq \
  && bash -c "echo authzforce-ce-server	authzforce-ce-server/keepSamples	boolean	true | debconf-set-selections" \
  && gdebi --quiet --non-interactive authzforce-ce-server-dist-5.3.0.deb \
  && rm -f authzforce-ce-server-dist-5.3.0.deb \
- && sed -i 's|^JAVA_OPTS\s*=.*$|JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Xms1024m -Xmx1024m -XX:+UseConcMarkSweepGC -XX:MaxNewSize=384m -XX:MaxPermSize=128m -server"|' /etc/default/tomcat7 \
-CMD service tomcat7 restart && tail -f /var/lib/tomcat7/logs/catalina.out \
+ && sed -i 's|^JAVA_OPTS\s*=.*$|JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Xms1024m -Xmx1024m -XX:+UseConcMarkSweepGC -XX:MaxNewSize=384m -XX:MaxPermSize=128m -server"|' /etc/default/tomcat7
+CMD service tomcat7 restart && tail -f /var/lib/tomcat7/logs/catalina.out
 
 
 ### Exposed ports
