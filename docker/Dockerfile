@@ -41,14 +41,17 @@ RUN apt-get update --assume-yes -qq && apt-get install --assume-yes -qq \
         debconf-utils \
         gdebi \
         curl \
+        openjdk-7-jdk \
+        tomcat7 \
  && rm -rf /var/lib/apt/lists/* \
  && curl --silent --remote-name --location http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/5.3.0/authzforce-ce-server-dist-5.3.0.deb \
  && bash -c "echo authzforce-ce-server	authzforce-ce-server/restartTomcat	boolean	false | debconf-set-selections" \
  && bash -c "echo authzforce-ce-server	authzforce-ce-server/keepSamples	boolean	true | debconf-set-selections" \
  && gdebi --quiet --non-interactive authzforce-ce-server-dist-5.3.0.deb \
+ && rm -f authzforce-ce-server-dist-5.3.0.deb \
  && sed -i 's|^JAVA_OPTS\s*=.*$|JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Xms1024m -Xmx1024m -XX:+UseConcMarkSweepGC -XX:MaxNewSize=384m -XX:MaxPermSize=128m -server"|' /etc/default/tomcat7 \
- && service tomcat7 restart \
- && rm -f authzforce-ce-server-dist-5.3.0.deb
+CMD service tomcat7 restart && tail -f /var/lib/tomcat7/logs/catalina.out \
+
 
 ### Exposed ports
 # - App server
