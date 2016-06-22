@@ -638,7 +638,7 @@ Supported PDP features (IDs) by ``type``:
   Below is the equivalent of the previous Request in a form that is accepted by a ``-strict`` request filter (no duplicate Attribute)::
   
      <Request 
-      xmlns:xacml="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" 
+      xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" 
       ReturnPolicyIdList="false" 
       CombinedDecision="false">
       <Attributes Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
