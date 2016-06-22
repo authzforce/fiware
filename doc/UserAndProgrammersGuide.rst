@@ -533,9 +533,9 @@ root policy ID as before, in which case your policy is already active by now)::
    Content-Type: application/xml; charset=UTF-8
 
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
-   <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+   <az:pdpPropertiesUpdate xmlns:az="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
     <rootPolicyRefExpression>rbac:policyset</rootPolicyRefExpression>
-   </domainProperties>
+   </az:pdpPropertiesUpdate>
 
 The policy is now enforced by the PDP as described in the next section.
 
@@ -572,11 +572,11 @@ The HTTP PUT request to update the properties has a body that is similar to the 
    Content-Type: application/xml
  
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-   <prpProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+   <az:prpProperties xmlns:az="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
       <maxPolicyCount>4</maxPolicyCount>
       <maxVersionCountPerPolicy>2</maxVersionCountPerPolicy>
       <versionRollingEnabled>true</versionRollingEnabled>
-   </prpProperties>  
+   </az:prpProperties>  
 
 The response format is the same as for the GET request.
 
@@ -720,12 +720,12 @@ The HTTP PUT request to update the PDP properties goes as follows::
    Content-Type: application/xml
  
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-   <pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+   <az:pdpPropertiesUpdate xmlns:az="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
     <feature 
      type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
      enabled="true">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-lax</feature>
     <rootPolicyRefExpression>root</rootPolicyRefExpression>
-   </pdpPropertiesUpdate>
+   </az:pdpPropertiesUpdate>
 
 This example sets the root policy reference to the latest version of the policy with ``PolicySetId = 'root'`` that must exist in the domain (see `Adding and updating Policies`_), 
 and enables support for the XACML Multiple Decision profile with repeated attribute categories (*urn:oasis:names:tc:xacml:3.0:profile:multiple:repeated-attribute-categories*).
@@ -844,12 +844,12 @@ The following example enables the datatype ``dnsName-value`` (defined in DLP/NAC
    Content-Type: application/xml
  
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-   <pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+   <az:pdpPropertiesUpdate xmlns:az="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
     <feature 
      type="urn:ow2:authzforce:feature-type:pdp:data-type" 
      enabled="true">urn:oasis:names:tc:xacml:3.0:data-type:dnsName-value</feature>
       <rootPolicyRefExpression>root</rootPolicyRefExpression>
-   </pdpPropertiesUpdate>
+   </az:pdpPropertiesUpdate>
 
 
 Function Extensions
@@ -954,7 +954,7 @@ provided that the AuthZForce PDP Core Tests JAR has been deployed (see previous 
    Content-Type: application/xml
  
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-   <pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+   <az:pdpPropertiesUpdate xmlns:az="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
     <feature 
      type="urn:ow2:authzforce:feature-type:pdp:data-type" 
      enabled="true">urn:oasis:names:tc:xacml:3.0:data-type:dnsName-value</feature>
@@ -962,7 +962,7 @@ provided that the AuthZForce PDP Core Tests JAR has been deployed (see previous 
      type="urn:ow2:authzforce:feature-type:pdp:data-type" 
      enabled="true">urn:oasis:names:tc:xacml:3.0:data-type:dnsName-value-equal</feature>
     <rootPolicyRefExpression>root</rootPolicyRefExpression>
-   </pdpPropertiesUpdate>
+   </az:pdpPropertiesUpdate>
 
 
 Combining Algorithm Extensions
@@ -1054,12 +1054,12 @@ provided that the AuthZForce PDP Core Tests JAR has been deployed (see previous 
    Content-Type: application/xml
  
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-   <pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+   <az:pdpPropertiesUpdate xmlns:az="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
     <feature 
      type="urn:ow2:authzforce:feature-type:pdp:combining-algorithm" 
      enabled="true">urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:on-permit-apply-second</feature>
     <rootPolicyRefExpression>root</rootPolicyRefExpression>
-   </pdpPropertiesUpdate>
+   </az:pdpPropertiesUpdate>
 
 
 Request Filter Extensions
@@ -1219,12 +1219,12 @@ provided that the AuthZForce PDP Core Tests JAR has been deployed (see previous 
    Content-Type: application/xml
  
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-   <pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+   <az:pdpPropertiesUpdate xmlns:az="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
     <feature 
      type="urn:ow2:authzforce:feature-type:pdp:result-filter" 
      enabled="true">urn:ow2:authzforce:feature:pdp:result-filter:multiple:test-combined-decision</feature>
     <rootPolicyRefExpression>root</rootPolicyRefExpression>
-   </pdpPropertiesUpdate>
+   </az:pdpPropertiesUpdate>
 
 
 Attribute Providers
@@ -1394,8 +1394,8 @@ testing and documentation purposes, it is not available in a default installatio
    Content-Type: application/xml; charset=UTF-8
 
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
-   <attributeProviders 
-    xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+   <az:attributeProviders 
+    xmlns:az="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
     xmlns:xacml="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"> 
     <attributeProvider 
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
@@ -1410,7 +1410,7 @@ testing and documentation purposes, it is not available in a default installatio
       </xacml:Attribute>
      </xacml:Attributes>
     </attributeProvider>
-   </attributeProviders>
+   </az:attributeProviders>
 
 The response is the new attribute provider configuration from the request.
 
@@ -1475,7 +1475,7 @@ Example of request given below::
  Content-Type: application/xml; charset=UTF-8
 
  <?xml version='1.0' encoding='UTF-8' standalone='yes'?> 
- <Request xmlns='urn:oasis:names:tc:xacml:3.0:core:schema:wd-17' 
+ <Request xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
   CombinedDecision="false" ReturnPolicyIdList="false"> 
   <Attributes 
    Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"> 
