@@ -36,7 +36,11 @@ In order to make a release for a new AuthzForce server version, do as follows:
 1. Update FILAB deployment scripts: [install.sh](filab.deploy/install.sh), [verif.sh](filab.deploy/verif.sh); especially the package version to match the new AuthzForce server version.
 1. Update the [changelog](CHANGELOG.md) with the new version.
 1. After committing and pushing the changes to Github, create a release there with same tag name as the matching release of the AuthzForce server.
+1. In order to generate readthedocs.org documentation, trigger readthedocs.org to fetch the new tag by updating something in the [authzforce-ce-fiware project Settings in Admin menu](https://readthedocs.org/dashboard/authzforce-ce-fiware/edit/) such as the *Description*. 
+1. In the *Versions* sub-menu of *Admin* on the readthedocs.org repository, you should now see the new tag/version. Check the *Active* checkbox and click *Submit*.
+1. In the *Builds* menu on the readthedocs.org repository, select the new version and click the *Build version:* button. The build is triggered and added to the queue. Wait until the status changes to *Passed*. 
 1. Create a Docker tag in [build settings of authzforce-ce-server's Docker repository](https://hub.docker.com/r/fiware/authzforce-ce-server/) with the new release tag as *Name*, save changes and trigger the build.
+
 
 # Hotfix
 If you need to fix things on a release, create a hotfix release by adding/incrementing a letter as suffix to the AuthzForce server version, e.g. `1.2.3a` would be the first documentation fix for AuthzForce version `1.2.3` (the tag would be `release-1.2.3a`), `1.2.3b` would be the second hotfix, etc.
