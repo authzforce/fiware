@@ -37,7 +37,8 @@ ENV DEBIAN_FRONTEND noninteractive
 #ENV HTTPS_PROXY 'http://user:password@proxy-host:proxy-port'
 
 # Download and install Authzforce Server (service starts automatically)
-RUN apt-get update --assume-yes -qq && apt-get install --assume-yes -qq \
+# For PACKAGE_VERSION variable substitution, we use the shell form of RUN
+RUN /bin/bash -c 'apt-get update --assume-yes -qq && apt-get install --assume-yes -qq \
         debconf-utils \
         gdebi \
         curl \
@@ -45,11 +46,11 @@ RUN apt-get update --assume-yes -qq && apt-get install --assume-yes -qq \
         tomcat7 \
  && rm -rf /var/lib/apt/lists/* \
  && curl --silent --remote-name --location http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/${PACKAGE_VERSION}/authzforce-ce-server-dist-${PACKAGE_VERSION}.deb \
- && bash -c "echo authzforce-ce-server	authzforce-ce-server/restartTomcat	boolean	false | debconf-set-selections" \
- && bash -c "echo authzforce-ce-server	authzforce-ce-server/keepSamples	boolean	true | debconf-set-selections" \
+ && echo -e "authzforce-ce-server\tauthzforce-ce-server/restartTomcat\tboolean\tfalse" | debconf-set-selections \
+ && echo -e "authzforce-ce-server\tauthzforce-ce-server/keepSamples\tboolean\ttrue" | debconf-set-selections \
  && gdebi --quiet --non-interactive authzforce-ce-server-dist-${PACKAGE_VERSION}.deb \
  && rm -f authzforce-ce-server-dist-${PACKAGE_VERSION}.deb \
- && sed -i 's|^JAVA_OPTS\s*=.*$|JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Xms1024m -Xmx1024m -XX:+UseConcMarkSweepGC -XX:MaxNewSize=384m -XX:MaxPermSize=128m -server"|' /etc/default/tomcat7
+ && sed -i "s|^JAVA_OPTS\s*=.*$|JAVA_OPTS=\"-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Xms1024m -Xmx1024m -XX:+UseConcMarkSweepGC -XX:MaxNewSize=384m -XX:MaxPermSize=128m -server\"|" /etc/default/tomcat7'
 CMD service tomcat7 restart && tail -f /var/lib/tomcat7/logs/catalina.out
 
 
