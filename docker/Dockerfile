@@ -24,6 +24,7 @@
 FROM ubuntu:14.04
 MAINTAINER Cyril Dangerville (Contact via http://catalogue.fiware.org/enablers/authorization-pdp-authzforce)
 
+ENV PACKAGE_VERSION 5.4.0
 ENV DEBIAN_FRONTEND noninteractive
 
 # Proxy configuration (if you are building from behind a proxy)
@@ -35,7 +36,6 @@ ENV DEBIAN_FRONTEND noninteractive
 #ENV HTTP_PROXY 'http://user:password@proxy-host:proxy-port'
 #ENV HTTPS_PROXY 'http://user:password@proxy-host:proxy-port'
 
-
 # Download and install Authzforce Server (service starts automatically)
 RUN apt-get update --assume-yes -qq && apt-get install --assume-yes -qq \
         debconf-utils \
@@ -44,11 +44,11 @@ RUN apt-get update --assume-yes -qq && apt-get install --assume-yes -qq \
         openjdk-7-jdk \
         tomcat7 \
  && rm -rf /var/lib/apt/lists/* \
- && curl --silent --remote-name --location http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/5.3.0/authzforce-ce-server-dist-5.3.0.deb \
+ && curl --silent --remote-name --location http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/${PACKAGE_VERSION}/authzforce-ce-server-dist-${PACKAGE_VERSION}.deb \
  && bash -c "echo authzforce-ce-server	authzforce-ce-server/restartTomcat	boolean	false | debconf-set-selections" \
  && bash -c "echo authzforce-ce-server	authzforce-ce-server/keepSamples	boolean	true | debconf-set-selections" \
- && gdebi --quiet --non-interactive authzforce-ce-server-dist-5.3.0.deb \
- && rm -f authzforce-ce-server-dist-5.3.0.deb \
+ && gdebi --quiet --non-interactive authzforce-ce-server-dist-${PACKAGE_VERSION}.deb \
+ && rm -f authzforce-ce-server-dist-${PACKAGE_VERSION}.deb \
  && sed -i 's|^JAVA_OPTS\s*=.*$|JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Xms1024m -Xmx1024m -XX:+UseConcMarkSweepGC -XX:MaxNewSize=384m -XX:MaxPermSize=128m -server"|' /etc/default/tomcat7
 CMD service tomcat7 restart && tail -f /var/lib/tomcat7/logs/catalina.out
 

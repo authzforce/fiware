@@ -15,17 +15,17 @@ This image is intended to work together with [Identity Manager - Keyrock](http:/
 
 This image gives you a minimal installation for testing purposes. The [AuthZForce Installation and administration guide](http://authzforce-ce-fiware.readthedocs.org/en/release-5.3.0/InstallationAndAdministrationGuide.html) provides you a better approach for using it in a production environment.
 
-This image, if used with the [Chanchan APP](https://github.com/Bitergia/fiware-chanchan), is fully provided for testing. [PEP Proxy Wilma](http://catalogue.fiware.org/enablers/pep-proxy-wilma) included in Chanchan APP is aware of the [Domain creation](http://authzforce-ce-fiware.readthedocs.org/en/release-5.3.0/InstallationAndAdministrationGuide.html#domain-creation). 
+This image, if used with the [Chanchan APP](https://github.com/Bitergia/fiware-chanchan), is fully provided for testing. [PEP Proxy Wilma](http://catalogue.fiware.org/enablers/pep-proxy-wilma) included in Chanchan APP is aware of the [Domain creation](http://authzforce-ce-fiware.readthedocs.org/en/release-5.4.0/InstallationAndAdministrationGuide.html#domain-creation). 
 
 Still, you can always do it yourself. 
 
 Create a container using `fiware/authzforce-ce-server` image by doing:
 
 ```
-docker run -d --name <container-name> fiware/authzforce-ce-server:release-5.3.0
+docker run -d --name <container-name> fiware/authzforce-ce-server:release-5.4.0
 ```
 
-As stands in the [AuthZForce Installation and administration guide](http://authzforce-ce-fiware.readthedocs.org/en/release-5.3.0/InstallationAndAdministrationGuide.html#policy-domain-administration) you can:
+As stands in the [AuthZForce Installation and administration guide](http://authzforce-ce-fiware.readthedocs.org/en/release-5.4.0/InstallationAndAdministrationGuide.html#policy-domain-administration) you can:
 
 * **Create a domain**
 

@@ -33,12 +33,12 @@ Minimal setup
      In the end, you should have the package ``oracle-java7-installer`` installed.
 #. Install Tomcat 7: ``$ sudo aptitude install tomcat7``.
 #. Download the binary (Ubuntu package with ``.deb`` extension) release of AuthZForce 
-   from `Maven Central Repository <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/5.3.0/>`_. You get a file called ``authzforce-ce-server-dist-5.3.0.deb``.
+   from `Maven Central Repository <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/5.4.0/>`_. You get a file called ``authzforce-ce-server-dist-5.4.0.deb``.
 #. Copy this file to the host where you want to install the software.
 #. On the host, from the directory where you copied this file, run the following commands::
 
     $ sudo aptitude install gdebi curl
-    $ sudo gdebi authzforce-ce-server-dist-5.3.0.deb
+    $ sudo gdebi authzforce-ce-server-dist-5.4.0.deb
 #. At the end, you will see a message giving optional instructions to go through. Please follow them as necessary.
 
 Note that Tomcat default configuration may specify a very low value for the Java ``Xmx`` flag, causing the Authzforce webapp startup to fail. In that case, make sure Tomcat with ``Xmx`` at 1Go or more (2 Go recommended). 
@@ -53,11 +53,11 @@ Upgrade
 -------
 If you are still using a R4 version (4.2.x, 4.3.x or 4.4.x) of AuthZForce and wish to upgrade, follow these steps:
 
-#. Download AuthZForce server `upgrader distribution from Maven Central Repository <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-upgrader/5.3.0/authzforce-ce-server-upgrader-5.3.0.tar.gz>`_. You get a file called ``authzforce-ce-server-upgrader-5.3.0.tar.gz``.
+#. Download AuthZForce server `upgrader distribution from Maven Central Repository <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-upgrader/5.4.0/authzforce-ce-server-upgrader-5.4.0.tar.gz>`_. You get a file called ``authzforce-ce-server-upgrader-5.4.0.tar.gz``.
 #. Copy this file to the host where the old AuthZForce Server is installed, and unzip it and change directory::
 
-    $ tar xvzf authzforce-ce-server-upgrader-5.3.0.tar.gz
-    $ cd authzforce-ce-server-upgrader-5.3.0
+    $ tar xvzf authzforce-ce-server-upgrader-5.4.0.tar.gz
+    $ cd authzforce-ce-server-upgrader-5.4.0
 
 #. Follow the instructions in file ``README.html``.
 
@@ -165,11 +165,11 @@ You can do it with ``curl`` tool with the the following content in a XML file (`
 
  $ cat domainProperties.xml
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
- <az:domainProperties 
-  xmlns:az="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
+ <domainProperties 
+  xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
   externalId="external0"> 
   <description>This is my domain</description> 
- </az:domainProperties>
+ </domainProperties>  
  
  $ curl --verbose --request "POST" \
  --header "Content-Type: application/xml;charset=UTF-8" \
@@ -193,7 +193,7 @@ You can do it with ``curl`` tool with the the following content in a XML file (`
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
  <link xmlns="http://www.w3.org/2005/Atom" 
    rel="item" href="h_D23LsDEeWFwqVFFMDLTQ" 
-   title="h_D23LsDEeWFwqVFFMDLTQ"/>
+   title="h_D23LsDEeWFwqVFFMDLTQ"/> 
 
 **WARNING**: Mind the leading and trailing single quotes for the ``--data`` argument. Do not use double quotes instead of these single quotes, otherwise curl will remove the double quotes in the XML payload itself, 
 and send invalid XML which will be rejected by the server. You may use the ``--trace-ascii -`` argument (the last dash here means *stdout*) instead of ``--verbose``, in order to check the actual request body sent by ``curl``. 
@@ -278,10 +278,11 @@ To check the proper deployment and operation of the Authorization Server, perfor
     Content-Type: application/xml
     
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-    <ns2:resources 
-      xmlns:ns2="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
-      ... list of links to policy domains omitted here... 
-    </ns2:resources>
+    <resources 
+      xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:atom="http://www.w3.org/2005/Atom">
+      <atom:link rel="item" href="1XepFknrEea2mQAdYFsFBQ" title="1XepFknrEea2mQAdYFsFBQ"/>
+      ... list of links to other policy domains omitted here... 
+    </resources>
 
 You can check the exact body format in the representation element of response code 200 for method ``getDomains``, and all other API resources and operations in general, 
 in the WADL (Web Application Description Language) document available at the following URL::

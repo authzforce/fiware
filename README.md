@@ -25,3 +25,15 @@ Then run:
 ```shell
 make clean latexpdf
 ```
+
+# Release
+In order to make a release for a new AuthzForce server version, do as follows:
+1. Update `version` and `release` variables in [conf.py], to match the new AuthzForce server version.
+1. Update manuals: [InstallationAndAdministrationGuide.rst] and [UserAndProgrammersGuide.rst]; especially version numbers when they occur.
+1. Update the [Dockerfile](docker/Dockerfile) with the package version.
+1. Update FILAB deployment scripts: [installation.sh](filab.deploy/install.sh), [verif.sh](filab.deploy/verif.sh); especially the package version to match the new AuthzForce server version.
+1. Update CHANGELOG.md with the new version.
+1. After committing and pushing the changes to Github, create a release there with same tag name as the matching release of the AuthzForce server.
+
+# Hotfix
+If you need to fix things on a release, create a hotfix release by adding/incrementing a letter as suffix to the AuthzForce server version, e.g. `1.2.3a` would be the first documentation fix for AuthzForce version `1.2.3` (the tag would be `release-1.2.3a`), `1.2.3b` would be the second hotfix, etc.

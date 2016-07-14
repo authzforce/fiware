@@ -7,7 +7,7 @@ XACML-based access control policies and provide authorization decisions based on
 given access request. This guide explains how to use the API.
 
 **If you have been using a previous version of AuthZForce, check the** 
-`release notes <https://github.com/authzforce/server/blob/release-5.3.0/CHANGELOG.md#530>`_ 
+`release notes <https://github.com/authzforce/server/blob/release-5.4.0/CHANGELOG.md#530>`_ 
 **to know what is changed and what is new.**
 
 Background and Detail
@@ -39,11 +39,21 @@ AuthZForce provides the following APIs:
 
 The full API (RESTful) is described by a document written in the Web Application Description Language format (WADL) and
 associated XML schema files available in
-`Authzforce rest-api-model project files <https://github.com/authzforce/rest-api-model/tree/release-5.2.0/src/main/resources>`_.
+`Authzforce rest-api-model project files <https://github.com/authzforce/rest-api-model/tree/release-5.3.1/src/main/resources>`_.
 
 XACML is the main international OASIS standard for access control language and request-response formats, that addresses
 most use cases of access control. AuthZForce supports the full core XACML 3.0 language; therefore it allows to enforce
 generic and complex access control policies.
+
+Note for programmers parsing XML manually or with namespace-UNaware parsers
+---------------------------------------------------------------------------
+In all the sample XML outputs shown in the next sections, the XML namespace prefixe of any API response element, 
+such as the XACML ``Response`` element, might vary from an AuthzForce run time to another, 
+but it is always the same XML element as the prefix is always mapped to the same namespace, 
+such as ``urn:oasis:names:tc:xacml:3.0:core:schema:wd-17`` (XACML 3.0 namespace) for the XACML ``Response``. 
+Therefore, any valid (namespace-aware) XML parser will handle it equally, no matter the namespace prefix.
+Beware of that XML namespace-prefix mapping issue if you are parsing XML manually.
+
 
 Attribute-Based Access Control
 ------------------------------
@@ -68,6 +78,62 @@ Domain Management API
 
 The API allows AuthZForce application administrators or administration interfaces to create domains for the users, and
 remove domains once they are no longer used. This part of the API is described in the section :ref:`adminGuideDomainAdmin`. 
+
+The API is provided over HTTP in order to comply with the test assertions 
+``urn:oasis:names:tc:xacml:3.0:profile:rest:assertion:http:client`` and 
+``urn:oasis:names:tc:xacml:3.0:profile:rest:assertion:http:server`` of 
+`REST Profile of XACML v3.0 Version 1.0 <http://docs.oasis-open.org/xacml/xacml-rest/v1.0/xacml-rest-v1.0.html>`_.
+
+Each AuthzForce domain represents an independent *RESTful XACML system*, in the context of the 
+`REST Profile of XACML v3.0 Version 1.0`_.
+
+End-users may retrieve the domain's resource content as follows:
+
+* Method: GET
+* Path: ``/domains/{domainId}``
+* Headers:
+
+    * Accept: ``application/xml; charset=UTF-8``
+    
+For example, this request gets the resource for domain ``iMnxv7sDEeWFwqVFFMDLTQ`` ::
+
+   GET /domains/iMnxv7sDEeWFwqVFFMDLTQ 
+   HTTP/1.1 
+   Accept: application/xml; charset=UTF-8
+
+If the domain exists, the response goes::
+
+   HTTP/1.1 200 OK 
+   Content-Type: application/xml; charset=UTF-8
+ 
+   <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+   <domain 
+    xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
+    xmlns:atom="http://www.w3.org/2005/Atom">
+    <properties externalId="test-domain1">
+     <description>Test domain</description>
+    </properties>
+    <childResources>
+     <atom:link rel="item" href="/properties" title="Domain properties"/>
+     <atom:link rel="item" href="/pap" title="Policy Administration Point"/>
+     <atom:link 
+      rel="http://docs.oasis-open.org/ns/xacml/relation/pdp" 
+      href="/pdp" title="Policy Decision Point"/>
+    </childResources>
+   </domain>
+
+
+If a domain with such ID does not exist, an error 404 is returned.
+
+Therefore, in the context of the `REST Profile of XACML v3.0 Version 1.0`_, 
+the location of the single entry point of a domain-specific RESTful XACML system is ``/domains/{domainId}``,
+and you may get the link to the PDP from the response for the ``GET`` request to this entry point location, 
+looking for the link relation ``http://docs.oasis-open.org/ns/xacml/relation/pdp``. In this respect,
+we comply with test assertions ``urn:oasis:names:tc:xacml:3.0:profile:rest:assertion:home:documentation``,
+``urn:oasis:names:tc:xacml:3.0:profile:rest:assertion:home:status`` and 
+``urn:oasis:names:tc:xacml:3.0:profile:rest:assertion:home:pdp`` of the 
+`REST Profile of XACML v3.0 Version 1.0`_.
+
 The API also allows users to update certain properties of the domain allocated to them: 
 
 * An **externalId** (optional) for the domain, which users/clients can modify and more easily use as reference, as opposed
@@ -91,8 +157,12 @@ For example, this request gets the properties of domain ``iMnxv7sDEeWFwqVFFMDLTQ
 The response goes::
 
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
-   <ns4:domainProperties 
-      xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/5" /> 
+   <domainProperties 
+      xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+      externalId="test-domain1">
+      <description>Test domain</description>
+   </domainProperties> 
+   
 
 You may update the domain properties as follows:
 
@@ -131,11 +201,11 @@ look up the API-defined ID corresponding to a given ``externalId`` as follows::
 The response gives the corresponding domain ID in a link ``href`` attribute::
 
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-   <ns2:resources 
-     xmlns:ns2="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
-     xmlns:ns3="http://www.w3.org/2005/Atom">
-     <ns3:link rel="item" href="iMnxv7sDEeWFwqVFFMDLTQ" title="iMnxv7sDEeWFwqVFFMDLTQ"/>
-   </ns2:resources> 
+   <resources 
+     xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
+     xmlns:atom="http://www.w3.org/2005/Atom">
+     <atom:link rel="item" href="iMnxv7sDEeWFwqVFFMDLTQ" title="iMnxv7sDEeWFwqVFFMDLTQ"/>
+   </resources> 
 
 
 Policy Administration API
@@ -251,7 +321,7 @@ Response::
  Content-Type: application/xml; charset=UTF-8
 
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
- <ns3:link xmlns:ns3="http://www.w3.org/2005/Atom" 
+ <atom:link xmlns:atom="http://www.w3.org/2005/Atom" 
    rel="item" href="P1/1.0" title="Policy 'P1' v1.0"/>
 
 To update a policy, you add a new version of the policy, i.e. you send the same request as above, but with a higher ``Version`` value. 
@@ -279,16 +349,16 @@ The response is the list of links to the versions of the policy ``P1`` available
  Content-Type: application/xml; charset=UTF-8
  
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
- <ns2:resources 
-   xmlns:ns2="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
-   xmlns:ns3="http://www.w3.org/2005/Atom">
-     <ns3:link rel="item" href="1.0"/> 
-     <ns3:link rel="item" href="1.1"/> 
-     <ns3:link rel="item" href="2.0"/>
-     <ns3:link rel="item" href="2.1"/> 
-     <ns3:link rel="item" href="2.2"/> 
+ <resources 
+   xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
+   xmlns:atom="http://www.w3.org/2005/Atom">
+     <atom:link rel="item" href="1.0"/> 
+     <atom:link rel="item" href="1.1"/> 
+     <atom:link rel="item" href="2.0"/>
+     <atom:link rel="item" href="2.1"/> 
+     <atom:link rel="item" href="2.2"/> 
      ...
- </ns2:resources>
+ </resources>
 
 As the ``href`` values are telling you, you may get a specific version of the policy as follows:
 
@@ -324,14 +394,14 @@ For example::
  Accept: application/xml; charset=UTF-8
  
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
- <ns2:resources 
-   xmlns:ns2="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
-   xmlns:ns3="http://www.w3.org/2005/Atom">
-     <ns3:link rel="item" href="root"/> 
-     <ns3:link rel="item" href="P1"/> 
-     <ns3:link rel="item" href="P2"/> 
+ <resources 
+   xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
+   xmlns:atom="http://www.w3.org/2005/Atom">
+     <atom:link rel="item" href="root"/> 
+     <atom:link rel="item" href="P1"/> 
+     <atom:link rel="item" href="P2"/> 
      ...
- </ns2:resources>
+ </resources>
 
 
 Removing Policies and Policy Versions
@@ -533,9 +603,9 @@ root policy ID as before, in which case your policy is already active by now)::
    Content-Type: application/xml; charset=UTF-8
 
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
-   <az:pdpPropertiesUpdate xmlns:az="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+   <pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
     <rootPolicyRefExpression>rbac:policyset</rootPolicyRefExpression>
-   </az:pdpPropertiesUpdate>
+   </pdpPropertiesUpdate>
 
 The policy is now enforced by the PDP as described in the next section.
 
@@ -560,11 +630,11 @@ For example, below is a HTTP GET request and response for the policy repository 
    Content-Type: application/xml
  
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-   <ns2:prpProperties xmlns:ns2="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+   <prpProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
       <maxPolicyCount>10</maxPolicyCount>
       <maxVersionCountPerPolicy>10</maxVersionCountPerPolicy>
       <versionRollingEnabled>true</versionRollingEnabled>
-   </ns2:prpProperties>
+   </prpProperties>
  
 The HTTP PUT request to update the properties has a body that is similar to the GET response::
 
@@ -572,11 +642,11 @@ The HTTP PUT request to update the properties has a body that is similar to the 
    Content-Type: application/xml
  
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-   <az:prpProperties xmlns:az="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+   <prpProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
       <maxPolicyCount>4</maxPolicyCount>
       <maxVersionCountPerPolicy>2</maxVersionCountPerPolicy>
       <versionRollingEnabled>true</versionRollingEnabled>
-   </az:prpProperties>  
+   </prpProperties>  
 
 The response format is the same as for the GET request.
 
@@ -680,8 +750,8 @@ Follow the example of request/response below to get the current PDP properties i
    Content-Type: application/xml
  
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-   <ns2:pdpProperties 
-    xmlns:ns2="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+   <pdpProperties 
+    xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
     lastModifiedTime="2016-05-28T14:21:35.730Z">
     <feature 
      type="urn:ow2:authzforce:feature-type:pdp:core" 
@@ -706,7 +776,7 @@ Follow the example of request/response below to get the current PDP properties i
      <refPolicyRef Version="1.0">PPS:Manager</refPolicyRef>
      ...(content omitted)...
     </applicablePolicies>
-   </ns2:pdpProperties>  
+   </pdpProperties>  
 
 As you can see, the GET response provides extra information such as:
 
@@ -720,12 +790,12 @@ The HTTP PUT request to update the PDP properties goes as follows::
    Content-Type: application/xml
  
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-   <az:pdpPropertiesUpdate xmlns:az="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+   <pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
     <feature 
      type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
      enabled="true">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-lax</feature>
     <rootPolicyRefExpression>root</rootPolicyRefExpression>
-   </az:pdpPropertiesUpdate>
+   </pdpPropertiesUpdate>
 
 This example sets the root policy reference to the latest version of the policy with ``PolicySetId = 'root'`` that must exist in the domain (see `Adding and updating Policies`_), 
 and enables support for the XACML Multiple Decision profile with repeated attribute categories (*urn:oasis:names:tc:xacml:3.0:profile:multiple:repeated-attribute-categories*).
@@ -844,12 +914,12 @@ The following example enables the datatype ``dnsName-value`` (defined in DLP/NAC
    Content-Type: application/xml
  
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-   <az:pdpPropertiesUpdate xmlns:az="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+   <pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
     <feature 
      type="urn:ow2:authzforce:feature-type:pdp:data-type" 
      enabled="true">urn:oasis:names:tc:xacml:3.0:data-type:dnsName-value</feature>
       <rootPolicyRefExpression>root</rootPolicyRefExpression>
-   </az:pdpPropertiesUpdate>
+   </pdpPropertiesUpdate>
 
 
 Function Extensions
@@ -954,7 +1024,7 @@ provided that the AuthZForce PDP Core Tests JAR has been deployed (see previous 
    Content-Type: application/xml
  
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-   <az:pdpPropertiesUpdate xmlns:az="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+   <pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
     <feature 
      type="urn:ow2:authzforce:feature-type:pdp:data-type" 
      enabled="true">urn:oasis:names:tc:xacml:3.0:data-type:dnsName-value</feature>
@@ -962,7 +1032,7 @@ provided that the AuthZForce PDP Core Tests JAR has been deployed (see previous 
      type="urn:ow2:authzforce:feature-type:pdp:data-type" 
      enabled="true">urn:oasis:names:tc:xacml:3.0:data-type:dnsName-value-equal</feature>
     <rootPolicyRefExpression>root</rootPolicyRefExpression>
-   </az:pdpPropertiesUpdate>
+   </pdpPropertiesUpdate>
 
 
 Combining Algorithm Extensions
@@ -1054,12 +1124,12 @@ provided that the AuthZForce PDP Core Tests JAR has been deployed (see previous 
    Content-Type: application/xml
  
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-   <az:pdpPropertiesUpdate xmlns:az="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+   <pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
     <feature 
      type="urn:ow2:authzforce:feature-type:pdp:combining-algorithm" 
      enabled="true">urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:on-permit-apply-second</feature>
     <rootPolicyRefExpression>root</rootPolicyRefExpression>
-   </az:pdpPropertiesUpdate>
+   </pdpPropertiesUpdate>
 
 
 Request Filter Extensions
@@ -1219,12 +1289,12 @@ provided that the AuthZForce PDP Core Tests JAR has been deployed (see previous 
    Content-Type: application/xml
  
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-   <az:pdpPropertiesUpdate xmlns:az="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+   <pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
     <feature 
      type="urn:ow2:authzforce:feature-type:pdp:result-filter" 
      enabled="true">urn:ow2:authzforce:feature:pdp:result-filter:multiple:test-combined-decision</feature>
     <rootPolicyRefExpression>root</rootPolicyRefExpression>
-   </az:pdpPropertiesUpdate>
+   </pdpPropertiesUpdate>
 
 
 Attribute Providers
@@ -1352,7 +1422,7 @@ The steps to integrate the extension into the AuthZForce Server go as follows:
    `Tomcat HowTo <http://wiki.apache.org/tomcat/HowTo#How_do_I_add_JARs_or_classes_to_the_common_classloader_without_adding_them_to_.24CATALINA_HOME.2Flib.3F>`_.
 
 #. Import your attribute provider XML schema in the XML schema file ``/opt/authzforce-ce-server/conf/authzforce-ext.xsd``, using ``namespace`` **only** (no ``schemaLocation``), 
-   like in the `example from Authzforce code <https://github.com/authzforce/server/blob/release-5.3.0/webapp/src/test/server.conf/authzforce-ce/authzforce-ext.xsd>`_
+   like in the `example from Authzforce code <https://github.com/authzforce/server/blob/release-5.4.0/webapp/src/test/server.conf/authzforce-ce/authzforce-ext.xsd>`_
    with this schema import for Authzforce ``TestAttributeProvider``::
 
     <xs:import namespace="http://authzforce.github.io/core/xmlns/test/3" />
@@ -1360,7 +1430,7 @@ The steps to integrate the extension into the AuthZForce Server go as follows:
 #. Add a ``uri`` element to XML catalog file ``/opt/authzforce-ce-server/conf/catalog.xml``, with your attribute
    Provider XML namespace as ``name`` attribute value, and, the location of your XML schema
    file within the JAR, as ``uri`` attribute value, prefixed by ``classpath:``. For example, in the
-   `sample XML catalog from Authzforce source code <https://github.com/authzforce/server/blob/release-5.3.0/webapp/src/test/server.conf/authzforce-ce/catalog.xml>`_,
+   `sample XML catalog from Authzforce source code <https://github.com/authzforce/server/blob/release-5.4.0/webapp/src/test/server.conf/authzforce-ce/catalog.xml>`_,
    we add the following line for Authzforce ``TestAttributeProvider``::
 
     <uri 
@@ -1394,8 +1464,8 @@ testing and documentation purposes, it is not available in a default installatio
    Content-Type: application/xml; charset=UTF-8
 
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
-   <az:attributeProviders 
-    xmlns:az="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+   <attributeProviders 
+    xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
     xmlns:xacml="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"> 
     <attributeProvider 
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
@@ -1406,11 +1476,11 @@ testing and documentation purposes, it is not available in a default installatio
       <xacml:Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:example:attribute:role" 
        IncludeInResult="false">
        <xacml:AttributeValue 
-        DataType="http://www.w3.org/2001/XMLSchema#string">Physician</ns3:AttributeValue>
+        DataType="http://www.w3.org/2001/XMLSchema#string">Physician</xacml:AttributeValue>
       </xacml:Attribute>
      </xacml:Attributes>
     </attributeProvider>
-   </az:attributeProviders>
+   </attributeProviders>
 
 The response is the new attribute provider configuration from the request.
 
@@ -1440,9 +1510,9 @@ For example, this request gets the PDP attribute providers of domain ``iMnxv7sDE
    Accept: application/xml; charset=UTF-8
    
    <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
-   <ns4:attributeProviders xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+   <attributeProviders xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
      ...
-   </ns4:attributeProviders>
+   </attributeProviders>
 
 
 Policy Decision API
@@ -1453,8 +1523,11 @@ in the request and possibly other attributes resolved by the PDP itself. The Aut
 or ``Deny``. The PDP is able to resolve extra attributes not provided directly in the request, such as the current
 date/time (environment attribute).
 
-The PDP provides an HTTP RESTful API for requesting authorization decisions. The HTTP request must be formatted as
-follows:
+The PDP provides an HTTP RESTful API for requesting authorization decisions, that complies with test assertions 
+``urn:oasis:names:tc:xacml:3.0:profile:rest:assertion:pdp:xacml:status``, ``urn:oasis:names:tc:xacml:3.0:profile:rest:assertion:pdp:xacml:body``
+and ``urn:oasis:names:tc:xacml:3.0:profile:rest:assertion:pdp:xacml:invalid`` of `REST Profile of XACML v3.0 Version 1.0`_. 
+
+The HTTP request must be formatted as follows:
 
 * Method: POST
 * Path: ``/domains/{domainId}/pdp``
@@ -1523,15 +1596,14 @@ Response::
  Content-Type: application/xml; charset=UTF-8
 
  <?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
- <ns1:Response xmlns:ns1="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ...>
-    <ns1:Result>
-        <ns1:Decision>Permit</ns1:Decision>
-    </ns1:Result>
- </ns1:Response>
+ <Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ...>
+    <Result>
+        <Decision>Permit</Decision>
+    </Result>
+ </Response>
 
-*Note for developers parsing XML manually or with namespace-UNaware parsers: the namespace prefix of the* ``Response`` *element -* ``ns1``
-*in this example - might vary from a run time to another, but it is always the same XML element as the prefix is always mapped to* ``urn:oasis:names:tc:xacml:3.0:core:schema:wd-17``
-*(XACML 3.0 namespace). Therefore, any valid (namespace-aware) XML parser will handle it equally, no matter the namespace prefix.*
+If the XACML request was invalid (invalid format), an error 400 is returned.
+
 
 Fast Infoset
 ------------

@@ -4,7 +4,7 @@
 # use ./mycomand || true
 
 # log into the VM and check the service
-# use debian user for Debian7, ubuntu por Ubuntu12.04/Ubuntu14.04, centos for Centos6/Centos7
+# use debian user for Debian7, ubuntu for Ubuntu12.04/Ubuntu14.04, centos for Centos6/Centos7
 
 # Check that AuthzForce webapp is up and running
 # Wait for 20 sec max and check every 5 sec
@@ -12,7 +12,7 @@ max_iterations=5
 iterations=0
 until [[ "`curl --silent --show-error --connect-timeout 5 --max-time 10 --request GET http://$IP:8080/authzforce-ce/domains | grep 'resources'`" != "" || $iterations -gt $max_iterations ]];
 do
-  echo --- waiting 5 more seconds for Authzforce app to start
+  echo --- waiting 5 more seconds for AuthzForce app to start
   sleep 5
   let "iterations=iterations+1"
   echo "Status check $iterations/$max_iterations"
