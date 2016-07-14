@@ -36,7 +36,7 @@ In order to make a release for a new AuthzForce server version, do as follows:
 1. Update FILAB deployment scripts: [install.sh](filab.deploy/install.sh), [verif.sh](filab.deploy/verif.sh); especially the package version to match the new AuthzForce server version.
 1. Update the [changelog](CHANGELOG.md) with the new version.
 1. After committing and pushing the changes to Github, create a release there with same tag name as the matching release of the AuthzForce server.
-1. Create a Docker tag in [the automated builds of authzforce-ce-server's Docker repository](https://hub.docker.com/r/fiware/authzforce-ce-server/~/settings/automated-builds/) with the new release tag as *Name*, save changes and trigger the build.
+1. Create a Docker tag in [build settings of authzforce-ce-server's Docker repository](https://hub.docker.com/r/fiware/authzforce-ce-server/) with the new release tag as *Name*, save changes and trigger the build.
 
 # Hotfix
 If you need to fix things on a release, create a hotfix release by adding/incrementing a letter as suffix to the AuthzForce server version, e.g. `1.2.3a` would be the first documentation fix for AuthzForce version `1.2.3` (the tag would be `release-1.2.3a`), `1.2.3b` would be the second hotfix, etc.
