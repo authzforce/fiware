@@ -723,12 +723,12 @@ Supported PDP features (IDs) by ``type``:
         
   Available request filter IDs: 
 
-   * ``urn:ow2:authzforce:feature:pdp:request-filter:default-lax`` and ``urn:ow2:authzforce:feature:pdp:request-filter:default-strict``: 
+   * *urn:ow2:authzforce:feature:pdp:request-filter:default-lax* and *urn:ow2:authzforce:feature:pdp:request-filter:default-strict*: 
      supports only XACML Request elements marked as *mandatory* in 
      `XACML 3.0 Core specification (§10.2.1) <http://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html#_Toc325047227>`_ 
      (in particular, **no** support for Multiple Decision Profile);
-   * ``urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-lax`` and 
-     ``urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-strict``: 
+   * *urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-lax* and 
+     *urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-strict*: 
      Provides the functionality identified by *urn:oasis:names:tc:xacml:3.0:profile:multiple:repeated-attribute-categories* 
      in `XACML v3.0 Multiple Decision Profile Version 1.0 (§3.3) <http://docs.oasis-open.org/xacml/3.0/multiple/v1.0/cs02/xacml-3.0-multiple-v1.0-cs02.html#_Toc388943334>`_
    
@@ -1065,8 +1065,8 @@ The steps to make your own Combining Algorithm extension go as follows:
     </dependencies> 
     ...
 
-#. Create the Java implementation class, either extending class ``org.ow2.authzforce.core.pdp.api.combining.BaseCombiningAlg<D>`` 
-   or, as second resort, implementing interface ``org.ow2.authzforce.core.pdp.api.combining.CombiningAlg<D>``,
+#. Create the Java implementation class, either extending class *org.ow2.authzforce.core.pdp.api.combining.BaseCombiningAlg<D>* 
+   or, as second resort, implementing interface *org.ow2.authzforce.core.pdp.api.combining.CombiningAlg<D>*,
    where the type parameter ``D`` represents the type of elements combined by the algorithm implementation (policy or rule), 
    more precisely ``D`` must be one of the following:
    
@@ -1241,7 +1241,7 @@ The steps to make your own Result Filter extension go as follows:
     </dependencies> 
     ...
 
-#. Create a Java implementation class implementing interface ``org.ow2.authzforce.core.pdp.api.DecisionResultFilter``.    
+#. Create a Java implementation class implementing interface *org.ow2.authzforce.core.pdp.api.DecisionResultFilter*.    
    This class must have a public no-argument constructor or no constructor.
    You may use 
    `AuthZForce TestCombinedDecisionResultFilter class <https://github.com/authzforce/core/blob/release-4.0.0/src/test/java/org/ow2/authzforce/core/test/custom/TestCombinedDecisionResultFilter.java>`_

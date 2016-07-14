@@ -279,7 +279,8 @@ To check the proper deployment and operation of the Authorization Server, perfor
     
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <resources 
-      xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:atom="http://www.w3.org/2005/Atom">
+      xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
+      xmlns:atom="http://www.w3.org/2005/Atom">
       <atom:link rel="item" href="1XepFknrEea2mQAdYFsFBQ" title="1XepFknrEea2mQAdYFsFBQ"/>
       ... list of links to other policy domains omitted here... 
     </resources>
