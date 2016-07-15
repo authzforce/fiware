@@ -35,7 +35,10 @@ In order to make a release for a new AuthzForce server version, do as follows:
 1. Update the [Dockerfile](docker/Dockerfile) with the package version.
 1. Update FILAB deployment scripts: [install.sh](filab.deploy/install.sh), [verif.sh](filab.deploy/verif.sh); especially the package version to match the new AuthzForce server version.
 1. Update the [changelog](CHANGELOG.md) with the new version.
-1. After committing and pushing the changes to Github, create a release there with same tag name as the matching release of the AuthzForce server.
+1. Commit and push all changes
+1. Check the readthedocs.org HTML/PDF output by building the version *latest* from the [readthedocs.org repository](https://readthedocs.org/projects/authzforce-ce-fiware/builds/).
+1. When readthedocs.org ouput is OK, check the Docker build by triggering Docker build with tag name *latest-unstable* (from git branch *master*) on [authzforce-ce-server's Docker repository](https://hub.docker.com/r/fiware/authzforce-ce-server/) (*Build Settings*). Check the result in *Build Details*.
+1. After Docker build is OK, create a release on Github with same tag name as the matching release of the AuthzForce server.
 1. In order to generate readthedocs.org documentation, trigger readthedocs.org to fetch the new tag by updating something in the [authzforce-ce-fiware project Settings in Admin menu](https://readthedocs.org/dashboard/authzforce-ce-fiware/edit/) such as the *Description*. 
 1. In the *Versions* sub-menu of *Admin* on the readthedocs.org repository, you should now see the new tag/version. Check the *Active* checkbox and click *Submit*.
 1. In the *Builds* menu on the readthedocs.org repository, select the new version and click the *Build version:* button. The build is triggered and added to the queue. Wait until the status changes to *Passed*. 
