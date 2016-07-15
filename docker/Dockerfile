@@ -36,6 +36,7 @@ ENV DEBIAN_FRONTEND noninteractive
 #ENV HTTPS_PROXY 'http://user:password@proxy-host:proxy-port'
 
 # Download and install Authzforce Server (service starts automatically)
+# Where there is a command with a pipe, we need to put in between quotes and make it an argument to bash -c command
 RUN apt-get update --assume-yes -qq && apt-get install --assume-yes -qq \
         debconf-utils \
         gdebi \
@@ -44,8 +45,8 @@ RUN apt-get update --assume-yes -qq && apt-get install --assume-yes -qq \
         tomcat7 \
  && rm -rf /var/lib/apt/lists/* \
  && curl --silent --output authzforce-ce-server.deb --location http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/5.4.0/authzforce-ce-server-dist-5.4.0.deb \
- && echo -e "authzforce-ce-server\tauthzforce-ce-server/restartTomcat\tboolean\tfalse" | debconf-set-selections \
- && echo -e "authzforce-ce-server\tauthzforce-ce-server/keepSamples\tboolean\ttrue" | debconf-set-selections \
+ && bash -c "echo -e 'authzforce-ce-server\tauthzforce-ce-server/restartTomcat\tboolean\tfalse' | debconf-set-selections" \
+ && bash -c "echo -e 'authzforce-ce-server\tauthzforce-ce-server/keepSamples\tboolean\ttrue' | debconf-set-selections" \
  && gdebi --quiet --non-interactive authzforce-ce-server.deb \
  && rm -f authzforce-ce-server.deb \
  && sed -i 's|^JAVA_OPTS\s*=.*$|JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Xms1024m -Xmx1024m -XX:+UseConcMarkSweepGC -XX:MaxNewSize=384m -XX:MaxPermSize=128m -server"|' /etc/default/tomcat7
