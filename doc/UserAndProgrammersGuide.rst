@@ -891,12 +891,12 @@ Integrating an Attribute Datatype extension into AuthZForce Server
 
 This section assumes you have an Attribute Datatype extension in form of a JAR, typically produced by the process described in the previous section. 
 You may use AuthZForce PDP Core Tests JAR if you only wish to test the examples in this documentation. 
-This JAR is `available on Maven Central <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core/4.0.0/authzforce-ce-core-4.0.0-tests.jar>`_.
+This JAR is `available on Maven Central <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core/4.0.2/authzforce-ce-core-4.0.2-tests.jar>`_.
 
 The steps to integrate the extension into the AuthZForce Server go as follows:
 
 #. Make the JAR - and any extra dependency - visible from the AuthZForce webapp in Tomcat. 
-   One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-4.0.0-tests.jar`` in our example) 
+   One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-4.0.2-tests.jar`` in our example) 
    into ``/opt/authzforce-ce-server/webapp/WEB-INF/lib``. For other ways, please refer to
    `Tomcat HowTo <http://wiki.apache.org/tomcat/HowTo#How_do_I_add_JARs_or_classes_to_the_common_classloader_without_adding_them_to_.24CATALINA_HOME.2Flib.3F>`_.
 
@@ -998,12 +998,12 @@ Integrating a Function extension into AuthZForce Server
 
 This section assumes you have a Function extension in form of a JAR, typically produced by the process described in the previous section. 
 You may use AuthZForce PDP Core Tests JAR if you only wish to test the examples in this documentation. 
-This JAR is `available on Maven Central <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core/4.0.0/authzforce-ce-core-4.0.0-tests.jar>`_.
+This JAR is `available on Maven Central <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core/4.0.2/authzforce-ce-core-4.0.2-tests.jar>`_.
 
 The steps to integrate the extension into the AuthZForce Server go as follows:
 
 #. Make the JAR - and any extra dependency - visible from the AuthZForce webapp in Tomcat. 
-   One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-4.0.0-tests.jar`` in our example) 
+   One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-4.0.2-tests.jar`` in our example) 
    into ``/opt/authzforce-ce-server/webapp/WEB-INF/lib``. For other ways, please refer to
    `Tomcat HowTo <http://wiki.apache.org/tomcat/HowTo#How_do_I_add_JARs_or_classes_to_the_common_classloader_without_adding_them_to_.24CATALINA_HOME.2Flib.3F>`_.
 
@@ -1100,12 +1100,12 @@ Integrating a Combining Algorithm extension into AuthZForce Server
 
 This section assumes you have a Combining Algorithm extension in form of a JAR, typically produced by the process described in the previous section. 
 You may use AuthZForce PDP Core Tests JAR if you only wish to test the examples in this documentation. 
-This JAR is `available on Maven Central <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core/4.0.0/authzforce-ce-core-4.0.0-tests.jar>`_.
+This JAR is `available on Maven Central <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core/4.0.2/authzforce-ce-core-4.0.2-tests.jar>`_.
 
 The steps to integrate the extension into the AuthZForce Server go as follows:
 
 #. Make the JAR - and any extra dependency - visible from the AuthZForce webapp in Tomcat. 
-   One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-4.0.0-tests.jar`` in our example) 
+   One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-4.0.2-tests.jar`` in our example) 
    into ``/opt/authzforce-ce-server/webapp/WEB-INF/lib``. For other ways, please refer to
    `Tomcat HowTo <http://wiki.apache.org/tomcat/HowTo#How_do_I_add_JARs_or_classes_to_the_common_classloader_without_adding_them_to_.24CATALINA_HOME.2Flib.3F>`_.
 
@@ -1195,7 +1195,7 @@ This section assumes you have a Request Filter extension in form of a JAR, typic
 The steps to integrate the extension into the AuthZForce Server go as follows:
 
 #. Make the JAR - and any extra dependency - visible from the AuthZForce webapp in Tomcat. 
-   One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-4.0.0-tests.jar`` in our example) 
+   One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-4.0.2-tests.jar`` in our example) 
    into ``/opt/authzforce-ce-server/webapp/WEB-INF/lib``. For other ways, please refer to
    `Tomcat HowTo <http://wiki.apache.org/tomcat/HowTo#How_do_I_add_JARs_or_classes_to_the_common_classloader_without_adding_them_to_.24CATALINA_HOME.2Flib.3F>`_.
 
@@ -1263,12 +1263,12 @@ Integrating a Result Filter extension into AuthZForce Server
 
 This section assumes you have a Combining Algorithm extension in form of a JAR, typically produced by the process described in the previous section. 
 You may use AuthZForce PDP Core Tests JAR if you only wish to test the examples in this documentation. 
-This JAR is `available on Maven Central <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core/4.0.0/authzforce-ce-core-4.0.0-tests.jar>`_.
+This JAR is `available on Maven Central <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core/4.0.2/authzforce-ce-core-4.0.2-tests.jar>`_.
 
 The steps to integrate the extension into the AuthZForce Server go as follows:
 
 #. Make the JAR - and any extra dependency - visible from the AuthZForce webapp in Tomcat. 
-   One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-4.0.0-tests.jar`` in our example) 
+   One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-4.0.2-tests.jar`` in our example) 
    into ``/opt/authzforce-ce-server/webapp/WEB-INF/lib``. For other ways, please refer to
    `Tomcat HowTo <http://wiki.apache.org/tomcat/HowTo#How_do_I_add_JARs_or_classes_to_the_common_classloader_without_adding_them_to_.24CATALINA_HOME.2Flib.3F>`_.
 
@@ -1384,7 +1384,7 @@ The steps to make your own PDP Attribute Provider extension for AuthZForce go as
 #. Create your Attribute Provider factory and concrete implementation class (as in the *Factory* design pattern). The factory class must be public, and extend
    ``org.ow2.authzforce.core.pdp.api.CloseableAttributeProviderModule.FactoryBuilder<APM>``, where ``APM`` stands for
    your *Attribute Provider Model Class*; and the factory class must have a public no-argument constructor or no constructor. You may use the
-   `AuthZForce TestAttributeProviderModule class <https://github.com/authzforce/core/blob/release-4.0.0/src/test/java/org/ow2/authzforce/core/test/utils/TestAttributeProviderModule.java>`_
+   `AuthZForce TestAttributeProviderModule class <https://github.com/authzforce/core/blob/release-4.0.0/src/test/java/org/ow2/authzforce/core/test/custom/TestAttributeProviderModule.java>`_
    (used for AuthZForce unit tests only) as an example. In this example, the static nested class ``Factory`` is the one
    extending ``CloseableAttributeProviderModule.FactoryBuilder<TestAttributeProvider>``. Such a class has a factory
    method ``getInstance(APM configuration)`` (``getInstance(TestAttributeProvider conf)`` in the example) that, from an
@@ -1412,12 +1412,12 @@ Integrating an Attribute Provider into AuthZForce Server
 
 This section assumes you have an Attribute Provider extension in form of a JAR, typically produced by the process in the previous section. 
 You may use AuthZForce PDP Core Tests JAR if you only wish to test the examples in this documentation. 
-This JAR is `available on Maven Central <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core/4.0.0/authzforce-ce-core-4.0.0-tests.jar>`_.
+This JAR is `available on Maven Central <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core/4.0.2/authzforce-ce-core-4.0.2-tests.jar>`_.
 
 The steps to integrate the extension into the AuthZForce Server go as follows:
 
 #. Make the JAR - and any extra dependency - visible from the AuthZForce webapp in Tomcat. 
-   One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-4.0.0-tests.jar`` in our example) 
+   One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-4.0.2-tests.jar`` in our example) 
    into ``/opt/authzforce-ce-server/webapp/WEB-INF/lib``. For other ways, please refer to
    `Tomcat HowTo <http://wiki.apache.org/tomcat/HowTo#How_do_I_add_JARs_or_classes_to_the_common_classloader_without_adding_them_to_.24CATALINA_HOME.2Flib.3F>`_.
 
