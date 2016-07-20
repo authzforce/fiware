@@ -1367,6 +1367,15 @@ The steps to make your own PDP Attribute Provider extension for AuthZForce go as
         <bindingDirectory>src/main/jaxb</bindingDirectory>
         <schemaDirectory>src/main/resources</schemaDirectory>
        </configuration>
+       <executions>
+				<execution>
+					<id>jaxb-generate-compile-sources</id>
+					<phase>generate-sources</phase>
+					<goals>
+						<goal>generate</goal>
+					</goals>
+				</execution>
+			 </executions>
       </plugin>
       ...
      </plugins>
