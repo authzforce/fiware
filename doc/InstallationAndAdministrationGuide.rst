@@ -33,7 +33,9 @@ Minimal setup
      In the end, you should have the package ``oracle-java7-installer`` installed.
 #. Install Tomcat 7: ``$ sudo aptitude install tomcat7``.
 #. Download the binary (Ubuntu package with ``.deb`` extension) release of AuthZForce 
-   from `Maven Central Repository <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/5.4.0/>`_. You get a file called ``authzforce-ce-server-dist-5.4.0.deb``.
+   from `Maven Central Repository <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/5.4.0/>`_. You get a file called ``authzforce-ce-server-dist-5.4.0.deb``:
+    
+    $ wget http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/5.4.0/authzforce-ce-server-dist-5.4.0.deb
 #. Copy this file to the host where you want to install the software.
 #. On the host, from the directory where you copied this file, run the following commands::
 
