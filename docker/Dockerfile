@@ -21,10 +21,18 @@
 # Tips to do an unattended installation on Debian/Ubuntu: 
 # http://www.microhowto.info/howto/perform_an_unattended_installation_of_a_debian_package.html
 
-FROM ubuntu:14.04
+# The alternative is to use FROM ubuntu:* then install tomcat ubuntu package and use upstart/sysctl init script but this is not the way to go:
+# https://github.com/docker/docker/issues/6800
+FROM tomcat:7-jre7
 MAINTAINER Cyril Dangerville (Contact via http://catalogue.fiware.org/enablers/authorization-pdp-authzforce)
 
 ENV DEBIAN_FRONTEND noninteractive
+# Set UTF-8 English Locale 
+RUN locale-gen en_US en_US.UTF-8
+RUN dpkg-reconfigure locales
+ENV LANG en_US.UTF-8 
+ENV LANGUAGE en_US:en 
+ENV LC_ALL en_US.UTF-8
 
 # Proxy configuration (if you are building from behind a proxy)
 # Next release of docker 1.9.0 should allow you to configure these by passing build-time arguments
@@ -35,23 +43,32 @@ ENV DEBIAN_FRONTEND noninteractive
 #ENV HTTP_PROXY 'http://user:password@proxy-host:proxy-port'
 #ENV HTTPS_PROXY 'http://user:password@proxy-host:proxy-port'
 
+ENV JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Xms1024m -Xmx1024m -XX:+UseConcMarkSweepGC -server"
+
+ENV AUTHZFORCE_SERVER_VERSION="5.4.0"
+ENV AUTHZFORCE_SERVER_PACKAGE_FILENAE=
+ENV AUTHZFORCE_SERVER_DOWNLOAD_URL="http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/$AUTHZFORCE_SERVER_VERSION/authzforce-ce-server-dist-$AUTHZFORCE_SERVER_VERSION.deb"
+
 # Download and install Authzforce Server (service starts automatically)
 # Where there is a command with a pipe, we need to put in between quotes and make it an argument to bash -c command
-RUN apt-get update --assume-yes -qq && apt-get install --assume-yes -qq \
+RUN apt-get update --assume-yes -qq && \
+ apt-get install --assume-yes -qq \
+        locales-all \ 
+        locales \
+        less \
+        apt-utils \ 
         debconf-utils \
         gdebi \
-        curl \
-        openjdk-7-jdk \
-        tomcat7 \
- && rm -rf /var/lib/apt/lists/* \
- && curl --silent --output authzforce-ce-server.deb --location http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/5.4.0/authzforce-ce-server-dist-5.4.0.deb \
- && bash -c "echo -e 'authzforce-ce-server\tauthzforce-ce-server/restartTomcat\tboolean\tfalse' | debconf-set-selections" \
- && bash -c "echo -e 'authzforce-ce-server\tauthzforce-ce-server/keepSamples\tboolean\ttrue' | debconf-set-selections" \
- && gdebi --quiet --non-interactive authzforce-ce-server.deb \
- && rm -f authzforce-ce-server.deb \
- && sed -i 's|^JAVA_OPTS\s*=.*$|JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Xms1024m -Xmx1024m -XX:+UseConcMarkSweepGC -XX:MaxNewSize=384m -XX:MaxPermSize=128m -server"|' /etc/default/tomcat7
-CMD service tomcat7 restart && tail -f /var/lib/tomcat7/logs/catalina.out
-
+        curl && \
+ rm -rf /var/lib/apt/lists/* && \
+ curl --silent --output authzforce-ce-server.deb --location $AUTHZFORCE_SERVER_DOWNLOAD_URL && \
+ dpkg --extract authzforce-ce-server.deb /root/authzforce/ && \
+ mv /root/authzforce/etc/tomcat7/Catalina /usr/local/tomcat/conf/ && \
+ mv /root/authzforce/opt/* /opt/ && \
+ rm -rf /opt/authzforce-ce-server/data/domains/* && \
+ rm -rf /root/authzforce && \
+ rm -f authzforce-ce-server.deb
+# CMD service tomcat7 restart && tail -f /var/lib/tomcat7/logs/catalina.out
 
 ### Exposed ports
 # - App server
