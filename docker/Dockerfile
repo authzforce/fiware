@@ -69,7 +69,7 @@ RUN curl --silent --output authzforce-ce-server.deb --location $AUTHZFORCE_SERVE
  rm -rf /opt/authzforce-ce-server/data/domains/* && \
  rm -rf /root/authzforce && \
  rm -f authzforce-ce-server.deb
-# CMD service tomcat7 restart && tail -f /var/lib/tomcat7/logs/catalina.out
+CMD ["catalina.sh", "run"]
 
 ### Exposed ports
 # - App server
