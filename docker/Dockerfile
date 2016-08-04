@@ -27,12 +27,6 @@ FROM tomcat:7-jre7
 MAINTAINER Cyril Dangerville (Contact via http://catalogue.fiware.org/enablers/authorization-pdp-authzforce)
 
 ENV DEBIAN_FRONTEND noninteractive
-# Set UTF-8 English Locale 
-RUN locale-gen en_US en_US.UTF-8
-RUN dpkg-reconfigure locales
-ENV LANG en_US.UTF-8 
-ENV LANGUAGE en_US:en 
-ENV LC_ALL en_US.UTF-8
 
 # Proxy configuration (if you are building from behind a proxy)
 # Next release of docker 1.9.0 should allow you to configure these by passing build-time arguments
@@ -60,8 +54,15 @@ RUN apt-get update --assume-yes -qq && \
         debconf-utils \
         gdebi \
         curl && \
- rm -rf /var/lib/apt/lists/* && \
- curl --silent --output authzforce-ce-server.deb --location $AUTHZFORCE_SERVER_DOWNLOAD_URL && \
+ rm -rf /var/lib/apt/lists/* 
+ 
+RUN locale-gen en_US en_US.UTF-8
+RUN dpkg-reconfigure locales
+ENV LANG en_US.UTF-8 
+ENV LANGUAGE en_US:en 
+ENV LC_ALL en_US.UTF-8 
+
+RUN curl --silent --output authzforce-ce-server.deb --location $AUTHZFORCE_SERVER_DOWNLOAD_URL && \
  dpkg --extract authzforce-ce-server.deb /root/authzforce/ && \
  mv /root/authzforce/etc/tomcat7/Catalina /usr/local/tomcat/conf/ && \
  mv /root/authzforce/opt/* /opt/ && \
