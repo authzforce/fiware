@@ -1,14 +1,16 @@
 FORMAT: 1A
 HOST: http://authzforce.github.io/fiware-authorization-pdp/api/v2/
 TITLE: FIWARE Authorization PDP API Specification
-DATE: 15 January 2016
-VERSION: 5.1
-PREVIOUS_VERSION: 4.4
+DATE: 12 August 2016
+VERSION: 5.2
+PREVIOUS_VERSION: 5.1
 APIARY_PROJECT: authzforce-ce
+GITHUB_SOURCE: https://github.com/authzforce/fiware.git
+SPEC_URL: http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php?title=FIWARE.OpenSpecification.Security.AuthorizationPDP_R5
 
 # Abstract
 
-This specification defines the FIWARE Authorization PDP API. FIWARE Authorization PDP is short for FIWARE Authorization PDP Generic Enabler which enables PEPs (Policy Enforcement Points) to get an authorization decision for a given access request, based on access control policies, and various attributes in the context of the access request: the requester, the requested resource, the requested action, etc. The API follows the REST architecture style, and complies with XACML v3.0. XACML (eXtensible Access Control Markup Language) is a OASIS standard for authorization policy syntax and evaluation logic, as well as for the authorization decision request/response format. The PDP (Policy Decision Point) and the PEP (Policy Enforcement Point) terms are defined in the XACML standard.
+This specification defines the FIWARE Authorization PDP API. FIWARE Authorization PDP is short for FIWARE Authorization PDP Generic Enabler which enables PEPs (Policy Enforcement Points) to get an authorization decision for a given access request, based on access control policies, and various attributes in the context of the access request: the requester, the requested resource, the requested action, etc. The API follows the REST architecture style, and complies with XACML v3.0 core specification and the REST Profile of XACML v3.0. XACML (eXtensible Access Control Markup Language) is a OASIS standard for authorization policy syntax and evaluation logic, as well as for the authorization decision request/response format. The PDP (Policy Decision Point) and the PEP (Policy Enforcement Point) terms are defined in the XACML standard.
 
 ## Editors
 
@@ -18,11 +20,13 @@ This specification defines the FIWARE Authorization PDP API. FIWARE Authorizatio
 
 This is a work in progress and is changing on a daily basis.
 
-This specification is licensed under the [FIWARE Open Specification License](http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_(implicit_patents_license)).
-
 ## Copyright
 
 Copyright © 2014-2016 by [THALES](http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/Thales_sv).
+
+## License
+
+This specification is licensed under the [FIWARE Open Specification License](http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_(implicit_patents_license)).
 
 
 # Specification
@@ -36,8 +40,8 @@ The FIWARE Authorization PDP API specification defines a RESTful API of an Autho
 * Managing multiple PDPs, one per domain (aka tenant), in order to provide multi-tenancy.
 
 This APIARY blueprint gives a user-friendly description of the API. 
-However, the official API reference for a specific release is available in a WADL (Web Application Description Language) 
-and XML schema files on the [catalogue entry](http://catalogue.fiware.org/enablers/authorization-pdp-authzforce/downloads). 
+However, the official API reference is available in a WADL (Web Application Description Language) 
+and XML schema files on the [Github repository of AuthZForce REST API model project](https://github.com/authzforce/rest-api-model/tree/release-5.2.0/src/main/resources). 
 From this WADL (and associated XSD files), you can generate code automatically for various languages, e.g. Apache CXF's WADL2Java plugin for Java.
 
 ## Conformance
@@ -107,6 +111,16 @@ Policy administration domain
 
 + Parameters
     + domainId: 1234ABCD (string, required) - Domain ID
+
+## Get Domain Sub-resources [GET]
+Retrieves links to sub-resources in the domain. This must include a link to the PDP (`/pdp` as described later on) as specified by the [REST Profile of XACML v3.0 Version 1.0](http://docs.oasis-open.org/xacml/xacml-rest/v1.0/xacml-rest-v1.0.html), in test assertion [urn:oasis:names:tc:xacml:3.0:profile:rest:assertion:home:pdp](http://docs.oasis-open.org/xacml/xacml-rest/v1.0/cs02/xacml-rest-v1.0-cs02.html#_Toc399235433).
+
++ Response 200 (application/xml)
+
+        <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
+            externalId="my.test.domain">
+            <description>This is a test domain.</description>
+        </domainProperties>
 
 ## Delete domain [DELETE]
 Delete the domain.
@@ -226,6 +240,61 @@ Delete a specific version of a policy. The response is the removed policy versio
 + Response 200 (application/xml)
 
         <PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicySetId="P1" Version="1.0" ... />
+
+
+# Domain PAP - PDP properties [/domains/{domainId}/pap/pdp.properties]
+Policy Administration Point interface to manage PDP properties:
+* One or more optional `feature` elements: extra implementation-specific feature ID. A `feature` element may have a `type` attribute to indicate the category/type of feature, and a `enabled` attribute to indicate whether the feature is actually enabled or not.
+* One mandatory `rootPolicyRefExpression` element of type `{urn:oasis:names:tc:xacml:3.0:core:schema:wd-17}IdReferenceType` (XACML v3.0): expression (with version pattern(s)) to be matched by the PolicySet's `PolicySetId` and `Version` to be enforced by the PDP as root policy. This policy and any other policy referenced (directly or indirectly) from it via XACML PolicySetIdReference must correspond to a resource under URL path '/policies'.
+The documentation of any implementation of this GE must mention what is the default value for this element. 
+
+
+## Update PDP properties [PUT]
+
++ Request (application/xml)
+
+		<pdpPropertiesUpdate 
+			xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+			<feature 
+	     			type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
+				enabled="true">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-lax</feature>
+			...(content omitted)...
+			<rootPolicyRefExpression>root</rootPolicyRefExpression>
+		</pdpPropertiesUpdate>
+
++ Response 200 (application/xml)
+
+		<pdpProperties 
+			xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+	  		lastModifiedTime="2016-05-28T14:21:35.730Z">
+			<feature 
+	    			type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
+				enabled="false">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-strict</feature>
+			<feature 
+				type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
+				enabled="true">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-lax</feature>
+			...(content omitted)...
+			<rootPolicyRefExpression>root</rootPolicyRefExpression>
+		</pdpProperties> 
+
+## Get PDP properties [GET]
+Get a specific version of a policy.
+
++ Response 200 (application/xml)
+
+		<pdpProperties 
+	  		xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+	  		lastModifiedTime="2016-05-28T14:21:35.730Z">
+			<feature 
+				type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
+				enabled="false">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-strict</feature>
+			<feature 
+				type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
+				enabled="true">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-lax</feature>
+	    		...(content omitted)...
+			<rootPolicyRefExpression>root</rootPolicyRefExpression>
+		</pdpProperties>
+
 
 # Domain PDP [/domains/{domainId}/pdp]
 Policy Decision Point.
