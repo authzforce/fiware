@@ -1,80 +1,310 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: http://authzforce.github.io/fiware-authorization-pdp/api/v2/
+TITLE: FIWARE Authorization PDP API Specification
+DATE: 12 August 2016
+VERSION: 5.2
+PREVIOUS_VERSION: 5.1
+APIARY_PROJECT: authzforce-ce
+GITHUB_SOURCE: https://github.com/authzforce/fiware.git
+SPEC_URL: http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php?title=FIWARE.OpenSpecification.Security.AuthorizationPDP
 
-# Authorization PDP API
+# Abstract
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+This specification defines the FIWARE Authorization PDP API. FIWARE Authorization PDP is short for FIWARE Authorization PDP Generic Enabler which enables PEPs (Policy Enforcement Points) to get an authorization decision for a given access request, based on access control policies, and various attributes in the context of the access request: the requester, the requested resource, the requested action, etc. The API follows the REST architecture style, and complies with XACML v3.0 core specification and the REST Profile of XACML v3.0. XACML (eXtensible Access Control Markup Language) is a OASIS standard for authorization policy syntax and evaluation logic, as well as for the authorization decision request/response format. The PDP (Policy Decision Point) and the PEP (Policy Enforcement Point) terms are defined in the XACML standard.
 
-## Questions Collection [/questions]
+## Editors
 
-### List All Questions [GET]
+  + Cyril DANGERVILLE, Thales Services
 
-+ Response 200 (application/json)
+## Status
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
+This is a work in progress and is changing on a daily basis.
 
-### Create a New Question [POST]
+## Copyright
 
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+Copyright © 2014-2016 by [THALES](http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/Thales_sv).
 
-+ Request (application/json)
+## License
 
-        {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
-        }
+This specification is licensed under the [FIWARE Open Specification License](http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_(implicit_patents_license)).
 
-+ Response 201 (application/json)
 
-    + Headers
+# Specification
 
-            Location: /questions/2
+## Introduction
 
-    + Body
+The FIWARE Authorization PDP API specification defines a RESTful API of an Authorization Policy Decision Point (PDP) compliant with the OASIS XACML standard. More specifically, it defines RESTful interfaces for:
 
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
-            }
+* Managing XACML-compliant authorization policies;
+* Requesting authorization decisions based on those policies, in a XACML-compliant request-response format;
+* Managing multiple PDPs, one per domain (aka tenant), in order to provide multi-tenancy.
+
+This APIARY blueprint gives a user-friendly description of the API. 
+However, the official API reference is available in a WADL (Web Application Description Language) 
+and XML schema files on the [Github repository of AuthZForce REST API model project](https://github.com/authzforce/rest-api-model/tree/release-5.2.0/src/main/resources). 
+From this WADL (and associated XSD files), you can generate code automatically for various languages, e.g. Apache CXF's WADL2Java plugin for Java.
+
+## Conformance
+
+All the interfaces described by this specification are mandatory and must be implemented in order to be compliant with. 
+
+## Terminology
+
+### Policy and PolicySet
+
+A *Policy* is a set of *Rules*, and a *PolicySet* is a set of *Policy* elements. 
+A *Rule* consists of a condition on the access request attributes, and a decision – *Permit* or *Deny* - to apply if the condition holds true for the request. 
+A *Policy* (resp. *PolicySet*) combines multiple *Rules* (resp. *Policies*) and therefore multiple decisions together in various ways (defined in the standard) to make the final decision. 
+
+### PDP (Policy Decision Point)
+
+The PDP provides authorization decisions based on various attributes given at runtime by PEPs (Policy Enforcement Points) about each incoming access request, 
+and XACML policies that define multiple rules checking whether those attributes (and therefore the access request) satisfy certain conditions. 
+The attributes provided by the PEP (see below) about each access request may be attributes about the request itself: The request URL, the HTTP method; 
+about the requester: The access requester ID, requester role. The PDP may add attributes to the context on its own, such as the current date and time when the requested is received. 
+By replacing all the attribute references in the policy with these input values, PDP is able to evaluate the policy and determine whether the access should be granted. 
+
+### PAP (Policy Administration Point)
+
+The PAP provides an interface for policy administrators to manage XACML policies to be enforced by the PDP. This endpoint is provided by the Authorization PDP GE as well as a RESTful API interface. 
+The IdM GE also provides a form of graphical interface for the PAP, as part of its access management feature. This feature actually uses the Authorization PDP GE’s PAP API as backend. 
+
+### Domain
+
+The API is designed to be multi-tenant, i.e. it allows users or organizations to work on authorization policies in complete isolation from each other. In this document, we use the term *domain* instead of *tenant*. 
+In this context, a domain mostly consists of a specific dedicated PDP with specific policies. We may use the terms *domain*, *administration domain* and *policy administration domain* interchangeably in this document. 
+
+# REST API
+
+# Domains [/domains]
+Policy administration domains.
+
+## Add domain [POST]
+Create a new administration domain with defined properties, including one called `externalId`. We use the same definition for this property as in the [SCIM schema, § 3.1](https://tools.ietf.org/html/rfc7643#section-3.1).
+The response is the relative link to the REST resource created for the domain with a unique (opaque) ID assigned by the service.
+
++ Request (application/xml)
+
+        <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
+            externalId="my.test.domain">
+            <description>This is a test domain.</description>
+        </domainProperties>
+
++ Response 200 (application/xml)
+
+        <link xmlns="http://www.w3.org/2005/Atom" rel="item" href="1234ABCD" title="1234ABCD"/>
+
+## Get domains [GET /domains{?externalId}]
+Retrieve links to domains. 
+
++ Parameters
+    + externalId: my.test.domain (string, optional) - If specified, only a link to the domain with a matching `externalId` is returned, or none if no match.
+
++ Response 200 (application/xml)
+
+        <resources xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:atom="http://www.w3.org/2005/Atom"> 
+            <atom:link rel="item" href="1234ABCD" title="1234ABCD"/>
+        </resources>
+
+# Domain [/domains/{domainId}]
+Policy administration domain
+
++ Parameters
+    + domainId: 1234ABCD (string, required) - Domain ID
+
+## Get Domain Sub-resources [GET]
+Retrieves links to sub-resources in the domain. This must include a link to the PDP (`/pdp` as described later on) as specified by the [REST Profile of XACML v3.0 Version 1.0](http://docs.oasis-open.org/xacml/xacml-rest/v1.0/xacml-rest-v1.0.html), in test assertion [urn:oasis:names:tc:xacml:3.0:profile:rest:assertion:home:pdp](http://docs.oasis-open.org/xacml/xacml-rest/v1.0/cs02/xacml-rest-v1.0-cs02.html#_Toc399235433).
+
++ Response 200 (application/xml)
+
+        <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
+            externalId="my.test.domain">
+            <description>This is a test domain.</description>
+        </domainProperties>
+
+## Delete domain [DELETE]
+Delete the domain.
+
++ Response 200 (application/xml)
+
+        <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
+            externalId="my.test.domain">
+            <description>This is a test domain.</description>
+        </domainProperties>
+
+# Domain properties [/domains/{domainId}/properties]
+Policy administration domain properties
+
+## Update domain properties [PUT]
+Update the properties of the domain. In this example, we change the `externalId` and description.
+
++ Request (application/xml)
+
+        <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
+            externalId="my.test.domain0">
+            <description>This is a test domain and I want to use it.</description>
+        </domainProperties>
+
++ Response 200 (application/xml)
+
+        <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
+            externalId="my.test.domain0">
+            <description>This is a test domain and I want to use it.</description>
+        </domainProperties>
+
+## Get domain properties [GET]
+Get the properties of the domain.
+
++ Response 200 (application/xml)
+
+        <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
+            externalId="my.test.domain0">
+            <description>This is a test domain and I want to use it.</description>
+        </domainProperties>
+
+# Domain PAP - Policies [/domains/{domainId}/pap/policies]
+Policy Administration Point interface to manage the policies of the domain.
+
+## Add/update a policy [POST]
+Add/update a policy (XACML `PolicySet`) in the domain. The response is the relative link to the REST resource created for the policy version. 
+If there is no existing policy with a `PolicySetId` matching the one in the request, this adds a new policy resource. 
+If a policy exists with same `PolicySetId` but a different `Version`, this adds a new resource for this new policy version under the policy resource. 
+If a policy exists with the same `PolicySetId` and `Version`, this must raise a conflict error and the operation must be canceled.
+
++ Request (application/xml)
+
+        <PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicySetId="P1" Version="1.0" ... />
+
++ Response 200 (application/xml)
+
+        <link xmlns="http://www.w3.org/2005/Atom" rel="item" href="P1/1.0" title="Policy 'P1' v1.0"/>
+
+## Get policies [GET /domains/{domainId}/pap/policies]
+Get the list of domain's policies. The response is the list of links to all policy resources.
+
++ Response 200 (application/xml)
+
+        <resources xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:atom="http://www.w3.org/2005/Atom"> 
+            <atom:link rel="item" href="P1" title="P1"/>
+            <atom:link rel="item" href="P1" title="P2"/>
+            ...
+        </resources>
+
+
+# Domain PAP - Policy [/domains/{domainId}/pap/policies/{policyId}]
+A policy in the domain.
+
++ Parameters
+    + policyId: P1 (string, required) - Policy ID, more precisely the XACML `PolicySetId`.
+
+## Get policy [GET]
+Get the policy, i.e. the links to all versions of the policy.
+
++ Response 200 (application/xml)
+
+        <resources xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:atom="http://www.w3.org/2005/Atom"> 
+            <atom:link rel="item" href="1.0" title="1.0"/>
+            <atom:link rel="item" href="1.1" title="1.1"/>
+            <atom:link rel="item" href="2.0" title="2.0"/>
+            ...
+        </resources>
+
+## Delete policy [DELETE]
+Delete the policy, i.e. all policy versions. The response is the list of all the versions of the removed policy before removal.
+
++ Response 200 (application/xml)
+
+        <resources xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:atom="http://www.w3.org/2005/Atom"> 
+            <atom:link rel="item" href="1.0" title="1.0"/>
+            <atom:link rel="item" href="1.1" title="1.1"/>
+            <atom:link rel="item" href="2.0" title="2.0"/>
+            ...
+        </resources>
+
+# Domain PAP - Policy version [/domains/{domainId}/pap/policies/{policyId}/{version}]
+A policy version.
+
++ Parameters
+    + version: 1.0 (string, required) - Policy version, more precisely the XACML `PolicySet` `Version`.
+
+## Get policy version [GET]
+Get a specific version of a policy.
+
++ Response 200 (application/xml)
+
+        <PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicySetId="P1" Version="1.0" ... />
+
+## Delete policy version [DELETE]
+Delete a specific version of a policy. The response is the removed policy version.
+
++ Response 200 (application/xml)
+
+        <PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicySetId="P1" Version="1.0" ... />
+
+
+# Domain PAP - PDP properties [/domains/{domainId}/pap/pdp.properties]
+Policy Administration Point interface to manage PDP properties:
+* One or more optional `feature` elements: extra implementation-specific feature ID. A `feature` element may have a `type` attribute to indicate the category/type of feature, and a `enabled` attribute to indicate whether the feature is actually enabled or not.
+* One mandatory `rootPolicyRefExpression` element of type `{urn:oasis:names:tc:xacml:3.0:core:schema:wd-17}IdReferenceType` (XACML v3.0): expression (with version pattern(s)) to be matched by the PolicySet's `PolicySetId` and `Version` to be enforced by the PDP as root policy. This policy and any other policy referenced (directly or indirectly) from it via XACML PolicySetIdReference must correspond to a resource under URL path '/policies'.
+The documentation of any implementation of this GE must mention what is the default value for this element. 
+
+
+## Update PDP properties [PUT]
+
++ Request (application/xml)
+
+		<pdpPropertiesUpdate 
+			xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+			<feature 
+	     			type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
+				enabled="true">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-lax</feature>
+			...(content omitted)...
+			<rootPolicyRefExpression>root</rootPolicyRefExpression>
+		</pdpPropertiesUpdate>
+
++ Response 200 (application/xml)
+
+		<pdpProperties 
+			xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+	  		lastModifiedTime="2016-05-28T14:21:35.730Z">
+			<feature 
+	    			type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
+				enabled="false">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-strict</feature>
+			<feature 
+				type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
+				enabled="true">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-lax</feature>
+			...(content omitted)...
+			<rootPolicyRefExpression>root</rootPolicyRefExpression>
+		</pdpProperties> 
+
+## Get PDP properties [GET]
+Get a specific version of a policy.
+
++ Response 200 (application/xml)
+
+		<pdpProperties 
+	  		xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+	  		lastModifiedTime="2016-05-28T14:21:35.730Z">
+			<feature 
+				type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
+				enabled="false">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-strict</feature>
+			<feature 
+				type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
+				enabled="true">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-lax</feature>
+	    		...(content omitted)...
+			<rootPolicyRefExpression>root</rootPolicyRefExpression>
+		</pdpProperties>
+
+
+# Domain PDP [/domains/{domainId}/pdp]
+Policy Decision Point.
+
+## Request authorization decision [POST]
+
++ Request (application/xml)
+
+        <Request xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ... />
+
++ Response 200 (application/xml)
+
+        <Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ... />
