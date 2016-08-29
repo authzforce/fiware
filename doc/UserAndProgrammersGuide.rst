@@ -1643,7 +1643,15 @@ After you `installed and configured KeyRock <http://fiware-idm.readthedocs.org/e
 it to Authzforce, you modify the properties with names prefixed by ``ACCESS_CONTROL_`` in the configuration file
 ``fiware-idm/horizon/openstack_dashboard/local/local_settings.py``
 (`example on KeyRock Github repository <https://github.com/ging/horizon/blob/master/openstack_dashboard/local/local_settings.py.example>`_)
-according to your AuthZForce instance properties. Then go to IdM web interface, and check that the permissions and
+according to your AuthZForce instance properties. For example
+
+   # ACCESS CONTROL GE
+   # URL to Authzforce server (http(s)://HOST:PORT)
+   ACCESS_CONTROL_URL = 'http://127.0.0.1:8080'
+   # Magic key, required only if securing the AZF with a PEP Proxy
+   ACCESS_CONTROL_MAGIC_KEY = 'undefined'
+
+Then restart the IdM to apply changes, and go to IdM web interface, and check that the permissions and
 roles are well configured for your application. You may have to 'trigger' the policy generation in IdM by going to your
 application > *Manage roles* and click *Save* to trigger the XACML generation. More information in
 `KeyRock installation and administration guide <http://fiware-idm.readthedocs.org/en/latest/admin_guide.html>`_.
