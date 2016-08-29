@@ -1650,6 +1650,10 @@ according to your AuthZForce instance properties. For example::
  ACCESS_CONTROL_URL = 'http://127.0.0.1:8080'
  # Magic key, required only if securing the AZF with a PEP Proxy
  ACCESS_CONTROL_MAGIC_KEY = 'undefined'
+ 
+*WARNING*: If you are using KeyRock v5.3.0 or older, you also have to change the content of IDM's template file ``openstack_dashboard/templates/access_control/policy_properties.xacml`` to this (basically the only change consists to remove the 'ns2' namespace prefix)::
+
+ <?xml version="1.0" encoding="UTF-8" standalone="yes"?><pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5"><rootPolicyRefExpression>{{ policy_id }}</rootPolicyRefExpression></pdpPropertiesUpdate>
 
 Then restart the IdM to apply changes, and go to IdM web interface, and check that the permissions and
 roles are well configured for your application. You may have to 'trigger' the policy generation in IdM by going to your
