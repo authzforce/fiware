@@ -40,7 +40,6 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Xms1024m -Xmx1024m -XX:+UseConcMarkSweepGC -server"
 
 ENV AUTHZFORCE_SERVER_VERSION="5.4.1"
-ENV AUTHZFORCE_SERVER_PACKAGE_FILENAE=
 ENV AUTHZFORCE_SERVER_DOWNLOAD_URL="http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/$AUTHZFORCE_SERVER_VERSION/authzforce-ce-server-dist-$AUTHZFORCE_SERVER_VERSION.deb"
 
 # Download and install Authzforce Server (service starts automatically)
