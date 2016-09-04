@@ -2,7 +2,9 @@
 This project is part of [FIWARE](https://www.fiware.org). More info on the [FIWARE catalogue](http://catalogue.fiware.org/enablers/authorization-pdp-authzforce).
 
 This project provides the source of various FIWARE-specific documents and packaging related to AuthZForce Server. AuthZForce Server is FIWARE Authorization PDP GEri (Generic Enabler Reference Implementation):
-- A technical description of the FIWARE Authorization PDP Generic Enabler (GE) that AuthZForce implements, i.e. WADL and XML schemas;
+- Technical specifications of the FIWARE Authorization PDP Generic Enabler (GE)'s API that AuthZForce implements in various forms:
+  - WADL and XML schemas (the reference);
+  - Apiary blueprint (the HTML output is available in [Apiary style](http://docs.authorizationpdp.apiary.io) and [FIWARE style](http://authzforce.github.io/fiware/) ).
 - The source of the GEri's documentation: Installation and Administration guide, User and Programmer Guide, etc. The generated documentation is available for each AuthZForce Server release as standalone HTML/PDF from the [Server release page](https://github.com/authzforce/server/releases), or online on [readthedocs.org](http://readthedocs.org/projects/authzforce-ce-fiware/versions/);
 - The source of the GEri's Docker image published in FIWARE Docker hub.
 
