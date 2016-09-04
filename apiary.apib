@@ -245,7 +245,7 @@ Delete a specific version of a policy. The response is the removed policy versio
 # Domain PAP - PDP properties [/domains/{domainId}/pap/pdp.properties]
 Policy Administration Point interface to manage PDP properties:
 * One or more optional `feature` elements: extra implementation-specific feature ID. A `feature` element may have a `type` attribute to indicate the category/type of feature, and a `enabled` attribute to indicate whether the feature is actually enabled or not.
-* One mandatory `rootPolicyRefExpression` element of type `{urn:oasis:names:tc:xacml:3.0:core:schema:wd-17}IdReferenceType` (XACML v3.0): expression (with version pattern(s)) to be matched by the PolicySet's `PolicySetId` and `Version` to be enforced by the PDP as root policy. This policy and any other policy referenced (directly or indirectly) from it via XACML PolicySetIdReference must correspond to a resource under URL path `/policies`.
+* One mandatory `rootPolicyRefExpression` element of type `{urn:oasis:names:tc:xacml:3.0:core:schema:wd-17}IdReferenceType` (XACML v3.0): expression (with version pattern(s)) to be matched by the PolicySet's `PolicySetId` and `Version` to be enforced by the PDP as root policy. This policy and any other policy referenced (directly or indirectly) from it via XACML PolicySetIdReference must correspond to a resource under URL path '/policies'.
 The documentation of any implementation of this GE must mention what is the default value for this element. 
 
 
@@ -253,47 +253,47 @@ The documentation of any implementation of this GE must mention what is the defa
 
 + Request (application/xml)
 
-		<pdpPropertiesUpdate 
-			xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
-			<feature 
-	     			type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
-				enabled="true">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-lax</feature>
-			...(content omitted)...
-			<rootPolicyRefExpression>root</rootPolicyRefExpression>
-		</pdpPropertiesUpdate>
+        <pdpPropertiesUpdate 
+            xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+            <feature 
+                     type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
+                enabled="true">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-lax</feature>
+            ...(content omitted)...
+            <rootPolicyRefExpression>root</rootPolicyRefExpression>
+        </pdpPropertiesUpdate>
 
 + Response 200 (application/xml)
 
-		<pdpProperties 
-			xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
-	  		lastModifiedTime="2016-05-28T14:21:35.730Z">
-			<feature 
-	    			type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
-				enabled="false">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-strict</feature>
-			<feature 
-				type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
-				enabled="true">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-lax</feature>
-			...(content omitted)...
-			<rootPolicyRefExpression>root</rootPolicyRefExpression>
-		</pdpProperties> 
+        <pdpProperties 
+            xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+              lastModifiedTime="2016-05-28T14:21:35.730Z">
+            <feature 
+                    type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
+                enabled="false">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-strict</feature>
+            <feature 
+                type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
+                enabled="true">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-lax</feature>
+            ...(content omitted)...
+            <rootPolicyRefExpression>root</rootPolicyRefExpression>
+        </pdpProperties> 
 
 ## Get PDP properties [GET]
 Get a specific version of a policy.
 
 + Response 200 (application/xml)
 
-		<pdpProperties 
-	  		xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
-	  		lastModifiedTime="2016-05-28T14:21:35.730Z">
-			<feature 
-				type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
-				enabled="false">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-strict</feature>
-			<feature 
-				type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
-				enabled="true">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-lax</feature>
-	    		...(content omitted)...
-			<rootPolicyRefExpression>root</rootPolicyRefExpression>
-		</pdpProperties>
+        <pdpProperties 
+              xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+              lastModifiedTime="2016-05-28T14:21:35.730Z">
+            <feature 
+                type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
+                enabled="false">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-strict</feature>
+            <feature 
+                type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
+                enabled="true">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-lax</feature>
+                ...(content omitted)...
+            <rootPolicyRefExpression>root</rootPolicyRefExpression>
+        </pdpProperties>
 
 
 # Domain PDP [/domains/{domainId}/pdp]
