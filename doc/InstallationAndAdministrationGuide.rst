@@ -21,7 +21,7 @@ System Requirements
 
 Installation
 ============
-If you are still using a R4 version (4.2.x, 4.3.x or 4.4.x) of AuthZForce and wish to upgrade, please proceed with the `Minimal setup`_ below, to install the new version; then the `Upgrade`_ section that follows, to transfer data from the old version.
+If you are already using an older version of AuthZForce and wish to migrate your setup to the new version, please backup the folder ``/opt/authzforce-ce-server`` first because it will be overwritten by the new version, then proceed with the `Minimal setup`_ below, to install the new version; finally, proceed with the `Upgrade`_ section that follows, to transfer data from the old version.
 
 Minimal setup
 -------------
@@ -33,14 +33,14 @@ Minimal setup
      In the end, you should have the package ``oracle-java7-installer`` installed.
 #. Install Tomcat 7: ``$ sudo aptitude install tomcat7``.
 #. Download the binary (Ubuntu package with ``.deb`` extension) release of AuthZForce 
-   from `Maven Central Repository <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/5.4.0/>`_. You get a file called ``authzforce-ce-server-dist-5.4.0.deb``:
+   from `Maven Central Repository <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/5.4.1/>`_. You get a file called ``authzforce-ce-server-dist-5.4.1.deb``:
     
-    $ wget http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/5.4.0/authzforce-ce-server-dist-5.4.0.deb
+    $ wget http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/5.4.1/authzforce-ce-server-dist-5.4.1.deb
 #. Copy this file to the host where you want to install the software.
 #. On the host, from the directory where you copied this file, run the following commands::
 
     $ sudo aptitude install gdebi curl
-    $ sudo gdebi authzforce-ce-server-dist-5.4.0.deb
+    $ sudo gdebi authzforce-ce-server-dist-5.4.1.deb
 #. At the end, you will see a message giving optional instructions to go through. Please follow them as necessary.
 
 Note that Tomcat default configuration may specify a very low value for the Java ``Xmx`` flag, causing the Authzforce webapp startup to fail. In that case, make sure Tomcat with ``Xmx`` at 1Go or more (2 Go recommended). 
@@ -53,13 +53,13 @@ For example, for Ubuntu 12.04, Tomcat default ``Xmx`` used to be 128m. You can f
 
 Upgrade
 -------
-If you are still using a R4 version (4.2.x, 4.3.x or 4.4.x) of AuthZForce and wish to upgrade, follow these steps:
+If you are still using an older version of AuthZForce and wish to migrate your setup to the new version, assuming you made a backup in a separate location, as told previously, please follow these steps:
 
-#. Download AuthZForce server `upgrader distribution from Maven Central Repository <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-upgrader/5.4.0/authzforce-ce-server-upgrader-5.4.0.tar.gz>`_. You get a file called ``authzforce-ce-server-upgrader-5.4.0.tar.gz``.
+#. Download AuthZForce server `upgrader distribution from Maven Central Repository <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-upgrader/5.4.1/authzforce-ce-server-upgrader-5.4.1.tar.gz>`_. You get a file called ``authzforce-ce-server-upgrader-5.4.1.tar.gz``.
 #. Copy this file to the host where the old AuthZForce Server is installed, and unzip it and change directory::
 
-    $ tar xvzf authzforce-ce-server-upgrader-5.4.0.tar.gz
-    $ cd authzforce-ce-server-upgrader-5.4.0
+    $ tar xvzf authzforce-ce-server-upgrader-5.4.1.tar.gz
+    $ cd authzforce-ce-server-upgrader-5.4.1
 
 #. Follow the instructions in file ``README.html``.
 
@@ -145,6 +145,8 @@ The administrator may change these settings in the various XML files inside the 
   * ``maxPolicyRefDepth``: optional, positive integer that indicates the maximum depth of Policy(Set) reference chaining: ``PolicySet`` 1 -> ``PolicySet`` 2 -> ... -> ``PolicySet`` N; where *->* 
     represents a `XACML PolicySetIdReference`_. No limit if undefined. This property applies only to policies loaded by the PDP, i.e. the root policy 
     and policies referenced from it directly or indirectly via `XACML PolicySetIdReference`_.
+  * ``badRequestStatusDetailLevel``: optional, positive integer (default: 0) that sets the level of detail in the XACML StatusDetail element returned in the Indeterminate Decision Result in case of bad Request (XACML syntax/content is invalid). 
+    Increasing this value usually helps better pinpoint the reason why a particular Request was rejected by the XACML parser. This only applies to the content of the HTTP request body (XACML), it does not apply to HTTP-level errors (e.g. bad HTTP headers), in which case you get a HTTP status code 400 without any XACML response since the request is rejected before the body is passed to the XACML parser.
  
 * ``policies/cm9vdA/0.1.0.xml``: the default root `XACML PolicySet <http://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html#_Toc325047106>`_ enforced by the PDP on the domain. 
   As an administrator, you may change the content of this policy on two conditions:
