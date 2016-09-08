@@ -19,17 +19,20 @@ import shlex
 # on_rtd is whether we are on readthedocs.org
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
-if not on_rtd:  # only import and set the theme if we're building docs locally
+if on_rtd:
+    html_context = {
+        'css_files': [
+            'https://media.readthedocs.org/css/sphinx_rtd_theme.css',
+            'https://media.readthedocs.org/css/readthedocs-doc-embed.css',
+            '_static/fiware_style.css',
+        ],
+    }
+else:
     import sphinx_rtd_theme
     html_theme = 'sphinx_rtd_theme'
     html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
-else:
-    # Override default css with FIWARE style for ReadTheDoc build
-    html_context = {
-        'css_files': [
-            'https://fiware.org/style/fiware_readthedocs.css',
-        ],
-    }
+}
+
 # otherwise, readthedocs.org uses their theme by default, so no need to specify it
 
 
@@ -86,7 +89,7 @@ release = '5.4.1'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = 'en'
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
