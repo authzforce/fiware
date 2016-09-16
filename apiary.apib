@@ -10,7 +10,16 @@ SPEC_URL: http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php?title=
 
 # FIWARE Authorization PDP API Specification
 
-This specification defines the FIWARE Authorization PDP API. FIWARE Authorization PDP is short for FIWARE Authorization PDP Generic Enabler which enables PEPs (Policy Enforcement Points) to get an authorization decision for a given access request, based on access control policies, and various attributes in the context of the access request: the requester, the requested resource, the requested action, etc. The API follows the REST architecture style, and complies with XACML v3.0 core specification and the REST Profile of XACML v3.0. XACML (eXtensible Access Control Markup Language) is a OASIS standard for authorization policy syntax and evaluation logic, as well as for the authorization decision request/response format. The PDP (Policy Decision Point) and the PEP (Policy Enforcement Point) terms are defined in the XACML standard.
+This specification defines a RESTful API of an Authorization Policy Decision Point (PDP) compliant with the OASIS XACML standard. More specifically, it defines RESTful interfaces for:
+
+* Managing XACML-compliant authorization policies;
+* Requesting authorization decisions based on those policies, in a XACML-compliant request-response format;
+* Managing multiple PDPs, one per domain (aka tenant), in order to provide multi-tenancy.
+
+This APIARY blueprint gives a user-friendly description of the API. 
+However, the official API reference is available in a WADL (Web Application Description Language) 
+and XML schema files on the [Github repository of AuthZForce REST API model project](https://github.com/authzforce/rest-api-model/tree/release-5.2.0/src/main/resources). 
+From this WADL (and associated XSD files), you can generate code automatically for various languages, e.g. Apache CXF's WADL2Java plugin for Java.
 
 ## Editors
 
@@ -26,23 +35,7 @@ Copyright © 2014-2016 by [THALES](http://forge.fiware.org/plugins/mediawiki/wik
 
 ## License
 
-This specification is licensed under the [FIWARE Open Specification License](http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_(implicit_patents_license%29).
-
-
-# Specification
-
-## Introduction
-
-The FIWARE Authorization PDP API specification defines a RESTful API of an Authorization Policy Decision Point (PDP) compliant with the OASIS XACML standard. More specifically, it defines RESTful interfaces for:
-
-* Managing XACML-compliant authorization policies;
-* Requesting authorization decisions based on those policies, in a XACML-compliant request-response format;
-* Managing multiple PDPs, one per domain (aka tenant), in order to provide multi-tenancy.
-
-This APIARY blueprint gives a user-friendly description of the API. 
-However, the official API reference is available in a WADL (Web Application Description Language) 
-and XML schema files on the [Github repository of AuthZForce REST API model project](https://github.com/authzforce/rest-api-model/tree/release-5.2.0/src/main/resources). 
-From this WADL (and associated XSD files), you can generate code automatically for various languages, e.g. Apache CXF's WADL2Java plugin for Java.
+This specification is licensed under the [FIWARE Open Specification License (implicit patents license)](https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_%28implicit_patents_license%29).
 
 ## Conformance
 
@@ -74,12 +67,11 @@ The IdM GE also provides a form of graphical interface for the PAP, as part of i
 The API is designed to be multi-tenant, i.e. it allows users or organizations to work on authorization policies in complete isolation from each other. In this document, we use the term *domain* instead of *tenant*. 
 In this context, a domain mostly consists of a specific dedicated PDP with specific policies. We may use the terms *domain*, *administration domain* and *policy administration domain* interchangeably in this document. 
 
-# REST API
-
-# Domains [/domains]
+# Group Domains
+## Resource for all Domains [/domains]
 Policy administration domains.
 
-## Add domain [POST]
+### Add domain [POST]
 Create a new administration domain with defined properties, including one called `externalId`. We use the same definition for this property as in the [SCIM schema, § 3.1](https://tools.ietf.org/html/rfc7643#section-3.1).
 The response is the relative link to the REST resource created for the domain with a unique (opaque) ID assigned by the service.
 
@@ -94,7 +86,7 @@ The response is the relative link to the REST resource created for the domain wi
 
         <link xmlns="http://www.w3.org/2005/Atom" rel="item" href="1234ABCD" title="1234ABCD"/>
 
-## Get domains [GET /domains{?externalId}]
+### Get domains [GET /domains{?externalId}]
 Retrieve links to domains. 
 
 + Parameters
@@ -106,13 +98,14 @@ Retrieve links to domains.
             <atom:link rel="item" href="1234ABCD" title="1234ABCD"/>
         </resources>
 
-# Domain [/domains/{domainId}]
-Policy administration domain
+# Group Domain
+## Resource of a specific administration Domain [/domains/{domainId}]
+Policy administration domain, dedicated to specific tenant or project or workspace, logically isolated from other domains
 
 + Parameters
     + domainId: 1234ABCD (string, required) - Domain ID
 
-## Get Domain Sub-resources [GET]
+### Get Domain Sub-resources [GET]
 Retrieves links to sub-resources in the domain. This must include a link to the PDP (`/pdp` as described later on) as specified by the [REST Profile of XACML v3.0 Version 1.0](http://docs.oasis-open.org/xacml/xacml-rest/v1.0/xacml-rest-v1.0.html), in test assertion [urn:oasis:names:tc:xacml:3.0:profile:rest:assertion:home:pdp](http://docs.oasis-open.org/xacml/xacml-rest/v1.0/cs02/xacml-rest-v1.0-cs02.html#_Toc399235433).
 
 + Response 200 (application/xml)
@@ -122,7 +115,7 @@ Retrieves links to sub-resources in the domain. This must include a link to the 
             <description>This is a test domain.</description>
         </domainProperties>
 
-## Delete domain [DELETE]
+### Delete domain [DELETE]
 Delete the domain.
 
 + Response 200 (application/xml)
@@ -132,10 +125,10 @@ Delete the domain.
             <description>This is a test domain.</description>
         </domainProperties>
 
-# Domain properties [/domains/{domainId}/properties]
+## Resource Domain properties [/domains/{domainId}/properties]
 Policy administration domain properties
 
-## Update domain properties [PUT]
+### Update domain properties [PUT]
 Update the properties of the domain. In this example, we change the `externalId` and description.
 
 + Request (application/xml)
@@ -152,7 +145,7 @@ Update the properties of the domain. In this example, we change the `externalId`
             <description>This is a test domain and I want to use it.</description>
         </domainProperties>
 
-## Get domain properties [GET]
+### Get domain properties [GET]
 Get the properties of the domain.
 
 + Response 200 (application/xml)
@@ -162,10 +155,11 @@ Get the properties of the domain.
             <description>This is a test domain and I want to use it.</description>
         </domainProperties>
 
-# Domain PAP - Policies [/domains/{domainId}/pap/policies]
+# Group Domain Policy Administration Point
+## Resource Domain PAP - Policies [/domains/{domainId}/pap/policies]
 Policy Administration Point interface to manage the policies of the domain.
 
-## Add/update a policy [POST]
+### Add/update a policy [POST]
 Add/update a policy (XACML `PolicySet`) in the domain. The response is the relative link to the REST resource created for the policy version. 
 If there is no existing policy with a `PolicySetId` matching the one in the request, this adds a new policy resource. 
 If a policy exists with same `PolicySetId` but a different `Version`, this adds a new resource for this new policy version under the policy resource. 
@@ -179,7 +173,7 @@ If a policy exists with the same `PolicySetId` and `Version`, this must raise a 
 
         <link xmlns="http://www.w3.org/2005/Atom" rel="item" href="P1/1.0" title="Policy 'P1' v1.0"/>
 
-## Get policies [GET /domains/{domainId}/pap/policies]
+### Get policies [GET /domains/{domainId}/pap/policies]
 Get the list of domain's policies. The response is the list of links to all policy resources.
 
 + Response 200 (application/xml)
@@ -191,13 +185,13 @@ Get the list of domain's policies. The response is the list of links to all poli
         </resources>
 
 
-# Domain PAP - Policy [/domains/{domainId}/pap/policies/{policyId}]
+## Resource Domain PAP - Policy [/domains/{domainId}/pap/policies/{policyId}]
 A policy in the domain.
 
 + Parameters
     + policyId: P1 (string, required) - Policy ID, more precisely the XACML `PolicySetId`.
 
-## Get policy [GET]
+### Get policy [GET]
 Get the policy, i.e. the links to all versions of the policy.
 
 + Response 200 (application/xml)
@@ -209,7 +203,7 @@ Get the policy, i.e. the links to all versions of the policy.
             ...
         </resources>
 
-## Delete policy [DELETE]
+### Delete policy [DELETE]
 Delete the policy, i.e. all policy versions. The response is the list of all the versions of the removed policy before removal.
 
 + Response 200 (application/xml)
@@ -221,20 +215,20 @@ Delete the policy, i.e. all policy versions. The response is the list of all the
             ...
         </resources>
 
-# Domain PAP - Policy version [/domains/{domainId}/pap/policies/{policyId}/{version}]
+## Resource Domain PAP - Policy version [/domains/{domainId}/pap/policies/{policyId}/{version}]
 A policy version.
 
 + Parameters
     + version: 1.0 (string, required) - Policy version, more precisely the XACML `PolicySet` `Version`.
 
-## Get policy version [GET]
+### Get policy version [GET]
 Get a specific version of a policy.
 
 + Response 200 (application/xml)
 
         <PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicySetId="P1" Version="1.0" ... />
 
-## Delete policy version [DELETE]
+### Delete policy version [DELETE]
 Delete a specific version of a policy. The response is the removed policy version.
 
 + Response 200 (application/xml)
@@ -242,14 +236,14 @@ Delete a specific version of a policy. The response is the removed policy versio
         <PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicySetId="P1" Version="1.0" ... />
 
 
-# Domain PAP - PDP properties [/domains/{domainId}/pap/pdp.properties]
+## Resource Domain PAP - PDP properties [/domains/{domainId}/pap/pdp.properties]
 Policy Administration Point interface to manage PDP properties:
 * One or more optional `feature` elements: extra implementation-specific feature ID. A `feature` element may have a `type` attribute to indicate the category/type of feature, and a `enabled` attribute to indicate whether the feature is actually enabled or not.
 * One mandatory `rootPolicyRefExpression` element of type `{urn:oasis:names:tc:xacml:3.0:core:schema:wd-17}IdReferenceType` (XACML v3.0): expression (with version pattern(s)) to be matched by the PolicySet's `PolicySetId` and `Version` to be enforced by the PDP as root policy. This policy and any other policy referenced (directly or indirectly) from it via XACML PolicySetIdReference must correspond to a resource under URL path '/policies'.
 The documentation of any implementation of this GE must mention what is the default value for this element. 
 
 
-## Update PDP properties [PUT]
+### Update PDP properties [PUT]
 
 + Request (application/xml)
 
@@ -277,7 +271,7 @@ The documentation of any implementation of this GE must mention what is the defa
             <rootPolicyRefExpression>root</rootPolicyRefExpression>
         </pdpProperties> 
 
-## Get PDP properties [GET]
+### Get PDP properties [GET]
 Get a specific version of a policy.
 
 + Response 200 (application/xml)
@@ -295,11 +289,11 @@ Get a specific version of a policy.
             <rootPolicyRefExpression>root</rootPolicyRefExpression>
         </pdpProperties>
 
-
-# Domain PDP [/domains/{domainId}/pdp]
+# Group Domain Policy Decision Point
+## Resource Domain PDP [/domains/{domainId}/pdp]
 Policy Decision Point.
 
-## Request authorization decision [POST]
+### Request authorization decision [POST]
 
 + Request (application/xml)
 
