@@ -9,18 +9,20 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Abstract</title>
+    <title>FIWARE Authorization PDP API Specification</title>
     <link href="css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
     <link href="css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/monokai.css">
+    <link rel="stylesheet" href="css/idea.css">
     <script src="js/highlight.pack.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="js/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="js/toc-resize.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="css/api-specification.css">
+    <link rel="stylesheet" type="text/css" href="css/api-specification.css"> 
+    
+
+
     
 </head>
 <body id="respecDocument" class="h-entry">
@@ -41,9 +43,11 @@
 	        
         
 	        
+		        <li><a href="#API-content">FIWARE Authorization PDP API Specification</a></li>
+	        
         
 	        
-		        <li><a href="#API-content">FIWARE Authorization PDP API Specification</a></li>
+        
 	        
         
 	        
@@ -66,74 +70,6 @@
     
     
 
-    
-    
-    <li>
-        
-        <a href="#specification" title = "Specification" > Specification </a>
-        
-    <ul class="toc">
-    
-    
-        <li class="tocline"> <a href="#introduction" title = "Introduction"> Introduction </a>
-
-    
-</li>
-    
-    
-    
-    
-    
-        <li class="tocline"> <a href="#terminology" title = "Terminology"> Terminology </a>
-
-    
-        <ul class="toc">
-        
-            <li class="tocline"> <a href="#policy_and_policyset" title = "Policy and PolicySet"> Policy and PolicySet </a>
-
-    
-</li>
-        
-            <li class="tocline"> <a href="#pdp_(policy_decision_point)" title = "PDP (Policy Decision Point)"> PDP (Policy Decision Point) </a>
-
-    
-</li>
-        
-            <li class="tocline"> <a href="#pap_(policy_administration_point)" title = "PAP (Policy Administration Point)"> PAP (Policy Administration Point) </a>
-
-    
-</li>
-        
-            <li class="tocline"> <a href="#domain" title = "Domain"> Domain </a>
-
-    
-</li>
-        
-        </ul>
-    
-</li>
-    
-    
-   
-
-
-
-    
-
-    
-        <li class="tocline"> <a href="#conformance" title = "Conformance"> Conformance </a>
-
-    
-</li>
-    
-
-    
-
-
- </ul>
-</li>
-
-
 
 
 
@@ -146,13 +82,13 @@
 
                         <li>
                             
-                                <a href="#default_group" title = "Group default">Default</a>
+                                <a href="#resource_group_domains" title = "Group Domains">Group Domains</a>
                             
                             <ul class="toc">
                               
                                 
                                     <li>
-                                        <a href="#resource_domains" title = "Resource Domains">Resource Domains</a>
+                                        <a href="#resource_resource-for-all-domains" title = "Resource Resource for all Domains">Resource Resource for all Domains</a>
                                         <ul class="toc  ">
                                         
                                             
@@ -169,9 +105,19 @@
                                     </li>
                                 
                               
+                            </ul>
+                        </li>
+                      
+
+                        <li>
+                            
+                                <a href="#resource_group_domain" title = "Group Domain">Group Domain</a>
+                            
+                            <ul class="toc">
+                              
                                 
                                     <li>
-                                        <a href="#resource_domain" title = "Resource Domain">Resource Domain</a>
+                                        <a href="#resource_resource-of-a-specific-administration-domain" title = "Resource Resource of a specific administration Domain">Resource Resource of a specific administration Domain</a>
                                         <ul class="toc  ">
                                         
                                             
@@ -190,7 +136,7 @@
                               
                                 
                                     <li>
-                                        <a href="#resource_domain-properties" title = "Resource Domain properties">Resource Domain properties</a>
+                                        <a href="#resource_resource-domain-properties" title = "Resource Resource Domain properties">Resource Resource Domain properties</a>
                                         <ul class="toc  ">
                                         
                                             
@@ -207,9 +153,19 @@
                                     </li>
                                 
                               
+                            </ul>
+                        </li>
+                      
+
+                        <li>
+                            
+                                <a href="#resource_group_domain-policy-administration-point" title = "Group Domain Policy Administration Point">Group Domain Policy Administration Point</a>
+                            
+                            <ul class="toc">
+                              
                                 
                                     <li>
-                                        <a href="#resource_domain-pap-policies" title = "Resource Domain PAP - Policies">Resource Domain PAP - Policies</a>
+                                        <a href="#resource_resource-domain-pap-policies" title = "Resource Resource Domain PAP - Policies">Resource Resource Domain PAP - Policies</a>
                                         <ul class="toc  ">
                                         
                                             
@@ -228,7 +184,7 @@
                               
                                 
                                     <li>
-                                        <a href="#resource_domain-pap-policy" title = "Resource Domain PAP - Policy">Resource Domain PAP - Policy</a>
+                                        <a href="#resource_resource-domain-pap-policy" title = "Resource Resource Domain PAP - Policy">Resource Resource Domain PAP - Policy</a>
                                         <ul class="toc  ">
                                         
                                             
@@ -247,7 +203,7 @@
                               
                                 
                                     <li>
-                                        <a href="#resource_domain-pap-policy-version" title = "Resource Domain PAP - Policy version">Resource Domain PAP - Policy version</a>
+                                        <a href="#resource_resource-domain-pap-policy-version" title = "Resource Resource Domain PAP - Policy version">Resource Resource Domain PAP - Policy version</a>
                                         <ul class="toc  ">
                                         
                                             
@@ -266,7 +222,7 @@
                               
                                 
                                     <li>
-                                        <a href="#resource_domain-pap-pdp-properties" title = "Resource Domain PAP - PDP properties">Resource Domain PAP - PDP properties</a>
+                                        <a href="#resource_resource-domain-pap-pdp-properties" title = "Resource Resource Domain PAP - PDP properties">Resource Resource Domain PAP - PDP properties</a>
                                         <ul class="toc  ">
                                         
                                             
@@ -283,9 +239,19 @@
                                     </li>
                                 
                               
+                            </ul>
+                        </li>
+                      
+
+                        <li>
+                            
+                                <a href="#resource_group_domain-policy-decision-point" title = "Group Domain Policy Decision Point">Group Domain Policy Decision Point</a>
+                            
+                            <ul class="toc">
+                              
                                 
                                     <li>
-                                        <a href="#resource_domain-pdp" title = "Resource Domain PDP">Resource Domain PDP</a>
+                                        <a href="#resource_resource-domain-pdp" title = "Resource Resource Domain PDP">Resource Resource Domain PDP</a>
                                         <ul class="toc  ">
                                         
                                             
@@ -299,8 +265,14 @@
                               
                             </ul>
                         </li>
-                      <li><a href="#examples">Examples</a></li></ul>
+                      
+    <li><a href="#examples">Examples</a></li>
+    </ul>
 </li>
+    
+    
+    
+    
     
     
     
@@ -324,41 +296,16 @@
   <div id="API-content">
   
     
-
 	
 
 	
-
-	
-		
-	
-
-	
-
+		<h1>FIWARE Authorization PDP API Specification </h1>
 	
 
 	
 
 	
 
-	
-
-	
-
-
-
-	<h1>FIWARE Authorization PDP API Specification </h1>
-
-
-
-	
-
-	
-
-	
-
-	
-		<span class="dateLabel">DATE:</span> <span class="dateValue"> 12 August 2016 </span>
 	
 
 	
@@ -373,11 +320,31 @@
 
 
 
+	
+
+	
+
+	
+		<span class="dateLabel">DATE:</span> <span class="dateValue"> 16 September 2016 </span>
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
 
 
-	
-	
-	
+
+
 
 	
 	
@@ -413,6 +380,14 @@
 
 	
 		
+	
+	
+	
+
+	
+	
+	
+
 	
 	
 	
@@ -422,20 +397,20 @@
 	<dl>
 	
 		<dt class="versionLabel">This version:</dt> 
-		<dd class="versionValue"> <a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php?title=FIWARE.OpenSpecification.Security.AuthorizationPDP_R5">
-			http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php?title=FIWARE.OpenSpecification.Security.AuthorizationPDP_R5
+		<dd class="versionValue"> <a href="http://authzforce.github.io/fiware/authorization-pdp-api-spec/5.2">
+			http://authzforce.github.io/fiware/authorization-pdp-api-spec/5.2
 		</a> </dd>
 	
 
 	
 		<dt class="versionLabel">Previous version:</dt> 
-		<dd class="versionValue"> <a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php?title=FIWARE.OpenSpecification.Security.AuthorizationPDP_R4">
-			http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php?title=FIWARE.OpenSpecification.Security.AuthorizationPDP_R4
+		<dd class="versionValue"> <a href="http://authzforce.github.io/fiware/authorization-pdp-api-spec/4.4">
+			http://authzforce.github.io/fiware/authorization-pdp-api-spec/4.4
 		</a> </dd>
 	
 
 	<dt class="versionLabel">Latest version:</dt> 
-	<dd class="versionValue"> <a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php?title=FIWARE.OpenSpecification.Security.AuthorizationPDP">http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php?title=FIWARE.OpenSpecification.Security.AuthorizationPDP</a> </dd>
+	<dd class="versionValue"> <a href="latest">http://authzforce.github.io/fiware/authorization-pdp-api-spec/latest</a> </dd>
 
 	</dl>
 
@@ -459,9 +434,6 @@
   
 
   
-  
-
-  
     
   
   
@@ -469,6 +441,12 @@
   
   
     
+  
+
+  
+  
+
+  
   
 
   
@@ -500,18 +478,9 @@
 
 	
 
+	
 
-
-    
-
-    
-
-    
-        <h2 id="copyright">Copyright</h2>
-        <p>Copyright © 2014-2016 by <a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/Thales_sv">THALES</a>.</p>
-    
-
-    
+	
 
 
 
@@ -520,10 +489,14 @@
 	
 
 	
+		<h2 id="copyright">Copyright</h2>
+		<p>Copyright © 2014-2016 by <a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/Thales_sv">THALES</a>.</p>
+	
 
 	
-		<h2 id="license">License</h2>
-		<p>This specification is licensed under the <a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_(implicit_patents_license)">FIWARE Open Specification License</a>.</p>
+
+	
+
 	
 
 
@@ -531,7 +504,27 @@
 
 
 	<h2 id="abstract">Abstract</h2>
-	<p>This specification defines the FIWARE Authorization PDP API. FIWARE Authorization PDP is short for FIWARE Authorization PDP Generic Enabler which enables PEPs (Policy Enforcement Points) to get an authorization decision for a given access request, based on access control policies, and various attributes in the context of the access request: the requester, the requested resource, the requested action, etc. The API follows the REST architecture style, and complies with XACML v3.0 core specification and the REST Profile of XACML v3.0. XACML (eXtensible Access Control Markup Language) is a OASIS standard for authorization policy syntax and evaluation logic, as well as for the authorization decision request/response format. The PDP (Policy Decision Point) and the PEP (Policy Enforcement Point) terms are defined in the XACML standard.</p>
+	<!--
+You can also add metadata HOST, which should have value of your production API URI. This will allow you to test and debug production calls from Apiary.
+HOST: http://az.lab.fiware.org/
+-->
+
+<p>This specification defines a RESTful API of an Authorization Policy Decision Point (PDP) compliant with the OASIS XACML standard. More specifically, it defines RESTful interfaces for:</p>
+<ul>
+<li>
+<p>Managing XACML-compliant authorization policies;</p>
+</li>
+<li>
+<p>Requesting authorization decisions based on those policies, in a XACML-compliant request-response format;</p>
+</li>
+<li>
+<p>Managing multiple PDPs, one per domain (aka tenant), in order to provide multi-tenancy.</p>
+</li>
+</ul>
+<p>This APIARY blueprint gives a user-friendly description of the API. 
+However, the official API reference is available in a WADL (Web Application Description Language) 
+and XML schema files on the <a href="https://github.com/authzforce/rest-api-model/tree/release-5.2.0/src/main/resources">Github repository of AuthZForce REST API model project</a>. 
+From this WADL (and associated XSD files), you can generate code automatically for various languages, e.g. Apache CXF's WADL2Java plugin for Java.</p>
 
 
 
@@ -541,6 +534,10 @@
 	
 		<h2 id="status">Status of this document</h2>
 		<p>This is a work in progress and is changing on a daily basis.</p>
+	
+
+	
+
 	
 
 	
@@ -562,15 +559,15 @@
 
         <li>
             
-                <a href="#default_group" title = "Default">Default</a>
+                <a href="#resource_group_domains" title = "Domains">Domains</a>
             
             <ul>
               
                 
                     <li>
-                        <a href="#resource_domains" title = "Resource Domains">
+                        <a href="#resource_resource-for-all-domains" title = "Resource Resource for all Domains">
                         
-                            Domains
+                            Resource for all Domains
                         
                         </a>
                         <ul class="toc  ">
@@ -603,11 +600,21 @@
                     </li>
                 
               
+            </ul>
+        </li>
+      
+
+        <li>
+            
+                <a href="#resource_group_domain" title = "Domain">Domain</a>
+            
+            <ul>
+              
                 
                     <li>
-                        <a href="#resource_domain" title = "Resource Domain">
+                        <a href="#resource_resource-of-a-specific-administration-domain" title = "Resource Resource of a specific administration Domain">
                         
-                            Domain
+                            Resource of a specific administration Domain
                         
                         </a>
                         <ul class="toc  ">
@@ -644,9 +651,9 @@
               
                 
                     <li>
-                        <a href="#resource_domain-properties" title = "Resource Domain properties">
+                        <a href="#resource_resource-domain-properties" title = "Resource Resource Domain properties">
                         
-                            Domain properties
+                            Resource Domain properties
                         
                         </a>
                         <ul class="toc  ">
@@ -681,11 +688,21 @@
                     </li>
                 
               
+            </ul>
+        </li>
+      
+
+        <li>
+            
+                <a href="#resource_group_domain-policy-administration-point" title = "Domain Policy Administration Point">Domain Policy Administration Point</a>
+            
+            <ul>
+              
                 
                     <li>
-                        <a href="#resource_domain-pap-policies" title = "Resource Domain PAP - Policies">
+                        <a href="#resource_resource-domain-pap-policies" title = "Resource Resource Domain PAP - Policies">
                         
-                            Domain PAP - Policies
+                            Resource Domain PAP - Policies
                         
                         </a>
                         <ul class="toc  ">
@@ -720,9 +737,9 @@
               
                 
                     <li>
-                        <a href="#resource_domain-pap-policy" title = "Resource Domain PAP - Policy">
+                        <a href="#resource_resource-domain-pap-policy" title = "Resource Resource Domain PAP - Policy">
                         
-                            Domain PAP - Policy
+                            Resource Domain PAP - Policy
                         
                         </a>
                         <ul class="toc  ">
@@ -759,9 +776,9 @@
               
                 
                     <li>
-                        <a href="#resource_domain-pap-policy-version" title = "Resource Domain PAP - Policy version">
+                        <a href="#resource_resource-domain-pap-policy-version" title = "Resource Resource Domain PAP - Policy version">
                         
-                            Domain PAP - Policy version
+                            Resource Domain PAP - Policy version
                         
                         </a>
                         <ul class="toc  ">
@@ -798,9 +815,9 @@
               
                 
                     <li>
-                        <a href="#resource_domain-pap-pdp-properties" title = "Resource Domain PAP - PDP properties">
+                        <a href="#resource_resource-domain-pap-pdp-properties" title = "Resource Resource Domain PAP - PDP properties">
                         
-                            Domain PAP - PDP properties
+                            Resource Domain PAP - PDP properties
                         
                         </a>
                         <ul class="toc  ">
@@ -835,11 +852,21 @@
                     </li>
                 
               
+            </ul>
+        </li>
+      
+
+        <li>
+            
+                <a href="#resource_group_domain-policy-decision-point" title = "Domain Policy Decision Point">Domain Policy Decision Point</a>
+            
+            <ul>
+              
                 
                     <li>
-                        <a href="#resource_domain-pdp" title = "Resource Domain PDP">
+                        <a href="#resource_resource-domain-pdp" title = "Resource Resource Domain PDP">
                         
-                            Domain PDP
+                            Resource Domain PDP
                         
                         </a>
                         <ul class="toc  ">
@@ -883,48 +910,6 @@
 	
 		
 	
-		
-	
-
-
-
-
-
-	
-		
-	
-		
-	
-		
-	
-		
-	
-
-
-		
-            <section>
-			    <h1 id="specification">Specification</h1>
-			     
-            </section>
-		
-	
-	
-		
-		  	<section>
-				<h2 id="introduction"> Introduction</h2>
-<p>The FIWARE Authorization PDP API specification defines a RESTful API of an Authorization Policy Decision Point (PDP) compliant with the OASIS XACML standard. More specifically, it defines RESTful interfaces for:</p>
-<ul>
-<li>Managing XACML-compliant authorization policies;</li>
-<li>Requesting authorization decisions based on those policies, in a XACML-compliant request-response format;</li>
-<li>Managing multiple PDPs, one per domain (aka tenant), in order to provide multi-tenancy.</li>
-</ul>
-<p>This APIARY blueprint gives a user-friendly description of the API. 
-However, the official API reference is available in a WADL (Web Application Description Language) 
-and XML schema files on the <a href="https://github.com/authzforce/rest-api-model/tree/release-5.2.0/src/main/resources">Github repository of AuthZForce REST API model project</a>. 
-From this WADL (and associated XSD files), you can generate code automatically for various languages, e.g. Apache CXF's WADL2Java plugin for Java.</p>
-
-
-			</section>
 		
 	
 		
@@ -975,6 +960,19 @@ In this context, a domain mostly consists of a specific dedicated PDP with speci
 		
 	
 		
+	
+		
+	
+		
+			<section>
+				<h2 id="license"> License</h2>
+<p>This specification is licensed under the <a href="https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_%28implicit_patents_license%29">FIWARE Open Specification License (implicit patents license)</a>.</p>
+
+
+			</section>
+		
+	
+		
 			<section>
 				<h2 id="conformance"> Conformance</h2>
 <p>All the interfaces described by this specification are mandatory and must be implemented in order to be compliant with. </p>
@@ -999,15 +997,15 @@ In this context, a domain mostly consists of a specific dedicated PDP with speci
 
 
         
-            <section id="default_group" class="resourceGroup">
-             <div class= "header" ><h2 id="h-default_group"> Default </h2></div>
+            <section id="resource_group_domains" class="resourceGroup">
+            <h2 id="h-resource_group_domains">Domains</h2>
         
 	
         
-            <section id="resource_domains" class="resource">
+            <section id="resource_resource-for-all-domains" class="resource">
                  <div class= "header" >
                  
-                    <h3 id="h-resource_domains">Domains</h3>
+                    <h3 id="h-resource_resource-for-all-domains">Resource for all Domains</h3>
                     <span class="extra-header">[/domains]</span>
                  
                  </div>
@@ -1057,22 +1055,52 @@ The response is the relative link to the REST resource created for the domain wi
 			
                                 
                                 
-
-
-
       
-
-                                
-
                                     
+        	                            
+                                            
+                                            
+                                            
+                                            
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+        
+            (application/xml)
+        
+    
+            
+            
+     
+</div>
+        	                            
+    
+        	                            
+        		                            
                                         
                                         
                                         
-                                
-                                <div><div class="goExample">
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+     
+</div>
+        	                            
+                                    
+                                    <div>
+                                    <div class="goExample">
                                         <a href="#action_add-domain_examples">Go to example</a>
                                     </div>
                                     
+                                        
     <div class="goApiary">
     
         
@@ -1086,8 +1114,6 @@ The response is the relative link to the REST resource created for the domain wi
         
     
         
-    
-        
             
                 
             
@@ -1097,8 +1123,12 @@ The response is the relative link to the REST resource created for the domain wi
                 
             
             
-                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/default/domains/add-domain">View in Apiary</a>
+                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/domains/resource-for-all-domains/add-domain">View in Apiary</a>
             
+        
+    
+        
+    
         
     
         
@@ -1107,8 +1137,8 @@ The response is the relative link to the REST resource created for the domain wi
     
     </div>
 
-                                
-                                </div>
+                                    
+                                    </div>
                                 
                             </div>
                         </div>
@@ -1140,10 +1170,10 @@ The response is the relative link to the REST resource created for the domain wi
 	<dl>
 		
 			<dt>
-				<span class="parameter-name">externalId</span> <span class="parameter-attributes">(optional, string)</span>
+				<span class="parameter-name">externalId</span> <span class="parameter-attributes">(Optional, string)</span>
 			</dt>
 			<dd>
-				<p>If specified, only a link to the domain with a matching <code>externalId</code> is returned, or none if no match.</p>
+				If specified, only a link to the domain with a matching <code>externalId</code> is returned, or none if no match.
 				
 			</dd>
 		
@@ -1151,17 +1181,35 @@ The response is the relative link to the REST resource created for the domain wi
 			
                                 
                                 
-
-
-
       
-
-                                
-
                                     
-                                
-                                <div>
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+     
+</div>
+        	                            
                                     
+                                    <div>
+                                    <div class="goExample">
+                                        <a href="#action_get-domains_examples">Go to example</a>
+                                    </div>
+                                    
+                                        
     <div class="goApiary">
     
         
@@ -1175,8 +1223,6 @@ The response is the relative link to the REST resource created for the domain wi
         
     
         
-    
-        
             
                 
             
@@ -1186,8 +1232,12 @@ The response is the relative link to the REST resource created for the domain wi
                 
             
             
-                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/default/domains/get-domains">View in Apiary</a>
+                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/domains/resource-for-all-domains/get-domains">View in Apiary</a>
             
+        
+    
+        
+    
         
     
         
@@ -1196,22 +1246,30 @@ The response is the relative link to the REST resource created for the domain wi
     
     </div>
 
-                                
-                                </div>
+                                    
+                                    </div>
                                 
                             </div>
                         </div>
                     
             </section>
         
-            <section id="resource_domain" class="resource">
+    </section>
+
+        
+            <section id="resource_group_domain" class="resourceGroup">
+            <h2 id="h-resource_group_domain">Domain</h2>
+        
+	
+        
+            <section id="resource_resource-of-a-specific-administration-domain" class="resource">
                  <div class= "header" >
                  
-                    <h3 id="h-resource_domain">Domain</h3>
+                    <h3 id="h-resource_resource-of-a-specific-administration-domain">Resource of a specific administration Domain</h3>
                     <span class="extra-header">[/domains/{domainId}]</span>
                  
                  </div>
-                <p>Policy administration domain</p>
+                <p>Policy administration domain, dedicated to specific tenant or project or workspace, logically isolated from other domains</p>
                 
                 
 
@@ -1233,10 +1291,10 @@ The response is the relative link to the REST resource created for the domain wi
 	<dl>
 		
 			<dt>
-				<span class="parameter-name">domainId</span> <span class="parameter-attributes">(required, string)</span>
+				<span class="parameter-name">domainId</span> <span class="parameter-attributes">(Required, string)</span>
 			</dt>
 			<dd>
-				<p>Domain ID</p>
+				Domain ID
 				
 			</dd>
 		
@@ -1269,17 +1327,35 @@ The response is the relative link to the REST resource created for the domain wi
 			
                                 
                                 
-
-
-
       
-
-                                
-
                                     
-                                
-                                <div>
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+     
+</div>
+        	                            
                                     
+                                    <div>
+                                    <div class="goExample">
+                                        <a href="#action_get-domain-sub-resources_examples">Go to example</a>
+                                    </div>
+                                    
+                                        
     <div class="goApiary">
     
         
@@ -1293,8 +1369,6 @@ The response is the relative link to the REST resource created for the domain wi
         
     
         
-    
-        
             
                 
             
@@ -1304,8 +1378,12 @@ The response is the relative link to the REST resource created for the domain wi
                 
             
             
-                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/default/domain/get-domain-sub-resources">View in Apiary</a>
+                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/domain/resource-of-a-specific-administration-domain/get-domain-sub-resources">View in Apiary</a>
             
+        
+    
+        
+    
         
     
         
@@ -1314,8 +1392,8 @@ The response is the relative link to the REST resource created for the domain wi
     
     </div>
 
-                                
-                                </div>
+                                    
+                                    </div>
                                 
                             </div>
                         </div>
@@ -1345,17 +1423,35 @@ The response is the relative link to the REST resource created for the domain wi
 			
                                 
                                 
-
-
-
       
-
-                                
-
                                     
-                                
-                                <div>
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+     
+</div>
+        	                            
                                     
+                                    <div>
+                                    <div class="goExample">
+                                        <a href="#action_delete-domain_examples">Go to example</a>
+                                    </div>
+                                    
+                                        
     <div class="goApiary">
     
         
@@ -1369,8 +1465,6 @@ The response is the relative link to the REST resource created for the domain wi
         
     
         
-    
-        
             
                 
             
@@ -1380,8 +1474,12 @@ The response is the relative link to the REST resource created for the domain wi
                 
             
             
-                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/default/domain/delete-domain">View in Apiary</a>
+                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/domain/resource-of-a-specific-administration-domain/delete-domain">View in Apiary</a>
             
+        
+    
+        
+    
         
     
         
@@ -1390,18 +1488,18 @@ The response is the relative link to the REST resource created for the domain wi
     
     </div>
 
-                                
-                                </div>
+                                    
+                                    </div>
                                 
                             </div>
                         </div>
                     
             </section>
         
-            <section id="resource_domain-properties" class="resource">
+            <section id="resource_resource-domain-properties" class="resource">
                  <div class= "header" >
                  
-                    <h3 id="h-resource_domain-properties">Domain properties</h3>
+                    <h3 id="h-resource_resource-domain-properties">Resource Domain properties</h3>
                     <span class="extra-header">[/domains/{domainId}/properties]</span>
                  
                  </div>
@@ -1450,22 +1548,52 @@ The response is the relative link to the REST resource created for the domain wi
 			
                                 
                                 
-
-
-
       
-
-                                
-
                                     
+        	                            
+                                            
+                                            
+                                            
+                                            
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+        
+            (application/xml)
+        
+    
+            
+            
+     
+</div>
+        	                            
+    
+        	                            
+        		                            
                                         
                                         
                                         
-                                
-                                <div><div class="goExample">
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+     
+</div>
+        	                            
+                                    
+                                    <div>
+                                    <div class="goExample">
                                         <a href="#action_update-domain-properties_examples">Go to example</a>
                                     </div>
                                     
+                                        
     <div class="goApiary">
     
         
@@ -1479,8 +1607,6 @@ The response is the relative link to the REST resource created for the domain wi
         
     
         
-    
-        
             
                 
             
@@ -1490,8 +1616,12 @@ The response is the relative link to the REST resource created for the domain wi
                 
             
             
-                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/default/domain-properties/update-domain-properties">View in Apiary</a>
+                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/domain/resource-domain-properties/update-domain-properties">View in Apiary</a>
             
+        
+    
+        
+    
         
     
         
@@ -1500,8 +1630,8 @@ The response is the relative link to the REST resource created for the domain wi
     
     </div>
 
-                                
-                                </div>
+                                    
+                                    </div>
                                 
                             </div>
                         </div>
@@ -1531,17 +1661,35 @@ The response is the relative link to the REST resource created for the domain wi
 			
                                 
                                 
-
-
-
       
-
-                                
-
                                     
-                                
-                                <div>
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+     
+</div>
+        	                            
                                     
+                                    <div>
+                                    <div class="goExample">
+                                        <a href="#action_get-domain-properties_examples">Go to example</a>
+                                    </div>
+                                    
+                                        
     <div class="goApiary">
     
         
@@ -1555,8 +1703,6 @@ The response is the relative link to the REST resource created for the domain wi
         
     
         
-    
-        
             
                 
             
@@ -1566,8 +1712,12 @@ The response is the relative link to the REST resource created for the domain wi
                 
             
             
-                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/default/domain-properties/get-domain-properties">View in Apiary</a>
+                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/domain/resource-domain-properties/get-domain-properties">View in Apiary</a>
             
+        
+    
+        
+    
         
     
         
@@ -1576,18 +1726,26 @@ The response is the relative link to the REST resource created for the domain wi
     
     </div>
 
-                                
-                                </div>
+                                    
+                                    </div>
                                 
                             </div>
                         </div>
                     
             </section>
         
-            <section id="resource_domain-pap-policies" class="resource">
+    </section>
+
+        
+            <section id="resource_group_domain-policy-administration-point" class="resourceGroup">
+            <h2 id="h-resource_group_domain-policy-administration-point">Domain Policy Administration Point</h2>
+        
+	
+        
+            <section id="resource_resource-domain-pap-policies" class="resource">
                  <div class= "header" >
                  
-                    <h3 id="h-resource_domain-pap---policies">Domain PAP - Policies</h3>
+                    <h3 id="h-resource_resource-domain-pap---policies">Resource Domain PAP - Policies</h3>
                     <span class="extra-header">[/domains/{domainId}/pap/policies]</span>
                  
                  </div>
@@ -1639,22 +1797,52 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
 			
                                 
                                 
-
-
-
       
-
-                                
-
                                     
+        	                            
+                                            
+                                            
+                                            
+                                            
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+        
+            (application/xml)
+        
+    
+            
+            
+     
+</div>
+        	                            
+    
+        	                            
+        		                            
                                         
                                         
                                         
-                                
-                                <div><div class="goExample">
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+     
+</div>
+        	                            
+                                    
+                                    <div>
+                                    <div class="goExample">
                                         <a href="#action_addupdate-a-policy_examples">Go to example</a>
                                     </div>
                                     
+                                        
     <div class="goApiary">
     
         
@@ -1668,8 +1856,6 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
         
     
         
-    
-        
             
                 
             
@@ -1679,8 +1865,12 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
                 
             
             
-                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/default/domain-pap---policies/add/update-a-policy">View in Apiary</a>
+                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/domain-policy-administration-point/resource-domain-pap---policies/add/update-a-policy">View in Apiary</a>
             
+        
+    
+        
+    
         
     
         
@@ -1689,8 +1879,8 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
     
     </div>
 
-                                
-                                </div>
+                                    
+                                    </div>
                                 
                             </div>
                         </div>
@@ -1720,17 +1910,35 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
 			
                                 
                                 
-
-
-
       
-
-                                
-
                                     
-                                
-                                <div>
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+     
+</div>
+        	                            
                                     
+                                    <div>
+                                    <div class="goExample">
+                                        <a href="#action_get-policies_examples">Go to example</a>
+                                    </div>
+                                    
+                                        
     <div class="goApiary">
     
         
@@ -1744,8 +1952,6 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
         
     
         
-    
-        
             
                 
             
@@ -1755,8 +1961,12 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
                 
             
             
-                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/default/domain-pap---policies/get-policies">View in Apiary</a>
+                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/domain-policy-administration-point/resource-domain-pap---policies/get-policies">View in Apiary</a>
             
+        
+    
+        
+    
         
     
         
@@ -1765,18 +1975,18 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
     
     </div>
 
-                                
-                                </div>
+                                    
+                                    </div>
                                 
                             </div>
                         </div>
                     
             </section>
         
-            <section id="resource_domain-pap-policy" class="resource">
+            <section id="resource_resource-domain-pap-policy" class="resource">
                  <div class= "header" >
                  
-                    <h3 id="h-resource_domain-pap---policy">Domain PAP - Policy</h3>
+                    <h3 id="h-resource_resource-domain-pap---policy">Resource Domain PAP - Policy</h3>
                     <span class="extra-header">[/domains/{domainId}/pap/policies/{policyId}]</span>
                  
                  </div>
@@ -1802,10 +2012,10 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
 	<dl>
 		
 			<dt>
-				<span class="parameter-name">policyId</span> <span class="parameter-attributes">(required, string)</span>
+				<span class="parameter-name">policyId</span> <span class="parameter-attributes">(Required, string)</span>
 			</dt>
 			<dd>
-				<p>Policy ID, more precisely the XACML <code>PolicySetId</code>.</p>
+				Policy ID, more precisely the XACML <code>PolicySetId</code>.
 				
 			</dd>
 		
@@ -1838,17 +2048,35 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
 			
                                 
                                 
-
-
-
       
-
-                                
-
                                     
-                                
-                                <div>
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+     
+</div>
+        	                            
                                     
+                                    <div>
+                                    <div class="goExample">
+                                        <a href="#action_get-policy_examples">Go to example</a>
+                                    </div>
+                                    
+                                        
     <div class="goApiary">
     
         
@@ -1862,8 +2090,6 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
         
     
         
-    
-        
             
                 
             
@@ -1873,8 +2099,12 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
                 
             
             
-                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/default/domain-pap---policy/get-policy">View in Apiary</a>
+                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/domain-policy-administration-point/resource-domain-pap---policy/get-policy">View in Apiary</a>
             
+        
+    
+        
+    
         
     
         
@@ -1883,8 +2113,8 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
     
     </div>
 
-                                
-                                </div>
+                                    
+                                    </div>
                                 
                             </div>
                         </div>
@@ -1914,17 +2144,35 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
 			
                                 
                                 
-
-
-
       
-
-                                
-
                                     
-                                
-                                <div>
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+     
+</div>
+        	                            
                                     
+                                    <div>
+                                    <div class="goExample">
+                                        <a href="#action_delete-policy_examples">Go to example</a>
+                                    </div>
+                                    
+                                        
     <div class="goApiary">
     
         
@@ -1938,8 +2186,6 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
         
     
         
-    
-        
             
                 
             
@@ -1949,8 +2195,12 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
                 
             
             
-                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/default/domain-pap---policy/delete-policy">View in Apiary</a>
+                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/domain-policy-administration-point/resource-domain-pap---policy/delete-policy">View in Apiary</a>
             
+        
+    
+        
+    
         
     
         
@@ -1959,18 +2209,18 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
     
     </div>
 
-                                
-                                </div>
+                                    
+                                    </div>
                                 
                             </div>
                         </div>
                     
             </section>
         
-            <section id="resource_domain-pap-policy-version" class="resource">
+            <section id="resource_resource-domain-pap-policy-version" class="resource">
                  <div class= "header" >
                  
-                    <h3 id="h-resource_domain-pap---policy-version">Domain PAP - Policy version</h3>
+                    <h3 id="h-resource_resource-domain-pap---policy-version">Resource Domain PAP - Policy version</h3>
                     <span class="extra-header">[/domains/{domainId}/pap/policies/{policyId}/{version}]</span>
                  
                  </div>
@@ -1996,10 +2246,10 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
 	<dl>
 		
 			<dt>
-				<span class="parameter-name">version</span> <span class="parameter-attributes">(required, string)</span>
+				<span class="parameter-name">version</span> <span class="parameter-attributes">(Required, string)</span>
 			</dt>
 			<dd>
-				<p>Policy version, more precisely the XACML <code>PolicySet</code> <code>Version</code>.</p>
+				Policy version, more precisely the XACML <code>PolicySet</code> <code>Version</code>.
 				
 			</dd>
 		
@@ -2032,17 +2282,35 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
 			
                                 
                                 
-
-
-
       
-
-                                
-
                                     
-                                
-                                <div>
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+     
+</div>
+        	                            
                                     
+                                    <div>
+                                    <div class="goExample">
+                                        <a href="#action_get-policy-version_examples">Go to example</a>
+                                    </div>
+                                    
+                                        
     <div class="goApiary">
     
         
@@ -2056,8 +2324,6 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
         
     
         
-    
-        
             
                 
             
@@ -2067,8 +2333,12 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
                 
             
             
-                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/default/domain-pap---policy-version/get-policy-version">View in Apiary</a>
+                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/domain-policy-administration-point/resource-domain-pap---policy-version/get-policy-version">View in Apiary</a>
             
+        
+    
+        
+    
         
     
         
@@ -2077,8 +2347,8 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
     
     </div>
 
-                                
-                                </div>
+                                    
+                                    </div>
                                 
                             </div>
                         </div>
@@ -2108,17 +2378,35 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
 			
                                 
                                 
-
-
-
       
-
-                                
-
                                     
-                                
-                                <div>
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+     
+</div>
+        	                            
                                     
+                                    <div>
+                                    <div class="goExample">
+                                        <a href="#action_delete-policy-version_examples">Go to example</a>
+                                    </div>
+                                    
+                                        
     <div class="goApiary">
     
         
@@ -2132,8 +2420,6 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
         
     
         
-    
-        
             
                 
             
@@ -2143,8 +2429,12 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
                 
             
             
-                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/default/domain-pap---policy-version/delete-policy-version">View in Apiary</a>
+                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/domain-policy-administration-point/resource-domain-pap---policy-version/delete-policy-version">View in Apiary</a>
             
+        
+    
+        
+    
         
     
         
@@ -2153,18 +2443,18 @@ If a policy exists with the same <code>PolicySetId</code> and <code>Version</cod
     
     </div>
 
-                                
-                                </div>
+                                    
+                                    </div>
                                 
                             </div>
                         </div>
                     
             </section>
         
-            <section id="resource_domain-pap-pdp-properties" class="resource">
+            <section id="resource_resource-domain-pap-pdp-properties" class="resource">
                  <div class= "header" >
                  
-                    <h3 id="h-resource_domain-pap---pdp-properties">Domain PAP - PDP properties</h3>
+                    <h3 id="h-resource_resource-domain-pap---pdp-properties">Resource Domain PAP - PDP properties</h3>
                     <span class="extra-header">[/domains/{domainId}/pap/pdp.properties]</span>
                  
                  </div>
@@ -2222,22 +2512,52 @@ The documentation of any implementation of this GE must mention what is the defa
 			
                                 
                                 
-
-
-
       
-
-                                
-
                                     
+        	                            
+                                            
+                                            
+                                            
+                                            
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+        
+            (application/xml)
+        
+    
+            
+            
+     
+</div>
+        	                            
+    
+        	                            
+        		                            
                                         
                                         
                                         
-                                
-                                <div><div class="goExample">
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+     
+</div>
+        	                            
+                                    
+                                    <div>
+                                    <div class="goExample">
                                         <a href="#action_update-pdp-properties_examples">Go to example</a>
                                     </div>
                                     
+                                        
     <div class="goApiary">
     
         
@@ -2251,8 +2571,6 @@ The documentation of any implementation of this GE must mention what is the defa
         
     
         
-    
-        
             
                 
             
@@ -2262,8 +2580,12 @@ The documentation of any implementation of this GE must mention what is the defa
                 
             
             
-                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/default/domain-pap---pdp-properties/update-pdp-properties">View in Apiary</a>
+                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/domain-policy-administration-point/resource-domain-pap---pdp-properties/update-pdp-properties">View in Apiary</a>
             
+        
+    
+        
+    
         
     
         
@@ -2272,8 +2594,8 @@ The documentation of any implementation of this GE must mention what is the defa
     
     </div>
 
-                                
-                                </div>
+                                    
+                                    </div>
                                 
                             </div>
                         </div>
@@ -2303,17 +2625,35 @@ The documentation of any implementation of this GE must mention what is the defa
 			
                                 
                                 
-
-
-
       
-
-                                
-
                                     
-                                
-                                <div>
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+     
+</div>
+        	                            
                                     
+                                    <div>
+                                    <div class="goExample">
+                                        <a href="#action_get-pdp-properties_examples">Go to example</a>
+                                    </div>
+                                    
+                                        
     <div class="goApiary">
     
         
@@ -2327,8 +2667,6 @@ The documentation of any implementation of this GE must mention what is the defa
         
     
         
-    
-        
             
                 
             
@@ -2338,8 +2676,12 @@ The documentation of any implementation of this GE must mention what is the defa
                 
             
             
-                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/default/domain-pap---pdp-properties/get-pdp-properties">View in Apiary</a>
+                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/domain-policy-administration-point/resource-domain-pap---pdp-properties/get-pdp-properties">View in Apiary</a>
             
+        
+    
+        
+    
         
     
         
@@ -2348,18 +2690,26 @@ The documentation of any implementation of this GE must mention what is the defa
     
     </div>
 
-                                
-                                </div>
+                                    
+                                    </div>
                                 
                             </div>
                         </div>
                     
             </section>
         
-            <section id="resource_domain-pdp" class="resource">
+    </section>
+
+        
+            <section id="resource_group_domain-policy-decision-point" class="resourceGroup">
+            <h2 id="h-resource_group_domain-policy-decision-point">Domain Policy Decision Point</h2>
+        
+	
+        
+            <section id="resource_resource-domain-pdp" class="resource">
                  <div class= "header" >
                  
-                    <h3 id="h-resource_domain-pdp">Domain PDP</h3>
+                    <h3 id="h-resource_resource-domain-pdp">Resource Domain PDP</h3>
                     <span class="extra-header">[/domains/{domainId}/pdp]</span>
                  
                  </div>
@@ -2408,22 +2758,52 @@ The documentation of any implementation of this GE must mention what is the defa
 			
                                 
                                 
-
-
-
       
-
-                                
-
                                     
+        	                            
+                                            
+                                            
+                                            
+                                            
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+        
+            (application/xml)
+        
+    
+            
+            
+     
+</div>
+        	                            
+    
+        	                            
+        		                            
                                         
                                         
                                         
-                                
-                                <div><div class="goExample">
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+     
+</div>
+        	                            
+                                    
+                                    <div>
+                                    <div class="goExample">
                                         <a href="#action_request-authorization-decision_examples">Go to example</a>
                                     </div>
                                     
+                                        
     <div class="goApiary">
     
         
@@ -2437,8 +2817,6 @@ The documentation of any implementation of this GE must mention what is the defa
         
     
         
-    
-        
             
                 
             
@@ -2448,8 +2826,12 @@ The documentation of any implementation of this GE must mention what is the defa
                 
             
             
-                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/default/domain-pdp/request-authorization-decision">View in Apiary</a>
+                <a target="_blank" href="http://docs.authorizationpdp.apiary.io/#reference/domain-policy-decision-point/resource-domain-pdp/request-authorization-decision">View in Apiary</a>
             
+        
+    
+        
+    
         
     
         
@@ -2458,8 +2840,8 @@ The documentation of any implementation of this GE must mention what is the defa
     
     </div>
 
-                                
-                                </div>
+                                    
+                                    </div>
                                 
                             </div>
                         </div>
@@ -2468,27 +2850,24 @@ The documentation of any implementation of this GE must mention what is the defa
         
     </section>
 
-
 <section id="examples">
     <div class= "header" ><h2>Examples</h2> </div>
     
-
         
+            <section id="resource_group_domains_example" class="resourceGroupExample">
+                <div class= "header" ><h3 id="h-resource_group_domains_example">Domains</h3> </div>
+        
+
                 
-            
+                    <section id="resource_resource-for-all-domains_example" class="resourceExample">
+                         <div class= "header" >
+                         
+                            <h4 id="h-resource_resource-for-all-domains_example">Resource for all Domains</h4>
+                            <span class="extra-header">[/domains]</span>
+                         
+                         </div>
 
-            <section id="resource_group__example" class="resourceGroupExample">
-                <div class= "header" ><h3 id="h-resource_group__example">Default</h3> </div>
-                
-                
-                    <section id="resource_domains_example" class="resourceExample">
-                            <div class= "header" >
                             
-                                <h4 id="h-resource_domains_example">Domains</h4>
-                                <span class="extra-header">[/domains]</span>
-                            
-                            </div>
-
                             
                             
 
@@ -2496,7 +2875,7 @@ The documentation of any implementation of this GE must mention what is the defa
                             
                             
 
-                            
+                           
 
                             
                                 <div id="action_add-domain_examples" class="actionExample POST">
@@ -2515,138 +2894,419 @@ The documentation of any implementation of this GE must mention what is the defa
 
     </div>
 
-                                
-                                        <div id="action_add-domain_body" class=""> 
+                
+                                    <div id="action_add-domain_body" class=""> 
+                                        
+                                        
+                                        
+                                                 
+                                        
                                             
-                                            
-                                            
-                                                     
                                             
                                                 
-                                            
-
-                                                
                                                     
                                                     
                                                     
-
                                                     
-                                                        
-
 
 <div class="rest-packet-div">
-    
-    <span class="packetType">Request  /domains</span> 
+
+            <span class="packetType">Request </span> 
         
             (application/xml)
         
     
-    
-    
-    
-    
-   
-
-
-
-    <div id="action_add-domain_Request_1_body" class=" action-div-body">
-        <p></p>
-
-        
-	         <div class= "header"><p>Headers</p></div>
             
             
+            
+            
+
+
+
+ 
+            <div id="action_add-domain_Request_1_body" class=" action-div-body">
+                <p></p>
+
                 
-            
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
 
-	        <pre><code>Content-Type: application/xml</code></pre>
-        
+        	        <pre><code>Content-Type: application/xml</code></pre>
+                
 
-        
-            <div class= "header"><p>Body</p></div>
-            <pre><code>&lt;domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>&lt;domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
     externalId="my.test.domain">
     &lt;description>This is a test domain.&lt;/description>
 &lt;/domainProperties>
 </code></pre>
-        
+                
 
-        
-    </div>   
+                
+            </div>
+            
+            
+     
 </div>
-
-                                                        
-                                                            
-                                                            
-                                                            
-
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
 
 <div class="rest-packet-div">
-    
-    <span class="packetType">Response 200</span> 
+
+            <span class="packetType">Response 200</span> 
         
             (application/xml)
         
     
-    
-    
-    
-    
-   
-
-
-
-    <div id="action_add-domain_Response_1_body" class=" action-div-body">
-        <p></p>
-
-        
-	         <div class= "header"><p>Headers</p></div>
             
             
+            
+            
+
+
+
+ 
+            <div id="action_add-domain_Response_1_body" class=" action-div-body">
+                <p></p>
+
                 
-            
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
 
-	        <pre><code>Content-Type: application/xml</code></pre>
-        
+        	        <pre><code>Content-Type: application/xml</code></pre>
+                
 
-        
-            <div class= "header"><p>Body</p></div>
-            <pre><code>&lt;link xmlns="http://www.w3.org/2005/Atom" rel="item" href="1234ABCD" title="1234ABCD"/>
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>&lt;link xmlns="http://www.w3.org/2005/Atom" rel="item" href="1234ABCD" title="1234ABCD"/>
 </code></pre>
-        
+                
 
-        
-    </div>   
+                
+            </div>
+            
+            
+     
 </div>
                                                 
                                             
                                             <div class="goActions">
                                                 <a href="#action_add-domain">Go to specification</a>
                                             </div>
-                                        </div>
                                     </div>
-                                
-                        </section>
-                    
+                                </div>
+                            
+                                <div id="action_get-domains_examples" class="actionExample GET">
+
+                                    
+    <div class="header">
+        
+            <h5 id="h-action_get-domains_examples">Get domains </h5>
+            <span class="extra-header">
+		GET 
                 
-                    
+                    /domains{?externalId}
                 
-                    <section id="resource_domain-properties_example" class="resourceExample">
-                            <div class= "header" >
+            </span>
+        
+
+    </div>
+
+                
+                                    <div id="action_get-domains_body" class=""> 
+                                        
+                                        
+                                        
+                                                 
+                                        
+                                            
+                                            
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_get-domains_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
+
+        	        <pre><code>Content-Type: application/xml</code></pre>
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>&lt;resources xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:atom="http://www.w3.org/2005/Atom"> 
+    &lt;atom:link rel="item" href="1234ABCD" title="1234ABCD"/>
+&lt;/resources>
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                            <div class="goActions">
+                                                <a href="#action_get-domains">Go to specification</a>
+                                            </div>
+                                    </div>
+                                </div>
                             
-                                <h4 id="h-resource_domain-properties_example">Domain properties</h4>
-                                <span class="extra-header">[/domains/{domainId}/properties]</span>
-                            
-                            </div>
+                    </section>
+            
+        </section>
+    
+        
+            <section id="resource_group_domain_example" class="resourceGroupExample">
+                <div class= "header" ><h3 id="h-resource_group_domain_example">Domain</h3> </div>
+        
+
+                
+                    <section id="resource_resource-of-a-specific-administration-domain_example" class="resourceExample">
+                         <div class= "header" >
+                         
+                            <h4 id="h-resource_resource-of-a-specific-administration-domain_example">Resource of a specific administration Domain</h4>
+                            <span class="extra-header">[/domains/{domainId}]</span>
+                         
+                         </div>
 
                             
                             
+                            
+
+                            
+                            
+                            
+
+                           
+
+                            
+                                <div id="action_get-domain-sub-resources_examples" class="actionExample GET">
+
+                                    
+    <div class="header">
+        
+            <h5 id="h-action_get-domain-sub-resources_examples">Get Domain Sub-resources </h5>
+            <span class="extra-header">
+		GET 
+                
+                    /domains/{domainId}
+                
+            </span>
+        
+
+    </div>
+
+                
+                                    <div id="action_get-domain-sub-resources_body" class=""> 
+                                        
+                                        
+                                        
+                                                 
+                                        
+                                            
+                                            
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_get-domain-sub-resources_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
+
+        	        <pre><code>Content-Type: application/xml</code></pre>
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>&lt;domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
+    externalId="my.test.domain">
+    &lt;description>This is a test domain.&lt;/description>
+&lt;/domainProperties>
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                            <div class="goActions">
+                                                <a href="#action_get-domain-sub-resources">Go to specification</a>
+                                            </div>
+                                    </div>
+                                </div>
+                            
+                                <div id="action_delete-domain_examples" class="actionExample DELETE">
+
+                                    
+    <div class="header">
+        
+            <h5 id="h-action_delete-domain_examples">Delete domain </h5>
+            <span class="extra-header">
+		DELETE 
+                
+                    /domains/{domainId}
+                
+            </span>
+        
+
+    </div>
+
+                
+                                    <div id="action_delete-domain_body" class=""> 
+                                        
+                                        
+                                        
+                                                 
+                                        
+                                            
+                                            
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_delete-domain_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
+
+        	        <pre><code>Content-Type: application/xml</code></pre>
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>&lt;domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
+    externalId="my.test.domain">
+    &lt;description>This is a test domain.&lt;/description>
+&lt;/domainProperties>
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                            <div class="goActions">
+                                                <a href="#action_delete-domain">Go to specification</a>
+                                            </div>
+                                    </div>
+                                </div>
+                            
+                    </section>
+            
+                    <section id="resource_resource-domain-properties_example" class="resourceExample">
+                         <div class= "header" >
+                         
+                            <h4 id="h-resource_resource-domain-properties_example">Resource Domain properties</h4>
+                            <span class="extra-header">[/domains/{domainId}/properties]</span>
+                         
+                         </div>
 
                             
                             
                             
 
                             
+                            
+                            
+
+                           
 
                             
                                 <div id="action_update-domain-properties_examples" class="actionExample PUT">
@@ -2665,139 +3325,234 @@ The documentation of any implementation of this GE must mention what is the defa
 
     </div>
 
-                                
-                                        <div id="action_update-domain-properties_body" class=""> 
+                
+                                    <div id="action_update-domain-properties_body" class=""> 
+                                        
+                                        
+                                        
+                                                 
+                                        
                                             
-                                            
-                                            
-                                                     
                                             
                                                 
-                                            
-
-                                                
                                                     
                                                     
                                                     
-
                                                     
-                                                        
-
 
 <div class="rest-packet-div">
-    
-    <span class="packetType">Request  /domains/{domainId}/properties</span> 
+
+            <span class="packetType">Request </span> 
         
             (application/xml)
         
     
-    
-    
-    
-    
-   
-
-
-
-    <div id="action_update-domain-properties_Request_1_body" class=" action-div-body">
-        <p></p>
-
-        
-	         <div class= "header"><p>Headers</p></div>
             
             
+            
+            
+
+
+
+ 
+            <div id="action_update-domain-properties_Request_1_body" class=" action-div-body">
+                <p></p>
+
                 
-            
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
 
-	        <pre><code>Content-Type: application/xml</code></pre>
-        
+        	        <pre><code>Content-Type: application/xml</code></pre>
+                
 
-        
-            <div class= "header"><p>Body</p></div>
-            <pre><code>&lt;domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>&lt;domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
     externalId="my.test.domain0">
     &lt;description>This is a test domain and I want to use it.&lt;/description>
 &lt;/domainProperties>
 </code></pre>
-        
+                
 
-        
-    </div>   
+                
+            </div>
+            
+            
+     
 </div>
-
-                                                        
-                                                            
-                                                            
-                                                            
-
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
 
 <div class="rest-packet-div">
-    
-    <span class="packetType">Response 200</span> 
+
+            <span class="packetType">Response 200</span> 
         
             (application/xml)
         
     
-    
-    
-    
-    
-   
-
-
-
-    <div id="action_update-domain-properties_Response_1_body" class=" action-div-body">
-        <p></p>
-
-        
-	         <div class= "header"><p>Headers</p></div>
             
             
+            
+            
+
+
+
+ 
+            <div id="action_update-domain-properties_Response_1_body" class=" action-div-body">
+                <p></p>
+
                 
-            
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
 
-	        <pre><code>Content-Type: application/xml</code></pre>
-        
+        	        <pre><code>Content-Type: application/xml</code></pre>
+                
 
-        
-            <div class= "header"><p>Body</p></div>
-            <pre><code>&lt;domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>&lt;domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
     externalId="my.test.domain0">
     &lt;description>This is a test domain and I want to use it.&lt;/description>
 &lt;/domainProperties>
 </code></pre>
-        
+                
 
-        
-    </div>   
+                
+            </div>
+            
+            
+     
 </div>
                                                 
                                             
                                             <div class="goActions">
                                                 <a href="#action_update-domain-properties">Go to specification</a>
                                             </div>
-                                        </div>
                                     </div>
-                                
-                        </section>
-                    
+                                </div>
+                            
+                                <div id="action_get-domain-properties_examples" class="actionExample GET">
+
+                                    
+    <div class="header">
+        
+            <h5 id="h-action_get-domain-properties_examples">Get domain properties </h5>
+            <span class="extra-header">
+		GET 
                 
-                    <section id="resource_domain-pap---policies_example" class="resourceExample">
-                            <div class= "header" >
+                    /domains/{domainId}/properties
+                
+            </span>
+        
+
+    </div>
+
+                
+                                    <div id="action_get-domain-properties_body" class=""> 
+                                        
+                                        
+                                        
+                                                 
+                                        
+                                            
+                                            
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_get-domain-properties_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
+
+        	        <pre><code>Content-Type: application/xml</code></pre>
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>&lt;domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" 
+    externalId="my.test.domain0">
+    &lt;description>This is a test domain and I want to use it.&lt;/description>
+&lt;/domainProperties>
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                            <div class="goActions">
+                                                <a href="#action_get-domain-properties">Go to specification</a>
+                                            </div>
+                                    </div>
+                                </div>
                             
-                                <h4 id="h-resource_domain-pap---policies_example">Domain PAP - Policies</h4>
-                                <span class="extra-header">[/domains/{domainId}/pap/policies]</span>
-                            
-                            </div>
+                    </section>
+            
+        </section>
+    
+        
+            <section id="resource_group_domain-policy-administration-point_example" class="resourceGroupExample">
+                <div class= "header" ><h3 id="h-resource_group_domain-policy-administration-point_example">Domain Policy Administration Point</h3> </div>
+        
+
+                
+                    <section id="resource_resource-domain-pap---policies_example" class="resourceExample">
+                         <div class= "header" >
+                         
+                            <h4 id="h-resource_resource-domain-pap---policies_example">Resource Domain PAP - Policies</h4>
+                            <span class="extra-header">[/domains/{domainId}/pap/policies]</span>
+                         
+                         </div>
 
                             
                             
-
-                            
-                            
                             
 
                             
+                            
+                            
+
+                           
 
                             
                                 <div id="action_addupdate-a-policy_examples" class="actionExample POST">
@@ -2816,137 +3571,597 @@ The documentation of any implementation of this GE must mention what is the defa
 
     </div>
 
-                                
-                                        <div id="action_add/update-a-policy_body" class=""> 
+                
+                                    <div id="action_add/update-a-policy_body" class=""> 
+                                        
+                                        
+                                        
+                                                 
+                                        
                                             
-                                            
-                                            
-                                                     
                                             
                                                 
-                                            
-
-                                                
                                                     
                                                     
                                                     
-
                                                     
-                                                        
-
 
 <div class="rest-packet-div">
-    
-    <span class="packetType">Request  /domains/{domainId}/pap/policies</span> 
+
+            <span class="packetType">Request </span> 
         
             (application/xml)
         
     
-    
-    
-    
-    
-   
-
-
-
-    <div id="action_add/update-a-policy_Request_1_body" class=" action-div-body">
-        <p></p>
-
-        
-	         <div class= "header"><p>Headers</p></div>
             
             
+            
+            
+
+
+
+ 
+            <div id="action_add/update-a-policy_Request_1_body" class=" action-div-body">
+                <p></p>
+
                 
-            
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
 
-	        <pre><code>Content-Type: application/xml</code></pre>
-        
+        	        <pre><code>Content-Type: application/xml</code></pre>
+                
 
-        
-            <div class= "header"><p>Body</p></div>
-            <pre><code>&lt;PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicySetId="P1" Version="1.0" ... />
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>&lt;PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicySetId="P1" Version="1.0" ... />
 </code></pre>
-        
+                
 
-        
-    </div>   
+                
+            </div>
+            
+            
+     
 </div>
-
-                                                        
-                                                            
-                                                            
-                                                            
-
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
 
 <div class="rest-packet-div">
-    
-    <span class="packetType">Response 200</span> 
+
+            <span class="packetType">Response 200</span> 
         
             (application/xml)
         
     
-    
-    
-    
-    
-   
-
-
-
-    <div id="action_add/update-a-policy_Response_1_body" class=" action-div-body">
-        <p></p>
-
-        
-	         <div class= "header"><p>Headers</p></div>
             
             
+            
+            
+
+
+
+ 
+            <div id="action_add/update-a-policy_Response_1_body" class=" action-div-body">
+                <p></p>
+
                 
-            
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
 
-	        <pre><code>Content-Type: application/xml</code></pre>
-        
+        	        <pre><code>Content-Type: application/xml</code></pre>
+                
 
-        
-            <div class= "header"><p>Body</p></div>
-            <pre><code>&lt;link xmlns="http://www.w3.org/2005/Atom" rel="item" href="P1/1.0" title="Policy 'P1' v1.0"/>
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>&lt;link xmlns="http://www.w3.org/2005/Atom" rel="item" href="P1/1.0" title="Policy 'P1' v1.0"/>
 </code></pre>
-        
+                
 
-        
-    </div>   
+                
+            </div>
+            
+            
+     
 </div>
                                                 
                                             
                                             <div class="goActions">
                                                 <a href="#action_addupdate-a-policy">Go to specification</a>
                                             </div>
-                                        </div>
                                     </div>
-                                
-                        </section>
-                    
-                
-                    
-                
-                    
-                
-                    <section id="resource_domain-pap---pdp-properties_example" class="resourceExample">
-                            <div class= "header" >
+                                </div>
                             
-                                <h4 id="h-resource_domain-pap---pdp-properties_example">Domain PAP - PDP properties</h4>
-                                <span class="extra-header">[/domains/{domainId}/pap/pdp.properties]</span>
+                                <div id="action_get-policies_examples" class="actionExample GET">
+
+                                    
+    <div class="header">
+        
+            <h5 id="h-action_get-policies_examples">Get policies </h5>
+            <span class="extra-header">
+		GET 
+                
+                    /domains/{domainId}/pap/policies
+                
+            </span>
+        
+
+    </div>
+
+                
+                                    <div id="action_get-policies_body" class=""> 
+                                        
+                                        
+                                        
+                                                 
+                                        
+                                            
+                                            
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_get-policies_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
+
+        	        <pre><code>Content-Type: application/xml</code></pre>
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>&lt;resources xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:atom="http://www.w3.org/2005/Atom"> 
+    &lt;atom:link rel="item" href="P1" title="P1"/>
+    &lt;atom:link rel="item" href="P1" title="P2"/>
+    ...
+&lt;/resources>
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                            <div class="goActions">
+                                                <a href="#action_get-policies">Go to specification</a>
+                                            </div>
+                                    </div>
+                                </div>
                             
-                            </div>
+                    </section>
+            
+                    <section id="resource_resource-domain-pap---policy_example" class="resourceExample">
+                         <div class= "header" >
+                         
+                            <h4 id="h-resource_resource-domain-pap---policy_example">Resource Domain PAP - Policy</h4>
+                            <span class="extra-header">[/domains/{domainId}/pap/policies/{policyId}]</span>
+                         
+                         </div>
 
                             
                             
+                            
+
+                            
+                            
+                            
+
+                           
+
+                            
+                                <div id="action_get-policy_examples" class="actionExample GET">
+
+                                    
+    <div class="header">
+        
+            <h5 id="h-action_get-policy_examples">Get policy </h5>
+            <span class="extra-header">
+		GET 
+                
+                    /domains/{domainId}/pap/policies/{policyId}
+                
+            </span>
+        
+
+    </div>
+
+                
+                                    <div id="action_get-policy_body" class=""> 
+                                        
+                                        
+                                        
+                                                 
+                                        
+                                            
+                                            
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_get-policy_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
+
+        	        <pre><code>Content-Type: application/xml</code></pre>
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>&lt;resources xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:atom="http://www.w3.org/2005/Atom"> 
+    &lt;atom:link rel="item" href="1.0" title="1.0"/>
+    &lt;atom:link rel="item" href="1.1" title="1.1"/>
+    &lt;atom:link rel="item" href="2.0" title="2.0"/>
+    ...
+&lt;/resources>
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                            <div class="goActions">
+                                                <a href="#action_get-policy">Go to specification</a>
+                                            </div>
+                                    </div>
+                                </div>
+                            
+                                <div id="action_delete-policy_examples" class="actionExample DELETE">
+
+                                    
+    <div class="header">
+        
+            <h5 id="h-action_delete-policy_examples">Delete policy </h5>
+            <span class="extra-header">
+		DELETE 
+                
+                    /domains/{domainId}/pap/policies/{policyId}
+                
+            </span>
+        
+
+    </div>
+
+                
+                                    <div id="action_delete-policy_body" class=""> 
+                                        
+                                        
+                                        
+                                                 
+                                        
+                                            
+                                            
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_delete-policy_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
+
+        	        <pre><code>Content-Type: application/xml</code></pre>
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>&lt;resources xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:atom="http://www.w3.org/2005/Atom"> 
+    &lt;atom:link rel="item" href="1.0" title="1.0"/>
+    &lt;atom:link rel="item" href="1.1" title="1.1"/>
+    &lt;atom:link rel="item" href="2.0" title="2.0"/>
+    ...
+&lt;/resources>
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                            <div class="goActions">
+                                                <a href="#action_delete-policy">Go to specification</a>
+                                            </div>
+                                    </div>
+                                </div>
+                            
+                    </section>
+            
+                    <section id="resource_resource-domain-pap---policy-version_example" class="resourceExample">
+                         <div class= "header" >
+                         
+                            <h4 id="h-resource_resource-domain-pap---policy-version_example">Resource Domain PAP - Policy version</h4>
+                            <span class="extra-header">[/domains/{domainId}/pap/policies/{policyId}/{version}]</span>
+                         
+                         </div>
 
                             
                             
                             
 
                             
+                            
+                            
+
+                           
+
+                            
+                                <div id="action_get-policy-version_examples" class="actionExample GET">
+
+                                    
+    <div class="header">
+        
+            <h5 id="h-action_get-policy-version_examples">Get policy version </h5>
+            <span class="extra-header">
+		GET 
+                
+                    /domains/{domainId}/pap/policies/{policyId}/{version}
+                
+            </span>
+        
+
+    </div>
+
+                
+                                    <div id="action_get-policy-version_body" class=""> 
+                                        
+                                        
+                                        
+                                                 
+                                        
+                                            
+                                            
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_get-policy-version_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
+
+        	        <pre><code>Content-Type: application/xml</code></pre>
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>&lt;PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicySetId="P1" Version="1.0" ... />
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                            <div class="goActions">
+                                                <a href="#action_get-policy-version">Go to specification</a>
+                                            </div>
+                                    </div>
+                                </div>
+                            
+                                <div id="action_delete-policy-version_examples" class="actionExample DELETE">
+
+                                    
+    <div class="header">
+        
+            <h5 id="h-action_delete-policy-version_examples">Delete policy version </h5>
+            <span class="extra-header">
+		DELETE 
+                
+                    /domains/{domainId}/pap/policies/{policyId}/{version}
+                
+            </span>
+        
+
+    </div>
+
+                
+                                    <div id="action_delete-policy-version_body" class=""> 
+                                        
+                                        
+                                        
+                                                 
+                                        
+                                            
+                                            
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_delete-policy-version_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
+
+        	        <pre><code>Content-Type: application/xml</code></pre>
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>&lt;PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicySetId="P1" Version="1.0" ... />
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                            <div class="goActions">
+                                                <a href="#action_delete-policy-version">Go to specification</a>
+                                            </div>
+                                    </div>
+                                </div>
+                            
+                    </section>
+            
+                    <section id="resource_resource-domain-pap---pdp-properties_example" class="resourceExample">
+                         <div class= "header" >
+                         
+                            <h4 id="h-resource_resource-domain-pap---pdp-properties_example">Resource Domain PAP - PDP properties</h4>
+                            <span class="extra-header">[/domains/{domainId}/pap/pdp.properties]</span>
+                         
+                         </div>
+
+                            
+                            
+                            
+
+                            
+                            
+                            
+
+                           
 
                             
                                 <div id="action_update-pdp-properties_examples" class="actionExample PUT">
@@ -2965,56 +4180,52 @@ The documentation of any implementation of this GE must mention what is the defa
 
     </div>
 
-                                
-                                        <div id="action_update-pdp-properties_body" class=""> 
+                
+                                    <div id="action_update-pdp-properties_body" class=""> 
+                                        
+                                        
+                                        
+                                                 
+                                        
                                             
-                                            
-                                            
-                                                     
                                             
                                                 
-                                            
-
-                                                
                                                     
                                                     
                                                     
-
                                                     
-                                                        
-
 
 <div class="rest-packet-div">
-    
-    <span class="packetType">Request  /domains/{domainId}/pap/pdp.properties</span> 
+
+            <span class="packetType">Request </span> 
         
             (application/xml)
         
     
-    
-    
-    
-    
-   
-
-
-
-    <div id="action_update-pdp-properties_Request_1_body" class=" action-div-body">
-        <p></p>
-
-        
-	         <div class= "header"><p>Headers</p></div>
             
             
+            
+            
+
+
+
+ 
+            <div id="action_update-pdp-properties_Request_1_body" class=" action-div-body">
+                <p></p>
+
                 
-            
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
 
-	        <pre><code>Content-Type: application/xml</code></pre>
-        
+        	        <pre><code>Content-Type: application/xml</code></pre>
+                
 
-        
-            <div class= "header"><p>Body</p></div>
-            <pre><code>&lt;pdpPropertiesUpdate 
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>&lt;pdpPropertiesUpdate 
     xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
     &lt;feature 
              type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
@@ -3023,49 +4234,53 @@ The documentation of any implementation of this GE must mention what is the defa
     &lt;rootPolicyRefExpression>root&lt;/rootPolicyRefExpression>
 &lt;/pdpPropertiesUpdate>
 </code></pre>
-        
+                
 
-        
-    </div>   
+                
+            </div>
+            
+            
+     
 </div>
-
-                                                        
-                                                            
-                                                            
-                                                            
-
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
 
 <div class="rest-packet-div">
-    
-    <span class="packetType">Response 200</span> 
+
+            <span class="packetType">Response 200</span> 
         
             (application/xml)
         
     
-    
-    
-    
-    
-   
-
-
-
-    <div id="action_update-pdp-properties_Response_1_body" class=" action-div-body">
-        <p></p>
-
-        
-	         <div class= "header"><p>Headers</p></div>
             
             
+            
+            
+
+
+
+ 
+            <div id="action_update-pdp-properties_Response_1_body" class=" action-div-body">
+                <p></p>
+
                 
-            
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
 
-	        <pre><code>Content-Type: application/xml</code></pre>
-        
+        	        <pre><code>Content-Type: application/xml</code></pre>
+                
 
-        
-            <div class= "header"><p>Body</p></div>
-            <pre><code>&lt;pdpProperties 
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>&lt;pdpProperties 
     xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
       lastModifiedTime="2016-05-28T14:21:35.730Z">
     &lt;feature 
@@ -3078,38 +4293,141 @@ The documentation of any implementation of this GE must mention what is the defa
     &lt;rootPolicyRefExpression>root&lt;/rootPolicyRefExpression>
 &lt;/pdpProperties> 
 </code></pre>
-        
+                
 
-        
-    </div>   
+                
+            </div>
+            
+            
+     
 </div>
                                                 
                                             
                                             <div class="goActions">
                                                 <a href="#action_update-pdp-properties">Go to specification</a>
                                             </div>
-                                        </div>
                                     </div>
-                                
-                        </section>
-                    
+                                </div>
+                            
+                                <div id="action_get-pdp-properties_examples" class="actionExample GET">
+
+                                    
+    <div class="header">
+        
+            <h5 id="h-action_get-pdp-properties_examples">Get PDP properties </h5>
+            <span class="extra-header">
+		GET 
                 
-                    <section id="resource_domain-pdp_example" class="resourceExample">
-                            <div class= "header" >
+                    /domains/{domainId}/pap/pdp.properties
+                
+            </span>
+        
+
+    </div>
+
+                
+                                    <div id="action_get-pdp-properties_body" class=""> 
+                                        
+                                        
+                                        
+                                                 
+                                        
+                                            
+                                            
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+        
+            (application/xml)
+        
+    
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_get-pdp-properties_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
+
+        	        <pre><code>Content-Type: application/xml</code></pre>
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>&lt;pdpProperties 
+      xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+      lastModifiedTime="2016-05-28T14:21:35.730Z">
+    &lt;feature 
+        type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
+        enabled="false">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-strict&lt;/feature>
+    &lt;feature 
+        type="urn:ow2:authzforce:feature-type:pdp:request-filter" 
+        enabled="true">urn:ow2:authzforce:feature:pdp:request-filter:multiple:repeated-attribute-categories-lax&lt;/feature>
+        ...(content omitted)...
+    &lt;rootPolicyRefExpression>root&lt;/rootPolicyRefExpression>
+&lt;/pdpProperties>
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                            <div class="goActions">
+                                                <a href="#action_get-pdp-properties">Go to specification</a>
+                                            </div>
+                                    </div>
+                                </div>
                             
-                                <h4 id="h-resource_domain-pdp_example">Domain PDP</h4>
-                                <span class="extra-header">[/domains/{domainId}/pdp]</span>
-                            
-                            </div>
+                    </section>
+            
+        </section>
+    
+        
+            <section id="resource_group_domain-policy-decision-point_example" class="resourceGroupExample">
+                <div class= "header" ><h3 id="h-resource_group_domain-policy-decision-point_example">Domain Policy Decision Point</h3> </div>
+        
+
+                
+                    <section id="resource_resource-domain-pdp_example" class="resourceExample">
+                         <div class= "header" >
+                         
+                            <h4 id="h-resource_resource-domain-pdp_example">Resource Domain PDP</h4>
+                            <span class="extra-header">[/domains/{domainId}/pdp]</span>
+                         
+                         </div>
 
                             
                             
-
-                            
-                            
                             
 
                             
+                            
+                            
+
+                           
 
                             
                                 <div id="action_request-authorization-decision_examples" class="actionExample POST">
@@ -3128,126 +4446,134 @@ The documentation of any implementation of this GE must mention what is the defa
 
     </div>
 
-                                
-                                        <div id="action_request-authorization-decision_body" class=""> 
+                
+                                    <div id="action_request-authorization-decision_body" class=""> 
+                                        
+                                        
+                                        
+                                                 
+                                        
                                             
-                                            
-                                            
-                                                     
                                             
                                                 
-                                            
-
-                                                
                                                     
                                                     
                                                     
-
                                                     
-                                                        
-
 
 <div class="rest-packet-div">
-    
-    <span class="packetType">Request  /domains/{domainId}/pdp</span> 
+
+            <span class="packetType">Request </span> 
         
             (application/xml)
         
     
-    
-    
-    
-    
-   
-
-
-
-    <div id="action_request-authorization-decision_Request_1_body" class=" action-div-body">
-        <p></p>
-
-        
-	         <div class= "header"><p>Headers</p></div>
             
             
+            
+            
+
+
+
+ 
+            <div id="action_request-authorization-decision_Request_1_body" class=" action-div-body">
+                <p></p>
+
                 
-            
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
 
-	        <pre><code>Content-Type: application/xml</code></pre>
-        
+        	        <pre><code>Content-Type: application/xml</code></pre>
+                
 
-        
-            <div class= "header"><p>Body</p></div>
-            <pre><code>&lt;Request xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ... />
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>&lt;Request xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ... />
 </code></pre>
-        
+                
 
-        
-    </div>   
+                
+            </div>
+            
+            
+     
 </div>
-
-                                                        
-                                                            
-                                                            
-                                                            
-
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
 
 <div class="rest-packet-div">
-    
-    <span class="packetType">Response 200</span> 
+
+            <span class="packetType">Response 200</span> 
         
             (application/xml)
         
     
-    
-    
-    
-    
-   
-
-
-
-    <div id="action_request-authorization-decision_Response_1_body" class=" action-div-body">
-        <p></p>
-
-        
-	         <div class= "header"><p>Headers</p></div>
             
             
+            
+            
+
+
+
+ 
+            <div id="action_request-authorization-decision_Response_1_body" class=" action-div-body">
+                <p></p>
+
                 
-            
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
 
-	        <pre><code>Content-Type: application/xml</code></pre>
-        
+        	        <pre><code>Content-Type: application/xml</code></pre>
+                
 
-        
-            <div class= "header"><p>Body</p></div>
-            <pre><code>&lt;Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ... />
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>&lt;Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ... />
 </code></pre>
-        
+                
 
-        
-    </div>   
+                
+            </div>
+            
+            
+     
 </div>
                                                 
                                             
                                             <div class="goActions">
                                                 <a href="#action_request-authorization-decision">Go to specification</a>
                                             </div>
-                                        </div>
                                     </div>
-                        </section>
-                    
-                
-            </section>
-        
+                                </div>
+                            
+                    </section>
+            
+        </section>
     
-</section>
 
+
+
+</section>
   </section>
   
    
 
 
+
+	
+
+	
 
 	
 
@@ -3264,21 +4590,15 @@ The documentation of any implementation of this GE must mention what is the defa
       <h1>References</h1>
           <ul>
               
-                  <li><a href="http://docs.authorizationpdp.apiary.io/#reference">Apiary project</a></li>
-              
-                  <li><a href="https://github.com/authzforce/fiware.git">Github source</a></li>
+                  <li><a href="https://github.com/authzforce/rest-api-model/tree/release-5.2.0/src/main/resources">Github repository of AuthZForce REST API model project</a></li>
               
                   <li><a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/Thales_sv">THALES</a></li>
               
-                  <li><a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_(implicit_patents_license)">FIWARE Open Specification License</a></li>
-              
-                  <li><a href="https://github.com/authzforce/rest-api-model/tree/release-5.2.0/src/main/resources">Github repository of AuthZForce REST API model project</a></li>
+                  <li><a href="https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_%28implicit_patents_license%29">FIWARE Open Specification License (implicit patents license)</a></li>
               
                   <li><a href="https://tools.ietf.org/html/rfc7643#section-3.1">SCIM schema, § 3.1</a></li>
               
-                  <li><a href="http://docs.oasis-open.org/xacml/xacml-rest/v1.0/xacml-rest-v1.0.html">REST Profile of XACML v3.0 Version 1.0</a></li>
-              
-                  <li><a href="http://docs.oasis-open.org/xacml/xacml-rest/v1.0/cs02/xacml-rest-v1.0-cs02.html#_Toc399235433">urn:oasis:names:tc:xacml:3.0:profile:rest:assertion:home:pdp</a></li>
+                  <li><a href="http://docs.oasis-open.org/xacml/xacml-rest/v1.0/xacml-rest-v1.0.html">REST Profile of XACML v3.0 Version 1.0</a>, in test assertion <a href="http://docs.oasis-open.org/xacml/xacml-rest/v1.0/cs02/xacml-rest-v1.0-cs02.html#_Toc399235433">urn:oasis:names:tc:xacml:3.0:profile:rest:assertion:home:pdp</a></li>
               
           </ul>
       </section>
