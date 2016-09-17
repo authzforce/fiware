@@ -3,7 +3,7 @@
 # The script is aborted if any command fails. If it is OK that a command fails,
 # use ./mycommand || true
 
-export PACKAGE_VERSION=5.4.0
+export PACKAGE_VERSION=5.4.1
 
 export DEBIAN_FRONTEND=noninteractive
 sudo -E apt-get update --assume-yes -qq
