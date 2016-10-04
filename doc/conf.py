@@ -70,7 +70,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'AuthZForce CE'
+project = u'AuthZForce CE - Installation and Administration Guide'
 copyright = u'2015-2016, Thales Services'
 author = u'Cyril Dangerville, Thales Services'
 
@@ -225,7 +225,7 @@ html_use_index = True
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'AuthZForcedoc'
+htmlhelp_basename = 'AuthZForce-ce-install-admin-guide'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -248,7 +248,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc, 'AuthZForce.tex', u'AuthZForce CE Documentation',
+  (master_doc, 'AuthZForce.tex', u'AuthZForce CE - Installation and Administration Guide',
    u'Cyril Dangerville, Thales Services', 'manual'),
 ]
 
@@ -278,7 +278,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'authzforce', u'AuthZForce CE Documentation',
+    (master_doc, 'authzforce', u'AuthZForce CE - Installation and Administration Guide',
      [author], 1)
 ]
 
@@ -292,7 +292,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'AuthZForce CE', u'AuthZForce CE Documentation',
+  (master_doc, 'AuthZForce CE', u'AuthZForce CE - Installation and Administration Guide',
    author, 'AuthZForce CE', 'AuthZForce Community Edition',
    'Miscellaneous'),
 ]

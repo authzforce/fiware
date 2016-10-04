@@ -22,7 +22,7 @@ ________
    :maxdepth: 10
    
    InstallationAndAdministrationGuide.rst
-   UserAndProgrammersGuide.rst
+..   UserAndProgrammersGuide.rst
 
 
 .. Indices and tables
