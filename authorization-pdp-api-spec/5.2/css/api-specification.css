@@ -65,7 +65,7 @@ h6 {
     font: small-caps 100%;
 }
 
-.header h5, .header h3, .header span{
+.header h3, .header span{
     display: inline-block !important;
 }
 
@@ -80,6 +80,7 @@ table, td, th {
     border-color: black;
     border-collapse: collapse;
     padding: 0.15em;
+    margin-bottom: 16px;
 }
 @media print {
     .goExample, .goActions {
@@ -313,6 +314,7 @@ dd dl{
 .parameters-title{
     font-weight: bold;
     font-size: 1.1em;
+    display: block;
 }
 
 .parameters-title+dl dl{
@@ -349,7 +351,6 @@ dd dl{
 }
 
 .resource dl dd>p{
-    font-weight: bold;
     margin-top: 0px;
     margin-bottom: 0px;
 }
@@ -364,7 +365,6 @@ dd dl{
 }
 
 .action dl dd>p{
-    font-weight: bold;
     margin-top: 0px;
     margin-bottom: 0px;
 }
@@ -404,7 +404,7 @@ dd dl{
     background-color: #E6BFBF;
 }
 
-.action h4{
+.action h4, .actionExample h5{
     font-size: 1.05em;
     font-style: italic;
     text-decoration: underline;
@@ -420,7 +420,6 @@ dd dl{
 }
 
 .resourceExample dl dd>p{
-    font-weight: bold;
     margin-top: 0px;
     margin-bottom: 0px;
 }
@@ -433,10 +432,10 @@ dd dl{
     padding-right: 5px;
     padding-bottom: 15px;
     background-color: #E0DCF3;
+    padding:5px;
 }
 
 .actionExample dl dd>p{
-    font-weight: bold;
     margin-top: 0px;
     margin-bottom: 0px;
 }
@@ -484,6 +483,7 @@ dd dl{
     font-weight: normal;
     text-decoration: underline;
     margin-bottom: 7px;
+    display: block;
 }
 
 .packetType ~ .payload-title{
@@ -568,3 +568,4 @@ dd dl{
     width: 4em;
     display: inline-table;
 }
+
