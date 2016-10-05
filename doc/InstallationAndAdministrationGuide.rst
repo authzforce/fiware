@@ -1,8 +1,3 @@
-==================================================
-AuthZForce - Installation and Administration Guide
-==================================================
-
-
 This guide provides the procedure to install the `AuthZForce server <https://github.com/authzforce/server>`_, including system requirements and troubleshooting instructions. 
 
 System Requirements
@@ -216,7 +211,7 @@ For example with ``curl`` tool::
   --header "Accept: application/xml" \ 
   http://${SERVER_NAME}:${PORT}/authzforce-ce/domains/h_D23LsDEeWFwqVFFMDLTQ
 
-Policy administration is part of the Authorization Server API, addressed more extensively in the :ref:`programmerGuide`.
+Policy administration is part of the Authorization Server API, addressed more extensively in the *User and Programmers Guide*.
 
 
 High Availability
@@ -233,7 +228,7 @@ In order to achieve high availability with multiple AuthZForce Server instances 
 * Data directory: ``/opt/authzforce-ce-server/data``. This is where the Server API persists and retrieves domain data such as policies.
   Therefore, it is critical to keep this directory synchronized across all the nodes in the high availability cluster, using either file synchronization solutions 
   such as `csync2 <http://linuxaria.com/howto/csync2-a-filesystem-syncronization-tool-for-linux>`_, or distributed file systems such as NFS.
-  Besides, for usability and performance reasons, the AuthZForce server caches certain objects in memory such as domains' PDPs and ID-externalId mappings (more info in the :ref:`programmerGuide`).
+  Besides, for usability and performance reasons, the AuthZForce server caches certain objects in memory such as domains' PDPs and ID-externalId mappings (more info in the *User and Programmers Guide*).
   Therefore, it is also critical to re-sync the AuthZForce Server cache after certain changes done directly by aforementioned solutions to the local data directory. 
   There are two ways to do that:
    

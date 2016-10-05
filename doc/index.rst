@@ -3,9 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-###############################
-AuthZForce FIWARE Documentation
-###############################
+.. section-numbering::
 
 Introduction
 ____________
@@ -19,8 +17,9 @@ Contents
 ________
 
 .. toctree::
+   :caption: Table of Contents
    :maxdepth: 10
-   
+
    InstallationAndAdministrationGuide.rst
 ..   UserAndProgrammersGuide.rst
 
