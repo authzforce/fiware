@@ -16,6 +16,17 @@ import sys
 import os
 import shlex
 
+# Chaning verbatim (source code listings) font size
+from sphinx.highlighting import PygmentsBridge
+from pygments.formatters.latex import LatexFormatter
+
+class CustomLatexFormatter(LatexFormatter):
+    def __init__(self, **options):
+        super(CustomLatexFormatter, self).__init__(**options)
+        self.verboptions = r"formatcom=\footnotesize"
+
+PygmentsBridge.latex_formatter = CustomLatexFormatter
+
 # on_rtd is whether we are on readthedocs.org
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
@@ -238,7 +249,7 @@ latex_elements = {
 
 # Additional stuff for the LaTeX preamble.
 #'preamble': '',
-'preamble': '\setcounter{tocdepth}{10} \setcounter{secnumdepth}{5}'
+'preamble': '\\setcounter{tocdepth}{10} \\setcounter{secnumdepth}{5} \\renewcommand{\\ttdefault}{txtt}'
 
 # Latex figure (float) alignment
 #'figure_align': 'htbp',
@@ -248,7 +259,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc, 'AuthZForce.tex', u'AuthZForce CE Documentation',
+  (master_doc, 'AuthZForce.tex', u'AuthZForce CE - User and Programmers Guide',
    u'Cyril Dangerville, Thales Services', 'manual'),
 ]
 
@@ -278,7 +289,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'authzforce', u'AuthZForce CE Documentation',
+    (master_doc, 'authzforce', u'AuthZForce CE - User and Programmers Guide',
      [author], 1)
 ]
 
@@ -292,7 +303,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'AuthZForce CE', u'AuthZForce CE Documentation',
+  (master_doc, 'AuthZForce CE', u'AuthZForce CE - User and Programmers Guide',
    author, 'AuthZForce CE', 'AuthZForce Community Edition',
    'Miscellaneous'),
 ]
