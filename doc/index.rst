@@ -12,8 +12,6 @@
 
    Introduction.rst
    InstallationAndAdministrationGuide.rst
-..   UserAndProgrammersGuide.rst
-
 
 .. Indices and tables
 .. ==================
