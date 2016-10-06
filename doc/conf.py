@@ -53,7 +53,8 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.pngmath',
     'sphinx.ext.ifconfig',
-    'rst2pdf.pdfbuilder',
+# If you want to use 'pdf' target with rst2pdf, instead of 'latexpdf' 
+#    'rst2pdf.pdfbuilder',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -239,7 +240,8 @@ latex_elements = {
 
 # Additional stuff for the LaTeX preamble.
 #'preamble': '',
-'preamble': '\setcounter{tocdepth}{10} \setcounter{secnumdepth}{5}'
+#'preamble': '\setcounter{tocdepth}{10} \setcounter{secnumdepth}{5}'
+'preamble': '\setcounter{tocdepth}{10}'
 
 # Latex figure (float) alignment
 #'figure_align': 'htbp',

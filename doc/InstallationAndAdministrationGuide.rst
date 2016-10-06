@@ -3,6 +3,8 @@ This guide provides the procedure to install the `AuthZForce server <https://git
 System Requirements
 ===================
 
+The system requirements are the following:
+
 * CPU frequency: 2.6 GHz min
 * CPU architecture: i686/x86_64
 * RAM: 4GB min
