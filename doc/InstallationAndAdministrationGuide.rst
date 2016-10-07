@@ -2,11 +2,12 @@
 AuthZForce - Installation and Administration Guide
 ==================================================
 
-
 This guide provides the procedure to install the `AuthZForce server <https://github.com/authzforce/server>`_, including system requirements and troubleshooting instructions. 
 
 System Requirements
 ===================
+
+The system requirements are the following:
 
 * CPU frequency: 2.6 GHz min
 * CPU architecture: i686/x86_64
@@ -216,7 +217,7 @@ For example with ``curl`` tool::
   --header "Accept: application/xml" \ 
   http://${SERVER_NAME}:${PORT}/authzforce-ce/domains/h_D23LsDEeWFwqVFFMDLTQ
 
-Policy administration is part of the Authorization Server API, addressed more extensively in the :ref:`programmerGuide`.
+Policy administration is part of the Authorization Server API, addressed more extensively in the *User and Programmers Guide*.
 
 
 High Availability
@@ -233,7 +234,7 @@ In order to achieve high availability with multiple AuthZForce Server instances 
 * Data directory: ``/opt/authzforce-ce-server/data``. This is where the Server API persists and retrieves domain data such as policies.
   Therefore, it is critical to keep this directory synchronized across all the nodes in the high availability cluster, using either file synchronization solutions 
   such as `csync2 <http://linuxaria.com/howto/csync2-a-filesystem-syncronization-tool-for-linux>`_, or distributed file systems such as NFS.
-  Besides, for usability and performance reasons, the AuthZForce server caches certain objects in memory such as domains' PDPs and ID-externalId mappings (more info in the :ref:`programmerGuide`).
+  Besides, for usability and performance reasons, the AuthZForce server caches certain objects in memory such as domains' PDPs and ID-externalId mappings (more info in the *User and Programmers Guide*).
   Therefore, it is also critical to re-sync the AuthZForce Server cache after certain changes done directly by aforementioned solutions to the local data directory. 
   There are two ways to do that:
    
@@ -408,44 +409,46 @@ The AuthZForce web application exposes a XML-based API. Therefore it is vulnerab
 To mitigate these attacks, there are two solutions:
 
 * **Authzforce native protection**: you can add the following `Environment entries <https://tomcat.apache.org/tomcat-7.0-doc/config/context.html#Environment_Entries>`_ 
-  in Authzfoce webapp context file ``/etc/tomcat7/Catalina/localhost/authzforce-ce.xml`` (if an entry is absent or its value is negative, the default value is used)::
-  
-   <Environment 
-    name="org.apache.cxf.stax.maxChildElements"
-    description="Maximum number of child elements in an input XML element. Default: 50000." 
-    type="java.lang.Integer"
-    value="1000" 
-    override="false" />
-    
-   <Environment 
-    name="org.apache.cxf.stax.maxElementDepth"
-    description="Maximum depth of an element in input XML. Default: 100." 
-    type="java.lang.Integer"
-    value="100" 
-    override="false" />
+  in Authzfoce webapp context file ``/etc/tomcat7/Catalina/localhost/authzforce-ce.xml`` (if an entry is absent or its value is negative, the default value is used):
+
+  .. code-block:: xml
    
-   <!--Following entries are not supported in Fast Infoset mode 
-   (more info: https://issues.apache.org/jira/browse/CXF-6848) --> 
-   <Environment 
-    name="org.apache.cxf.stax.maxAttributeCount"
-    description="Maximum number of attributes per element in input XML. Default: 500." 
-    type="java.lang.Integer"
-    value="100" 
-    override="false" />
-   
-   <Environment 
-    name="org.apache.cxf.stax.maxAttributeSize"
-    description="Maximum size of a single attribute in input XML. Default: 65536 (= 64*1024)." 
-    type="java.lang.Integer"
-    value="1000" 
-    override="false" />
+     <Environment 
+      name="org.apache.cxf.stax.maxChildElements"
+      description="Maximum number of child elements in an input XML element. Default: 50000." 
+      type="java.lang.Integer"
+      value="1000" 
+      override="false" />
     
-   <Environment 
-    name="org.apache.cxf.stax.maxTextLength"
-    description="Maximum size of XML text node in input XML. Default: 134217728 (= 128*1024*1024)." 
-    type="java.lang.Integer"
-    value="1000" 
-    override="false" />
+     <Environment 
+      name="org.apache.cxf.stax.maxElementDepth"
+      description="Maximum depth of an element in input XML. Default: 100." 
+      type="java.lang.Integer"
+      value="100" 
+      override="false" />
+   
+     <!--Following entries are not supported in Fast Infoset mode 
+     (more info: https://issues.apache.org/jira/browse/CXF-6848) --> 
+     <Environment 
+      name="org.apache.cxf.stax.maxAttributeCount"
+      description="Maximum number of attributes per element in input XML. Default: 500." 
+      type="java.lang.Integer"
+      value="100" 
+      override="false" />
+   
+     <Environment 
+      name="org.apache.cxf.stax.maxAttributeSize"
+      description="Maximum size of a single attribute in input XML. Default: 65536 (= 64*1024)." 
+      type="java.lang.Integer"
+      value="1000" 
+      override="false" />
+    
+     <Environment 
+      name="org.apache.cxf.stax.maxTextLength"
+      description="Maximum size of XML text node in input XML. Default: 134217728 (= 128*1024*1024)." 
+      type="java.lang.Integer"
+      value="1000" 
+      override="false" />
     
   Restart Tomcat to apply changes.
 * **Dedicated WAF**: for better mitigation, we recommend using a WAF (Web Application Firewall) with XML attack mitigation features in front of the Authzforce server. 
