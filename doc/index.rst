@@ -3,6 +3,15 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+Welcome to AuthzForce's official documentation
+______________________________________________
+
+This project is part of `FIWARE`_. You will find more information about this FIWARE GE at the `Catalogue`_.
+   
+.. _FIWARE: http://fiware.org
+.. _Catalogue: http://catalogue.fiware.org/enablers/authorization-pdp-authzforce
+
+
 .. both maxdepth here and latex secnumdepth must be set to have effect in PDF output. caption has no effect in PDF output
 
 .. toctree::
