@@ -1,4 +1,4 @@
-# fiware
+# FIWARE-specific documentation and Docker distribution 
 This project is part of [FIWARE](https://www.fiware.org). More info on the [FIWARE catalogue](http://catalogue.fiware.org/enablers/authorization-pdp-authzforce).
 
 This project provides the source of various FIWARE-specific documents and packaging related to AuthZForce Server. AuthZForce Server is FIWARE Authorization PDP GEri (Generic Enabler Reference Implementation):
