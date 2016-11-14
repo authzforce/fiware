@@ -191,7 +191,7 @@ You can do it with ``curl`` tool with the the following content in a XML file (`
  ...
  < HTTP/1.1 200 OK
  < Server: Authorization System
- < Date: Mon, 04 Aug 2014 13:00:12 GMT
+ < Date: Mon, 04 Aug 2016 13:00:12 GMT
  < Content-Type: application/xml
  < Transfer-Encoding: chunked
  <
