@@ -7,18 +7,18 @@ Find detailed information of this Generic Enabler at [Fiware catalogue](http://c
 This image is intended to work together with [Identity Manager - Keyrock](http://catalogue.fiware.org/enablers/identity-management-keyrock) and [PEP Proxy Wilma](http://catalogue.fiware.org/enablers/pep-proxy-wilma) generic enabler; and also integrated in Bitergia's [Chanchan APP](https://github.com/Bitergia/fiware-chanchan).
 
 ## Image contents
-- OpenJDK 7;
-- Tomcat 7;
+- OpenJDK JRE 8;
+- Tomcat 8;
 - Authzforce Server (version matching the Docker image tag).
 
 ## Usage
 
 This image gives you a minimal installation for testing purposes. The AuthZForce Installation and administration guide on [readthedocs.org](https://readthedocs.org/projects/authzforce-ce-fiware/versions/) (select the version matching the Docker image tag, then **AuthzForce - Installation and Administration Guide**) provides you a better approach for using it in a production environment. This installation guide also gives instructions to install from .deb package (instead of Docker), which is the recommended way for Ubuntu hosts.
 
-Create a container using `fiware/authzforce-ce-server` image by doing (replace the first *8080* after *-p* with whatever network port you want to use on the host to access the Authzforce Server, e.g. 80; and *release-5.4.0* with the current Docker image tag that you are using):
+Create a container using `fiware/authzforce-ce-server` image by doing (replace the first *8080* after *-p* with whatever network port you want to use on the host to access the Authzforce Server, e.g. 80; and *release-6.0.0* with the current Docker image tag that you are using):
 
 ```
-docker run -d -p 8080:8080 --name <container-name> fiware/authzforce-ce-server:release-5.4.0
+docker run -d -p 8080:8080 --name <container-name> fiware/authzforce-ce-server:release-6.0.0
 ```
 
 As stands in the AuthZForce Installation and administration guide on [readthedocs.org](https://readthedocs.org/projects/authzforce-ce-fiware/versions/) (select the version matching the Docker image tag, then **AuthzForce - Installation and Administration Guide**) you can:
