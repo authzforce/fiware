@@ -23,7 +23,7 @@
 
 # The alternative is to use FROM ubuntu:* then install tomcat ubuntu package and use upstart/sysctl init script but this is not the way to go:
 # https://github.com/docker/docker/issues/6800
-FROM tomcat:7-jre7
+FROM tomcat:8-jre8
 MAINTAINER Cyril Dangerville (Contact via http://catalogue.fiware.org/enablers/authorization-pdp-authzforce)
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -37,9 +37,9 @@ ENV DEBIAN_FRONTEND noninteractive
 #ENV HTTP_PROXY 'http://user:password@proxy-host:proxy-port'
 #ENV HTTPS_PROXY 'http://user:password@proxy-host:proxy-port'
 
-ENV JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Xms1024m -Xmx1024m -XX:+UseConcMarkSweepGC -server"
+ENV JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Djavax.xml.accessExternalSchema=http -Xms1024m -Xmx1024m -XX:+UseConcMarkSweepGC -server"
 
-ENV AUTHZFORCE_SERVER_VERSION="5.4.1"
+ENV AUTHZFORCE_SERVER_VERSION="6.0.0"
 ENV AUTHZFORCE_SERVER_DOWNLOAD_URL="http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/$AUTHZFORCE_SERVER_VERSION/authzforce-ce-server-dist-$AUTHZFORCE_SERVER_VERSION.deb"
 
 # Download and install Authzforce Server (service starts automatically)
@@ -63,7 +63,7 @@ ENV LC_ALL en_US.UTF-8
 
 RUN curl --silent --output authzforce-ce-server.deb --location $AUTHZFORCE_SERVER_DOWNLOAD_URL && \
  dpkg --extract authzforce-ce-server.deb /root/authzforce/ && \
- mv /root/authzforce/etc/tomcat7/Catalina /usr/local/tomcat/conf/ && \
+ mv /root/authzforce/etc/tomcat8/Catalina /usr/local/tomcat/conf/ && \
  mv /root/authzforce/opt/* /opt/ && \
  rm -rf /opt/authzforce-ce-server/data/domains/* && \
  rm -rf /root/authzforce && \
