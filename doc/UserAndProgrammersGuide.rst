@@ -1757,7 +1757,7 @@ according to your AuthZForce instance properties. For example:
    # Magic key, required only if securing the AZF with a PEP Proxy
    ACCESS_CONTROL_MAGIC_KEY = 'undefined'
  
-**WARNING**: If you are using KeyRock v5.3.0 or older, you also have to change the content of IDM's template file ``openstack_dashboard/templates/access_control/policy_properties.xacml`` to this (basically the only change consists to remove the 'ns2' namespace prefix):
+**WARNING**: If you are using KeyRock v5.3.0 or older, you also have to change the content of IDM's template file ``openstack_dashboard/templates/access_control/policy_properties.xacml`` to this (basically the only change consists to remove the ``ns2`` namespace prefix):
 
 .. code-block:: xml
    :linenos:
