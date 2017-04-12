@@ -47,7 +47,7 @@ generic and complex access control policies.
 
 Note for programmers parsing XML manually or with namespace-UNaware parsers
 ---------------------------------------------------------------------------
-In all the sample XML outputs shown in the next sections, the XML namespace prefixe of any API response element, 
+In all the sample XML outputs shown in the next sections, the XML namespace prefix of any API response element, 
 such as the XACML ``Response`` element, might vary from an AuthzForce run time to another, 
 but it is always the same XML element as the prefix is always mapped to the same namespace, 
 such as ``urn:oasis:names:tc:xacml:3.0:core:schema:wd-17`` (XACML 3.0 namespace) for the XACML ``Response``. 
@@ -486,7 +486,8 @@ permissions of an *Employee* are included in the permissions of a *Manager*. In 
    Content-Type: application/xml; charset=UTF-8
 
    <?xml version="1.0" encoding="UTF-8"?>
-   <PolicySet 
+   <PolicySet
+    xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
     PolicySetId="PPS:Employee" 
     Version="1.0"
     PolicyCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:deny-unless-permit">
