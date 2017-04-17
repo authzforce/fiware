@@ -45,8 +45,8 @@ XACML is the main international OASIS standard for access control language and r
 most use cases of access control. AuthZForce supports the full core XACML 3.0 language; therefore it allows to enforce
 generic and complex access control policies.
 
-Note for programmers parsing XML manually or with namespace-UNaware parsers
----------------------------------------------------------------------------
+General recommendations for developers
+--------------------------------------
 In all the sample XML outputs shown in the next sections, the XML namespace prefix of any API response element, 
 such as the XACML ``Response`` element, might vary from an AuthzForce run time to another, 
 but it is always the same XML element as the prefix is always mapped to the same namespace, 
@@ -54,7 +54,7 @@ such as ``urn:oasis:names:tc:xacml:3.0:core:schema:wd-17`` (XACML 3.0 namespace)
 Therefore, any valid (namespace-aware) XML parser will handle it equally, no matter the namespace prefix.
 Beware of that XML namespace-prefix mapping issue if you are parsing XML manually.
 
-**We strongly recommend developers to use XML-schema-aware software with XML schema validation enabled for all XML 
+We strongly recommend developers to use XML-schema-aware software with XML schema validation enabled for all XML 
 processing. This will make troubleshooting easier, and save you a lot of trouble. You can find the XML schemas and an example of Java client code with schema validation in the** `Authzforce rest-api-model project files`_. 
 
 
