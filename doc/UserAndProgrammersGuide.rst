@@ -55,7 +55,7 @@ Therefore, any valid (namespace-aware) XML parser will handle it equally, no mat
 Beware of that XML namespace-prefix mapping issue if you are parsing XML manually.
 
 We strongly recommend developers to use XML-schema-aware software with XML schema validation enabled for all XML 
-processing. This will make troubleshooting easier, and save you a lot of trouble. You can find the XML schemas and an example of Java client code with schema validation in the** `Authzforce rest-api-model project files`_. 
+processing. This will make troubleshooting easier, and save you a lot of trouble. You can find the XML schemas and an example of Java client code with schema validation in the `Authzforce rest-api-model project files`_. 
 
 
 Attribute-Based Access Control
