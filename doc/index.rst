@@ -20,6 +20,8 @@ This project is part of `FIWARE`_. You will find more information about this FIW
    :maxdepth: 10
 
    Introduction.rst
+   ReleaseNotes.rst
+   Features.rst
    InstallationAndAdministrationGuide.rst
    UserAndProgrammersGuide.rst
 
