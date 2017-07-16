@@ -1,5 +1,9 @@
 # Change log 
 
+# 5.4.1
+- Documentation for AuthzForce Server v5.4.1
+
+
 # 5.4.0
 - Documentation for AuthzForce Server v5.4.0
 
