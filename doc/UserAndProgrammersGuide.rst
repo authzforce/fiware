@@ -347,6 +347,9 @@ Response:
 
 To update a policy, you add a new version of the policy, i.e. you send the same request as above, but with a higher ``Version`` value. 
 
+**WARNING**: after you add/update a policy, it is not necessarily used, i.e.evaluated, by the PDP. The PDP starts the evaluation with the root policy specified in the `PDP properties <Policy Decision (PDP) Properties>`_. Therefore, only this root policy and any other one referenced (directly or indirectly) by this root policy is applicable. See the section `Policy Decision (PDP) Properties`_ to learn how to verify applicable policies and change the root policy.
+
+
 Getting Policies and Policy Versions
 ++++++++++++++++++++++++++++++++++++
 
