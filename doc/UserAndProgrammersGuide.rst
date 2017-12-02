@@ -298,7 +298,25 @@ Response:
 
 To update a policy, you add a new version of the policy, i.e. you send the same request as above, but with a higher ``Version`` value. 
 
-**WARNING**: after you add/update a policy, it is not necessarily used, i.e.evaluated, by the PDP. The PDP starts the evaluation with the root policy specified in the `Policy Decision (PDP) Properties`_. Therefore, only this root policy and any other one referenced (directly or indirectly) by this root policy is applicable. See the section `Policy Decision (PDP) Properties`_ to learn how to verify applicable policies and change the root policy.
+**WARNING**: after you add/update a policy, it is not necessarily used, i.e.evaluated, by the PDP. The PDP starts the evaluation with the root policy specified in the `Policy Decision (PDP) Properties`_. 
+Therefore, only this root policy and any other one referenced (directly or indirectly) by this root policy is applicable. 
+See the section `Policy Decision (PDP) Properties`_ to learn how to verify applicable policies and change the root policy.
+
+**WARNING**: Although AuthzForce Server supports ``application/json`` media type as well for sending/getting policies in JSON format, it is still experimental for various reasons. 
+One of which is a strong limitation that you should be much aware before using it for complex XACML policies: 
+XML schema type definitions using a repeated``choice`` (between different element types) or a polymorphic sequence with ``maxOccurs > 1`` are not handled properly in JSON, 
+at least not in any standard way or without significant customization of JSON processing. 
+For example of such polymorphic sequence, an XACML Apply element may contain multiple Expression elements in a sequence,
+and an Expression may be an Apply again, or an AttributeValue, or an AttributeDesignator, or a VariableReference, etc.
+For example of repeated ``choice``, a XACML PolicySet may contain P1, then PS1, then P2, then PS2, where ``P`` stands for XACML Policy and ``PS`` for XACML PolicySet.
+With the well-known simple conventions like the one used by AuthzForce Server for XML-to-JSON mapping, this is mapped to two separate JSON arrays, one for Policy element(s) (``[P1, P2]``) 
+and one for PolicySet element(s) (``[PS1, PS2]``). Therefore, the originally intended evaluation order is lost!
+It gets even worse if you use PolicySetIdReference element(s) as well (PolicyIdReference is out of the question since not supported by the API).
+Of course, there are solutions such as adding a wrapping JSON object with a key called ``PolicyOrPolicySetOrPolicySetIdReference`` with an array as value 
+where each item must have a type information to inform the consumer whether it is a Policy, PolicySet or PolicySetIdReference. 
+This kind of solution is used in JAXB for instance to map XML to Java model (except the array is replaced by a Java collection). 
+Like in JAXB to Java, this introduces some extra complexity to JSON processing that makes the JSON alternative lose much of its appeal compared to XML.
+In short, **you should not use JSON for policies either mixing XACML Policy, PolicySet or PolicySetIdReference elements within the same PolicySet; or Expressions within the same Apply**.
 
 
 Getting Policies and Policy Versions
@@ -376,7 +394,6 @@ For example:
        <atom:link rel="item" href="root"/> 
        <atom:link rel="item" href="P1"/> 
        <atom:link rel="item" href="P2"/> 
-       ...
    </resources>
 
 

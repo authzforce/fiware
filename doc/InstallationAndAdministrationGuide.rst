@@ -14,53 +14,58 @@ The system requirements are the following:
 * RAM: 4GB min
 * Disk space: 10 GB min
 * File system: ext4
-* Operating System: Ubuntu 14.04 LTS 
+* Operating System: Ubuntu 16.04 LTS 
 * Java environment: 
 
-    * JDK 7 either from OpenJDK or Oracle; 
-    * Tomcat 7.x.
+    * JRE 8 either from OpenJDK or Oracle; 
+    * Tomcat 8.x.
 
 Installation
 ============
-If you are already using an older version of AuthZForce and wish to migrate your setup to the new version, please backup the folder ``/opt/authzforce-ce-server`` first because it will be overwritten by the new version, then proceed with the `Minimal setup`_ below, to install the new version; finally, proceed with the `Upgrade`_ section that follows, to transfer data from the old version.
+If you are already using an older version of AuthZForce and wish to migrate your setup to the new version, 
+please backup the folder ``/opt/authzforce-ce-server`` first because it will be overwritten by the new version, then proceed with the `Minimal setup`_ below, to install the new version; 
+finally, proceed with the `Upgrade`_ section that follows, to transfer data from the old version.
 
 Minimal setup
 -------------
 
-#. Install a JDK 7 if you don't have one already, using either of these two methods depending on your JDK preference:
+#. Install a JRE 8 if you don't have one already, using either of these two methods depending on your JDK preference:
 
-   * If you prefer OpenJDK: ``$ sudo aptitude install openjdk-7-jdk``
-   * If you prefer Oracle JDK, follow the instructions from `WEB UPD8 <http://www.webupd8.org/2012/01/install-oracle-java-jdk-7-in-ubuntu-via.html>`_. 
-     In the end, you should have the package ``oracle-java7-installer`` installed.
-#. Install Tomcat 7: ``$ sudo aptitude install tomcat7``.
+   * If you prefer OpenJDK: ``$ sudo apt install openjdk-8-jre``
+   * If you prefer Oracle JDK, follow the instructions from `WEB UPD8 <http://www.webupd8.org/2012/09/install-oracle-java-8-in-ubuntu-via-ppa.html>`_. 
+     In the end, you should have the package ``oracle-java8-installer`` installed.
+#. Install Tomcat 8: ``$ sudo apt install tomcat8``.
 #. Download the binary (Ubuntu package with ``.deb`` extension) release of AuthZForce 
-   from `Maven Central Repository <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/5.4.1/>`_. You get a file called ``authzforce-ce-server-dist-5.4.1.deb``:
+   from `Maven Central Repository <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/|product.version|/>`_. You get a file called ``authzforce-ce-server-dist-|product.version|.deb``:
     
-    $ wget http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/5.4.1/authzforce-ce-server-dist-5.4.1.deb
+    $ wget http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/|product.version|/authzforce-ce-server-dist-|product.version|.deb
 #. Copy this file to the host where you want to install the software.
 #. On the host, from the directory where you copied this file, run the following commands::
 
     $ sudo aptitude install gdebi curl
-    $ sudo gdebi authzforce-ce-server-dist-5.4.1.deb
+    $ sudo gdebi authzforce-ce-server-dist-|product.version|.deb
 #. At the end, you will see a message giving optional instructions to go through. Please follow them as necessary.
 
-Note that Tomcat default configuration may specify a very low value for the Java ``Xmx`` flag, causing the Authzforce webapp startup to fail. In that case, make sure Tomcat with ``Xmx`` at 1Go or more (2 Go recommended). 
-For example, for Ubuntu 12.04, Tomcat default ``Xmx`` used to be 128m. You can fix it as follows::
+Note that Tomcat default configuration may specify a very low value for the Java ``Xmx`` flag, causing the Authzforce webapp startup to fail. 
+In that case, make sure Tomcat with ``Xmx`` at 1 Go or more (2 Go recommended). 
+You can fix it as follows::
  
  $ sudo sed -i "s/-Xmx128m/-Xmx1024m/" /etc/default/tomcat
- $ sudo service tomcat7 restart
+ $ sudo service tomcat8 restart
  
-**Known issue: lack of entropy may cause delays in Tomcat 7+ start up on virtual machines in particular**: `more info on Entropy Source issue <https://wiki.apache.org/tomcat/HowTo/FasterStartUp#Entropy_Source>`_. **So beware.**
+**Known issue: lack of entropy may cause delays in Tomcat start up on virtual machines in particular**: 
+`more info on Entropy Source issue <https://wiki.apache.org/tomcat/HowTo/FasterStartUp#Entropy_Source>`_. **So beware.**
 
 Upgrade
 -------
 If you are still using an older version of AuthZForce and wish to migrate your setup to the new version, assuming you made a backup in a separate location, as told previously, please follow these steps:
 
-#. Download AuthZForce server `upgrader distribution from Maven Central Repository <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-upgrader/5.4.1/authzforce-ce-server-upgrader-5.4.1.tar.gz>`_. You get a file called ``authzforce-ce-server-upgrader-5.4.1.tar.gz``.
+#. Download AuthZForce server `upgrader distribution from Maven Central Repository <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-upgrader/|product.version|/authzforce-ce-server-upgrader-|product.version|.tar.gz>`_. 
+You get a file called ``authzforce-ce-server-upgrader-|product.version|.tar.gz``.
 #. Copy this file to the host where the old AuthZForce Server is installed, and unzip it and change directory::
 
-    $ tar xvzf authzforce-ce-server-upgrader-5.4.1.tar.gz
-    $ cd authzforce-ce-server-upgrader-5.4.1
+    $ tar xvzf authzforce-ce-server-upgrader-|product.version|.tar.gz
+    $ cd authzforce-ce-server-upgrader-|product.version|
 
 #. Follow the instructions in file ``README.html``.
 
@@ -86,11 +91,11 @@ Authzforce webapp
 
 The Authzforce webapp configuration directory is located here: ``/opt/authzforce-ce-server/conf``. 
 
-In particular, the file ``logback.xml`` configures the logging for the webapp (independently from Tomcat). By default, Authzforce-specific logs go to ``/var/log/tomcat7/authzforce-ce/error.log``.
+In particular, the file ``logback.xml`` configures the logging for the webapp (independently from Tomcat). By default, Authzforce-specific logs go to ``/var/log/tomcat8/authzforce-ce/error.log``.
 
 Restart Tomcat to apply any configuration change::
  
-   $ sudo service tomcat7 restart
+   $ sudo service tomcat8 restart
 
 
 .. _adminGuideFastInfoset:
@@ -107,7 +112,7 @@ and that `adopted <http://www.web3d.org/documents/specifications/19776-3/V3.3/Pa
 for the serialization and compression of `X3D <http://www.web3d.org/x3d/what-x3d>`_ documents. X3D is a standard for representing 3D scenes and objects using XML.
 
 AuthZForce Server offers experimental support for Fast Infoset (use with caution). This feature is disabled by default. 
-To enable Fast Infoset support, change the value of the parameter ``spring.profiles.active`` to ``+fastinfoset`` in the webapp context configuration file ``/etc/tomcat7/Catalina/localhost/authzforce-ce.xml``; 
+To enable Fast Infoset support, change the value of the parameter ``spring.profiles.active`` to ``+fastinfoset`` in the webapp context configuration file ``/etc/tomcat8/Catalina/localhost/authzforce-ce.xml``; 
 then restart Tomcat as shown in the previous section in order to apply changes.
 
 .. _adminGuideDomainAdmin:
@@ -146,8 +151,11 @@ The administrator may change these settings in the various XML files inside the 
   * ``maxPolicyRefDepth``: optional, positive integer that indicates the maximum depth of Policy(Set) reference chaining: ``PolicySet`` 1 -> ``PolicySet`` 2 -> ... -> ``PolicySet`` N; where *->* 
     represents a `XACML PolicySetIdReference`_. No limit if undefined. This property applies only to policies loaded by the PDP, i.e. the root policy 
     and policies referenced from it directly or indirectly via `XACML PolicySetIdReference`_.
-  * ``badRequestStatusDetailLevel``: optional, positive integer (default: 0) that sets the level of detail in the XACML StatusDetail element returned in the Indeterminate Decision Result in case of bad Request (XACML syntax/content is invalid). 
-    Increasing this value usually helps better pinpoint the reason why a particular Request was rejected by the XACML parser. This only applies to the content of the HTTP request body (XACML), it does not apply to HTTP-level errors (e.g. bad HTTP headers), in which case you get a HTTP status code 400 without any XACML response since the request is rejected before the body is passed to the XACML parser.
+  * ``badRequestStatusDetailLevel``: optional, positive integer (default: 0) that sets the level of detail in the XACML StatusDetail element returned in the Indeterminate Decision Result in case of bad Request 
+  (XACML syntax/content is invalid). 
+    Increasing this value usually helps better pinpoint the reason why a particular Request was rejected by the XACML parser. 
+    This only applies to the content of the HTTP request body (XACML), it does not apply to HTTP-level errors (e.g. bad HTTP headers), 
+    in which case you get a HTTP status code 400 without any XACML response since the request is rejected before the body is passed to the XACML parser.
  
 * ``policies/cm9vdA/0.1.0.xml``: the default root `XACML PolicySet <http://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html#_Toc325047106>`_ enforced by the PDP on the domain. 
   As an administrator, you may change the content of this policy on two conditions:
@@ -201,7 +209,8 @@ You can do it with ``curl`` tool with the the following content in a XML file (`
    title="h_D23LsDEeWFwqVFFMDLTQ"/> 
 
 **WARNING**: Mind the leading and trailing single quotes for the ``--data`` argument. Do not use double quotes instead of these single quotes, otherwise curl will remove the double quotes in the XML payload itself, 
-and send invalid XML which will be rejected by the server. You may use the ``--trace-ascii -`` argument (the last dash here means *stdout*) instead of ``--verbose``, in order to check the actual request body sent by ``curl``. 
+and send invalid XML which will be rejected by the server. 
+You may use the ``--trace-ascii -`` argument (the last dash here means *stdout*) instead of ``--verbose``, in order to check the actual request body sent by ``curl``. 
 So use it only if you need to dump the outgoing (and incoming) data, in particular the request body, on *stdout*.  
 
 The ``href`` value in the response above gives you the domain ID (in the form of a Base64-encoded UUID) assigned by the API. You need this ID for any further operation on the domain.
@@ -225,7 +234,8 @@ High Availability
 
 In order to achieve high availability with multiple AuthZForce Server instances (AuthZForce Server cluster), you need to make sure that the following directories are synchronized on all instances:
 
-* Configuration directory: ``/opt/authzforce-ce-server/conf``. This directory is not modified by the API but only by administrators having access to the directory, and any change to it requires restarting Tomcat to apply.  
+* Configuration directory: ``/opt/authzforce-ce-server/conf``. 
+This directory is not modified by the API but only by administrators having access to the directory, and any change to it requires restarting Tomcat to apply.  
   Therefore, this directory requires synchronization only after a manual change by a server admin, which should not occur very often. 
   When it occurs, the server administrators may reproduce the changes on each instance manually; or, if there are too many instances for this to be practical, 
   they may use automatic file synchronization solutions, or a distributed filesystems (e.g. NFS) combined with file monitoring solutions. Both kinds of solutions must be capable of executing a specific command, 
@@ -256,7 +266,7 @@ In order to achieve high availability with multiple AuthZForce Server instances 
   * **Embedded file monitoring threads**: it is possible to enable file monitoring threads embedded in AuthZForce Server. 
     These threads check for changes to the local data directory periodically, and synchronize the cache automatically. This feature is disabled by default. 
     To enable it, change the value of the parameter ``org.ow2.authzforce.domains.sync.interval`` to a strictly positive integer 
-    in the webapp context configuration file ``/etc/tomcat7/Catalina/localhost/authzforce-ce.xml``. 
+    in the webapp context configuration file ``/etc/tomcat8/Catalina/localhost/authzforce-ce.xml``. 
     The parameter value indicates the period between two checks for changes, in seconds. 
     Beware that this feature creates one extra thread per domain. Therefore, the impact on memory and CPU usage increases with the number of domains.
     Last but not least, **use this feature only on filesystems that support millisecond or higher resolution of file timestamps**, such as ``ext4`` (supports nanosecond resolution).
@@ -315,18 +325,18 @@ Diagnosis Procedures
 #. Perform the test described in `End to End testing`_.
 #. If you get a Connection Refused/Error, check whether Tomcat is started::
 
-    $ sudo service tomcat7 status
+    $ sudo service tomcat8 status
 #. If status stopped, start Tomcat::
 
-    $ sudo service tomcat7 start
-#. If Tomcat fails to start, check for any Tomcat high-level error in Tomcat log directory: ``/var/log/tomcat7``
+    $ sudo service tomcat8 start
+#. If Tomcat fails to start, check for any Tomcat high-level error in Tomcat log directory: ``/var/log/tomcat8``
 #. If Tomcat is successfully started (no error in server logs), perform the test described in `End to End testing`_ again.
 #. If you still get a Connection Refused/error, check whether Tomcat is not listening on a different port::
    
     $ sudo netstat -lataupen|grep java
 #. If you still get a connection refused/error, especially if you are connecting remotely, check whether you are able to connect locally, then check the network link, 
    i.e. whether any network filtering is in place on the host or on the access network, or other network issue: network interface status, DNS/IP adress resolution, routing, etc.
-#. If you get an error ``404 Not Found``, make sure the webapp is deployed and enabled in Tomcat. Check for any webapp deployment error in file: ``/var/log/tomcat7/authzforce-ce/error.log``.
+#. If you get an error ``404 Not Found``, make sure the webapp is deployed and enabled in Tomcat. Check for any webapp deployment error in file: ``/var/log/tomcat8/authzforce-ce/error.log``.
 
 
 Resource availability
@@ -370,7 +380,7 @@ For instance, the *NIST Guide to General Server Security* (SP 800-123) is a good
 
 Server Security Setup
 +++++++++++++++++++++
-For more Tomcat-specific security guidelines, please read `Tomcat 7 Security considerations <https://tomcat.apache.org/tomcat-7.0-doc/security-howto.html>`_.
+For more Tomcat-specific security guidelines, please read `Tomcat 8 Security considerations <https://tomcat.apache.org/tomcat-8.0-doc/security-howto.html>`_.
 
 For security of communications (confidentiality, integrity, client/server authentication), it is also recommended to enable SSL/TLS with PKI certificates. 
 The first step to set up this is to have your Certification Authority (PKI) issue a server certificate for your AuthZForce instance. 
@@ -382,7 +392,7 @@ Certificate Authority Setup
 If you have a CA already, you can skip this section.
 So this section is about creating a basic local Certificate Authority (CA) for internal use. This CA will be in charge of issuing certificates to the Authorization Server and clients, 
 for authentication, integrity and confidentiality purposes. 
-**This procedure requires using a JDK 1.7 or later.**
+**This procedure requires JDK 1.7 or later.**
 (For the sake of simplicity, we do not use a subordinate CA, although you should for production, see `keytool command example <http://docs.oracle.com/javase/7/docs/technotes/tools/windows/keytool.html#genkeypairCmd>`_, 
 use the ``pathlen`` parameter to restrict number of subordinate CA, ``pathlen=0`` means no subordinate.)
 
@@ -399,7 +409,7 @@ use the ``pathlen`` parameter to restrict number of subordinate CA, ``pathlen=0`
 
 Server SSL Certificate Setup
 ++++++++++++++++++++++++++++
-For Tomcat 7, refer to the `Tomcat 7 SSL/TLS Configuration HOW-TO <https://tomcat.apache.org/tomcat-7.0-doc/ssl-howto.html>`_.
+For Tomcat 8, refer to the `Tomcat 8 SSL/TLS Configuration HOW-TO <https://tomcat.apache.org/tomcat-8.0-doc/ssl-howto.html>`_.
 
 
 Web Application Secutity
@@ -409,7 +419,7 @@ The AuthZForce web application exposes a XML-based API. Therefore it is vulnerab
 To mitigate these attacks, there are two solutions:
 
 * **Authzforce native protection**: you can add the following `Environment entries <https://tomcat.apache.org/tomcat-7.0-doc/config/context.html#Environment_Entries>`_ 
-  in Authzfoce webapp context file ``/etc/tomcat7/Catalina/localhost/authzforce-ce.xml`` (if an entry is absent or its value is negative, the default value is used):
+  in Authzfoce webapp context file ``/etc/tomcat8/Catalina/localhost/authzforce-ce.xml`` (if an entry is absent or its value is negative, the default value is used):
 
   .. code-block:: xml
    
