@@ -94,7 +94,7 @@ author = u'Cyril Dangerville, Thales Services'
 # The short X.Y version.
 version = '8.0.0'
 # The full version, including alpha/beta/rc tags.
-release = '8.0.0e'
+release = '8.0.0'
 
 rst_epilog = """
     .. |product.version| replace:: {0}
