@@ -1,6 +1,6 @@
-## Authorization PDP - AuthZForce Docker minimal image
+## Authorization PDP - AuthzForce Docker minimal image
 
-[Authorization PDP - AuthZForce](http://catalogue.fiware.org/enablers/authorization-pdp-authzforce) is a Reference Implementation of the Authorization PDP Generic Enabler (formerly Access Control GE).
+[Authorization PDP - AuthzForce](http://catalogue.fiware.org/enablers/authorization-pdp-authzforce) is a Reference Implementation of the Authorization PDP Generic Enabler (formerly Access Control GE).
 
 Find detailed information of this Generic Enabler at [Fiware catalogue](http://catalogue.fiware.org/enablers/authorization-pdp-authzforce).
 
@@ -13,7 +13,7 @@ This image is intended to work together with [Identity Manager - Keyrock](http:/
 
 ## Usage
 
-This image gives you a minimal installation for testing purposes. The AuthZForce Installation and administration guide on [readthedocs.org](https://readthedocs.org/projects/authzforce-ce-fiware/versions/) (select the version matching the Docker image tag, then **AuthzForce - Installation and Administration Guide**) provides you a better approach for using it in a production environment. This installation guide also gives instructions to install from .deb package (instead of Docker), which is the recommended way for Ubuntu hosts.
+This image gives you a minimal installation for testing purposes. The AuthzForce Installation and administration guide on [readthedocs.org](https://readthedocs.org/projects/authzforce-ce-fiware/versions/) (select the version matching the Docker image tag, then **AuthzForce - Installation and Administration Guide**) provides you a better approach for using it in a production environment. This installation guide also gives instructions to install from .deb package (instead of Docker), which is the recommended way for Ubuntu hosts.
 
 Create a container using `fiware/authzforce-ce-server` image by doing (replace the first *8080* after *-p* with whatever network port you want to use on the host to access the Authzforce Server, e.g. 80; and *release-6.0.0* with the current Docker image tag that you are using):
 
@@ -21,7 +21,7 @@ Create a container using `fiware/authzforce-ce-server` image by doing (replace t
 docker run -d -p 8080:8080 --name <container-name> fiware/authzforce-ce-server:release-6.0.0
 ```
 
-As stands in the AuthZForce Installation and administration guide on [readthedocs.org](https://readthedocs.org/projects/authzforce-ce-fiware/versions/) (select the version matching the Docker image tag, then **AuthzForce - Installation and Administration Guide**) you can:
+As stands in the AuthzForce Installation and administration guide on [readthedocs.org](https://readthedocs.org/projects/authzforce-ce-fiware/versions/) (select the version matching the Docker image tag, then **AuthzForce - Installation and Administration Guide**) you can:
 
 * **Create a domain**
 
@@ -50,7 +50,7 @@ http://<authzforce-container-ip>:8080/authzforce-ce/domains/<domain-id>
 
 * **User and Role Management Setup && Domain Role Assignment**
 
-These tasks are now delegated to the [Identity Manager - Keyrock](http://catalogue.fiware.org/enablers/identity-management-keyrock) enabler. Here you can find how to use the interface for that purpose: [How to manage AuthZForce in Fiware](https://www.fiware.org/devguides/handling-authorization-and-access-control-to-apis/how-to-manage-access-control-in-fiware/).
+These tasks are now delegated to the [Identity Manager - Keyrock](http://catalogue.fiware.org/enablers/identity-management-keyrock) enabler. Here you can find how to use the interface for that purpose: [How to manage AuthzForce in Fiware](https://www.fiware.org/devguides/handling-authorization-and-access-control-to-apis/how-to-manage-access-control-in-fiware/).
 
 ## User feedback
 

@@ -30,117 +30,117 @@ AuthzForce Server.
 Schema elements
 '''''''''''''''
 
-+---------------------------------------+-------+-------------+
-| Element name                          | M/O   | Supported   |
-+=======================================+=======+=============+
-| xacml:Advice                          | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:AdviceExpression                | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:AdviceExpressions               | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:AllOf                           | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:AnyOf                           | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:Apply                           | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:AssociatedAdvice                | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:Attribute                       | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:AttributeAssignment             | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:AttributeAssignmentExpression   | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:AttributeDesignator             | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:Attributes                      | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:AttributeSelector               | O     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:AttributesReference             | O     | N           |
-+---------------------------------------+-------+-------------+
-| xacml:AttributeValue                  | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:CombinerParameter               | O     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:CombinerParameters              | O     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:Condition                       | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:Content                         | O     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:Decision                        | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:Description                     | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:Expression                      | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:Function                        | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:Match                           | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:MissingAttributeDetail          | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:MultiRequests                   | O     | N           |
-+---------------------------------------+-------+-------------+
-| xacml:Obligation                      | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:ObligationExpression            | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:ObligationExpressions           | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:Obligations                     | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:Policy                          | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:PolicyCombinerParameters        | O     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:PolicyDefaults                  | O     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:PolicyIdentifierList            | O     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:PolicyIdReference               | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:PolicyIssuer                    | O     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:PolicySet                       | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:PolicySetDefaults               | O     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:PolicySetIdReference            | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:Request                         | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:RequestDefaults                 | O     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:RequestReference                | O     | N           |
-+---------------------------------------+-------+-------------+
-| xacml:Response                        | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:Result                          | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:Rule                            | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:RuleCombinerParameters          | O     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:Status                          | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:StatusCode                      | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:StatusDetail                    | O     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:StatusMessage                   | O     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:Target                          | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:VariableDefinition              | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:VariableReference               | M     | Y           |
-+---------------------------------------+-------+-------------+
-| xacml:XPathVersion                    | O     | Y           |
-+---------------------------------------+-------+-------------+
++-------------------------------------+-----+-----------+
+| Element name                        | M/O | Supported |
++=====================================+=====+===========+
+| xacml:Advice                        | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:AdviceExpression              | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:AdviceExpressions             | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:AllOf                         | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:AnyOf                         | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:Apply                         | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:AssociatedAdvice              | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:Attribute                     | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:AttributeAssignment           | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:AttributeAssignmentExpression | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:AttributeDesignator           | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:Attributes                    | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:AttributeSelector             | O   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:AttributesReference           | O   | N         |
++-------------------------------------+-----+-----------+
+| xacml:AttributeValue                | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:CombinerParameter             | O   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:CombinerParameters            | O   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:Condition                     | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:Content                       | O   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:Decision                      | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:Description                   | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:Expression                    | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:Function                      | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:Match                         | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:MissingAttributeDetail        | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:MultiRequests                 | O   | N         |
++-------------------------------------+-----+-----------+
+| xacml:Obligation                    | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:ObligationExpression          | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:ObligationExpressions         | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:Obligations                   | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:Policy                        | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:PolicyCombinerParameters      | O   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:PolicyDefaults                | O   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:PolicyIdentifierList          | O   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:PolicyIdReference             | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:PolicyIssuer                  | O   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:PolicySet                     | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:PolicySetDefaults             | O   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:PolicySetIdReference          | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:Request                       | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:RequestDefaults               | O   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:RequestReference              | O   | N         |
++-------------------------------------+-----+-----------+
+| xacml:Response                      | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:Result                        | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:Rule                          | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:RuleCombinerParameters        | O   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:Status                        | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:StatusCode                    | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:StatusDetail                  | O   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:StatusMessage                 | O   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:Target                        | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:VariableDefinition            | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:VariableReference             | M   | Y         |
++-------------------------------------+-----+-----------+
+| xacml:XPathVersion                  | O   | Y         |
++-------------------------------------+-----+-----------+
 
 Algorithms
 ''''''''''
@@ -202,71 +202,71 @@ are no longer supported.
 Status Codes
 ''''''''''''
 
-+---------------------------------------------------------+-------+-------------+
-| Status code                                             | M/O   | Supported   |
-+=========================================================+=======+=============+
-| urn:oasis:names:tc:xacml:1.0:status:missing-attribute   | M     | Y           |
-+---------------------------------------------------------+-------+-------------+
-| urn:oasis:names:tc:xacml:1.0:status:ok                  | M     | Y           |
-+---------------------------------------------------------+-------+-------------+
-| urn:oasis:names:tc:xacml:1.0:status:processing-error    | M     | Y           |
-+---------------------------------------------------------+-------+-------------+
-| urn:oasis:names:tc:xacml:1.0:status:syntax-error        | M     | Y           |
-+---------------------------------------------------------+-------+-------------+
++-------------------------------------------------------+-----+-----------+
+| Status code                                           | M/O | Supported |
++=======================================================+=====+===========+
+| urn:oasis:names:tc:xacml:1.0:status:missing-attribute | M   | Y         |
++-------------------------------------------------------+-----+-----------+
+| urn:oasis:names:tc:xacml:1.0:status:ok                | M   | Y         |
++-------------------------------------------------------+-----+-----------+
+| urn:oasis:names:tc:xacml:1.0:status:processing-error  | M   | Y         |
++-------------------------------------------------------+-----+-----------+
+| urn:oasis:names:tc:xacml:1.0:status:syntax-error      | M   | Y         |
++-------------------------------------------------------+-----+-----------+
 
 Attributes
 ''''''''''
 
-+-------------------------------------------------------------+-------+-------------+
-| Identifier                                                  | M/O   | Supported   |
-+=============================================================+=======+=============+
-| urn:oasis:names:tc:xacml:1.0:environment:current-time       | M     | Y           |
-+-------------------------------------------------------------+-------+-------------+
-| urn:oasis:names:tc:xacml:1.0:environment:current-date       | M     | Y           |
-+-------------------------------------------------------------+-------+-------------+
-| urn:oasis:names:tc:xacml:1.0:environment:current-dateTime   | M     | Y           |
-+-------------------------------------------------------------+-------+-------------+
++-----------------------------------------------------------+-----+-----------+
+| Identifier                                                | M/O | Supported |
++===========================================================+=====+===========+
+| urn:oasis:names:tc:xacml:1.0:environment:current-time     | M   | Y         |
++-----------------------------------------------------------+-----+-----------+
+| urn:oasis:names:tc:xacml:1.0:environment:current-date     | M   | Y         |
++-----------------------------------------------------------+-----+-----------+
+| urn:oasis:names:tc:xacml:1.0:environment:current-dateTime | M   | Y         |
++-----------------------------------------------------------+-----+-----------+
 
 Data-types
 ''''''''''
 
-+----------------------------------------------------------+-------+-------------+
-| Identifier                                               | M/O   | Supported   |
-+==========================================================+=======+=============+
-| http://www.w3.org/2001/XMLSchema#string                  | M     | Y           |
-+----------------------------------------------------------+-------+-------------+
-| http://www.w3.org/2001/XMLSchema#boolean                 | M     | Y           |
-+----------------------------------------------------------+-------+-------------+
-| http://www.w3.org/2001/XMLSchema#integer                 | M     | Y           |
-+----------------------------------------------------------+-------+-------------+
-| http://www.w3.org/2001/XMLSchema#double                  | M     | Y           |
-+----------------------------------------------------------+-------+-------------+
-| http://www.w3.org/2001/XMLSchema#time                    | M     | Y           |
-+----------------------------------------------------------+-------+-------------+
-| http://www.w3.org/2001/XMLSchema#date                    | M     | Y           |
-+----------------------------------------------------------+-------+-------------+
-| http://www.w3.org/2001/XMLSchema#dateTime                | M     | Y           |
-+----------------------------------------------------------+-------+-------------+
-| http://www.w3.org/2001/XMLSchema#dayTimeDuration         | M     | Y           |
-+----------------------------------------------------------+-------+-------------+
-| http://www.w3.org/2001/XMLSchema#yearMonthDuration       | M     | Y           |
-+----------------------------------------------------------+-------+-------------+
-| http://www.w3.org/2001/XMLSchema#anyURI                  | M     | Y           |
-+----------------------------------------------------------+-------+-------------+
-| http://www.w3.org/2001/XMLSchema#hexBinary               | M     | Y           |
-+----------------------------------------------------------+-------+-------------+
-| http://www.w3.org/2001/XMLSchema#base64Binary            | M     | Y           |
-+----------------------------------------------------------+-------+-------------+
-| urn:oasis:names:tc:xacml:1.0:data-type:rfc822Name        | M     | Y           |
-+----------------------------------------------------------+-------+-------------+
-| urn:oasis:names:tc:xacml:1.0:data-type:x500Name          | M     | Y           |
-+----------------------------------------------------------+-------+-------------+
-| urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression   | O     | Y           |
-+----------------------------------------------------------+-------+-------------+
-| urn:oasis:names:tc:xacml:2.0:data-type:ipAddress         | M     | Y           |
-+----------------------------------------------------------+-------+-------------+
-| urn:oasis:names:tc:xacml:2.0:data-type:dnsName           | M     | Y           |
-+----------------------------------------------------------+-------+-------------+
++--------------------------------------------------------+-----+-----------+
+| Identifier                                             | M/O | Supported |
++========================================================+=====+===========+
+| http://www.w3.org/2001/XMLSchema#string                | M   | Y         |
++--------------------------------------------------------+-----+-----------+
+| http://www.w3.org/2001/XMLSchema#boolean               | M   | Y         |
++--------------------------------------------------------+-----+-----------+
+| http://www.w3.org/2001/XMLSchema#integer               | M   | Y         |
++--------------------------------------------------------+-----+-----------+
+| http://www.w3.org/2001/XMLSchema#double                | M   | Y         |
++--------------------------------------------------------+-----+-----------+
+| http://www.w3.org/2001/XMLSchema#time                  | M   | Y         |
++--------------------------------------------------------+-----+-----------+
+| http://www.w3.org/2001/XMLSchema#date                  | M   | Y         |
++--------------------------------------------------------+-----+-----------+
+| http://www.w3.org/2001/XMLSchema#dateTime              | M   | Y         |
++--------------------------------------------------------+-----+-----------+
+| http://www.w3.org/2001/XMLSchema#dayTimeDuration       | M   | Y         |
++--------------------------------------------------------+-----+-----------+
+| http://www.w3.org/2001/XMLSchema#yearMonthDuration     | M   | Y         |
++--------------------------------------------------------+-----+-----------+
+| http://www.w3.org/2001/XMLSchema#anyURI                | M   | Y         |
++--------------------------------------------------------+-----+-----------+
+| http://www.w3.org/2001/XMLSchema#hexBinary             | M   | Y         |
++--------------------------------------------------------+-----+-----------+
+| http://www.w3.org/2001/XMLSchema#base64Binary          | M   | Y         |
++--------------------------------------------------------+-----+-----------+
+| urn:oasis:names:tc:xacml:1.0:data-type:rfc822Name      | M   | Y         |
++--------------------------------------------------------+-----+-----------+
+| urn:oasis:names:tc:xacml:1.0:data-type:x500Name        | M   | Y         |
++--------------------------------------------------------+-----+-----------+
+| urn:oasis:names:tc:xacml:3.0:data-type:xpathExpression | O   | Y         |
++--------------------------------------------------------+-----+-----------+
+| urn:oasis:names:tc:xacml:2.0:data-type:ipAddress       | M   | Y         |
++--------------------------------------------------------+-----+-----------+
+| urn:oasis:names:tc:xacml:2.0:data-type:dnsName         | M   | Y         |
++--------------------------------------------------------+-----+-----------+
 
 Functions
 '''''''''
@@ -886,29 +886,29 @@ Conformance table according to `section
 5 <http://docs.oasis-open.org/xacml/xacml-3.0-dlp-nac/v1.0/cs01/xacml-3.0-dlp-nac-v1.0-cs01.html#_Toc413165291>`__,
 with AuthzForce support status:
 
-+------------------------------------------------------------------+-------+-------------+
-| Identifier                                                       | M/O   | Supported   |
-+==================================================================+=======+=============+
-| urn:oasis:names:tc:xacml:3.0:data-type:ipAddress-value           | M     | N           |
-+------------------------------------------------------------------+-------+-------------+
-| urn:oasis:names:tc:xacml:3.0:data-type:ipAddress-pattern         | M     | N           |
-+------------------------------------------------------------------+-------+-------------+
-| urn:oasis:names:tc:xacml:3.0:function:ipAddress-match            | M     | N           |
-+------------------------------------------------------------------+-------+-------------+
-| urn:oasis:names:tc:xacml:3.0:function:ipAddress-endpoint-match   | M     | N           |
-+------------------------------------------------------------------+-------+-------------+
-| urn:oasis:names:tc:xacml:3.0:function:ipAddress-value-equal      | M     | N           |
-+------------------------------------------------------------------+-------+-------------+
-| urn:oasis:names:tc:xacml:3.0:data-type:dnsName-value             | M     | Y           |
-+------------------------------------------------------------------+-------+-------------+
-| urn:oasis:names:tc:xacml:3.0:data-type:dnsName-pattern           | M     | N           |
-+------------------------------------------------------------------+-------+-------------+
-| urn:oasis:names:tc:xacml:3.0:function:dnsName-match              | M     | N           |
-+------------------------------------------------------------------+-------+-------------+
-| urn:oasis:names:tc:xacml:3.0:function:dnsName-endpoint-match     | M     | N           |
-+------------------------------------------------------------------+-------+-------------+
-| urn:oasis:names:tc:xacml:3.0:function:dnsName-value-equal        | M     | Y           |
-+------------------------------------------------------------------+-------+-------------+
++----------------------------------------------------------------+-----+-----------+
+| Identifier                                                     | M/O | Supported |
++================================================================+=====+===========+
+| urn:oasis:names:tc:xacml:3.0:data-type:ipAddress-value         | M   | N         |
++----------------------------------------------------------------+-----+-----------+
+| urn:oasis:names:tc:xacml:3.0:data-type:ipAddress-pattern       | M   | N         |
++----------------------------------------------------------------+-----+-----------+
+| urn:oasis:names:tc:xacml:3.0:function:ipAddress-match          | M   | N         |
++----------------------------------------------------------------+-----+-----------+
+| urn:oasis:names:tc:xacml:3.0:function:ipAddress-endpoint-match | M   | N         |
++----------------------------------------------------------------+-----+-----------+
+| urn:oasis:names:tc:xacml:3.0:function:ipAddress-value-equal    | M   | N         |
++----------------------------------------------------------------+-----+-----------+
+| urn:oasis:names:tc:xacml:3.0:data-type:dnsName-value           | M   | Y         |
++----------------------------------------------------------------+-----+-----------+
+| urn:oasis:names:tc:xacml:3.0:data-type:dnsName-pattern         | M   | N         |
++----------------------------------------------------------------+-----+-----------+
+| urn:oasis:names:tc:xacml:3.0:function:dnsName-match            | M   | N         |
++----------------------------------------------------------------+-----+-----------+
+| urn:oasis:names:tc:xacml:3.0:function:dnsName-endpoint-match   | M   | N         |
++----------------------------------------------------------------+-----+-----------+
+| urn:oasis:names:tc:xacml:3.0:function:dnsName-value-equal      | M   | Y         |
++----------------------------------------------------------------+-----+-----------+
 
 XACML Additional Combining Algorithms Profile
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -917,6 +917,14 @@ AuthzForce provides experimental support for `XACML 3.0 Additional
 Combining Algorithms Profile Version
 1.0 <http://docs.oasis-open.org/xacml/xacml-3.0-combalgs/v1.0/xacml-3.0-combalgs-v1.0.html>`__,
 i.e. ``on-permit-apply-second`` policy combining algorithm.
+
+XACML REST Profile
+^^^^^^^^^^^^^^^^^^
+AuthzForce supports `REST Profile of XACML v3.0 Version 1.0 <http://docs.oasis-open.org/xacml/xacml-rest/v1.0/xacml-rest-v1.0.html>`__.
+
+XACML JSON Profile
+^^^^^^^^^^^^^^^^^^
+AuthzForce supports `JSON Profile of XACML 3.0 <http://docs.oasis-open.org/xacml/xacml-json-http/v1.0/xacml-json-http-v1.0.html>`__.
 
 Safety & Security
 ~~~~~~~~~~~~~~~~~
@@ -956,16 +964,16 @@ Extensibility Points
    functions;
 -  **Combining Algorithms**: you may extend the PDP engine with custom
    XACML policy/rule combining algorithms;
--  **Attribute Providers**: you may plug custom attribute providers into
+-  **Attribute Providers aka PIPs** (Policy Information Points): you may plug custom attribute providers into
    the PDP engine to allow it to retrieve attributes from other
    attribute sources (e.g. remote service) than the input XACML Request
    during evaluation;
--  **Request Filter**: you may customize the processing of XACML
+-  **Request Preprocessor**: you may customize the processing of XACML
    Requests before evaluation by the PDP core engine (e.g. used for
    implementing `XACML v3.0 Multiple Decision Profile Version 1.0 -
    Repeated attribute
    categories <http://docs.oasis-open.org/xacml/3.0/multiple/v1.0/cs02/xacml-3.0-multiple-v1.0-cs02.html#_Toc388943334>`__);
--  **Result Filter**: you may customize the processing of XACML Results
+-  **Result Postprocessor**: you may customize the processing of XACML Results
    after evaluation by the PDP engine (e.g. used for implementing `XACML
    v3.0 Multiple Decision Profile Version 1.0 - Requests for a combined
    decision <http://docs.oasis-open.org/xacml/3.0/xacml-3.0-multiple-v1-spec-cd-03-en.html#_Toc260837890>`__);
@@ -995,16 +1003,28 @@ REST API
    sections.
 -  Multi-tenant: allows to have multiple domains/tenants, each with its
    own PAP/PDP, in particular its own policy repository.
--  Conformance with `REST Profile of XACML v3.0 Version
-   1.0 <http://docs.oasis-open.org/xacml/xacml-rest/v1.0/xacml-rest-v1.0.html>`__
--  `Fast
-   Infoset <http://www.itu.int/en/ITU-T/asn1/Pages/Fast-Infoset.aspx>`__
-   support for requests/responses.
+-  Conformance with `REST Profile of XACML v3.0 Version 1.0 <http://docs.oasis-open.org/xacml/xacml-rest/v1.0/xacml-rest-v1.0.html>`__
+- Supported data formats, aka content types: 
+
+  - ``application/xml``: XML based on API schema;
+  - ``application/fastinfoset``: `Fast Infoset <http://www.itu.int/en/ITU-T/asn1/Pages/Fast-Infoset.aspx>`__ based on API's XML schema;
+  - ``application/json``: JSON based on API's XML schema with a generic XML-to-JSON mapping convention
+  - ``application/xacml+xml``: XACML content only, as defined by `RFC 7061 <https://tools.ietf.org/html/rfc7061>`__
+  - ``application/xacml+json``: JSON format for XACML Request/Response on PDP only, as defined by `XACML v3.0 - JSON Profile Version 1.0 <http://docs.oasis-open.org/xacml/xacml-json-http/v1.0/xacml-json-http-v1.0.html>`__
 
 High availability and load-balancing
 ------------------------------------
 
 -  Integration with file synchronization tools (e.g.
    `csync2 <http://oss.linbit.com/csync2/>`__) or distributed
-   filesystems (e.g. NFS and CIFS) to build clusters of AuthZForce
+   filesystems (e.g. NFS and CIFS) to build clusters of AuthzForce
    Servers.
+   
+   
+Limitations
+-----------
+The following optional features from `XACML v3.0 Core standard <http://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html>`__ are not supported:
+
+- Elements ``AttributesReferences``, ``MultiRequests`` and ``RequestReference``;
+- Functions ``urn:oasis:names:tc:xacml:3.0:function:xpath-node-equal``, ``urn:oasis:names:tc:xacml:3.0:function:xpath-node-match`` and ``urn:oasis:names:tc:xacml:3.0:function:access-permitted``;
+- `Algorithms planned for future deprecation <http://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html#_Toc325047257>`__.

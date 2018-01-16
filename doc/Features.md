@@ -466,4 +466,4 @@ AuthzForce provides experimental support for [XACML 3.0 Additional Combining Alg
 
 ## High availability and load-balancing
 
-* Integration with file synchronization tools (e.g. [csync2](http://oss.linbit.com/csync2/)) or distributed filesystems (e.g. NFS and CIFS) to build clusters of AuthZForce Servers.
+* Integration with file synchronization tools (e.g. [csync2](http://oss.linbit.com/csync2/)) or distributed filesystems (e.g. NFS and CIFS) to build clusters of AuthzForce Servers.

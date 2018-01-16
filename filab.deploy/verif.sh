@@ -22,5 +22,5 @@ if [[ $iterations -gt $max_iterations ]]
 then
         echo "AuthzForce startup seems to have failed, OR the Tomcat server was stopped, OR network filtering measures are blocking the HTTP request, as it is unreachable at URL 'http://$IP:8080/authzforce-ce/domains', please check /var/log/tomcat7/authzforce-ce/error.log"
 else
-        echo AuthZForce is ready!
+        echo AuthzForce is ready!
 fi

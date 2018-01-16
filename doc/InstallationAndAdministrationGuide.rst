@@ -2,7 +2,7 @@
 Installation and Administration Guide
 =====================================
 
-This guide provides the procedure to install the `AuthZForce server <https://github.com/authzforce/server>`_, including system requirements and troubleshooting instructions. 
+This guide provides the procedure to install the `AuthzForce server <https://github.com/authzforce/server>`_, including system requirements and troubleshooting instructions. 
 
 System Requirements
 ===================
@@ -22,7 +22,7 @@ The system requirements are the following:
 
 Installation
 ============
-If you are already using an older version of AuthZForce and wish to migrate your setup to the new version, 
+If you are already using an older version of AuthzForce and wish to migrate your setup to the new version, 
 please backup the folder ``/opt/authzforce-ce-server`` first because it will be overwritten by the new version, then proceed with the `Minimal setup`_ below, to install the new version; 
 finally, proceed with the `Upgrade`_ section that follows, to transfer data from the old version.
 
@@ -35,15 +35,20 @@ Minimal setup
    * If you prefer Oracle JDK, follow the instructions from `WEB UPD8 <http://www.webupd8.org/2012/09/install-oracle-java-8-in-ubuntu-via-ppa.html>`_. 
      In the end, you should have the package ``oracle-java8-installer`` installed.
 #. Install Tomcat 8: ``$ sudo apt install tomcat8``.
-#. Download the binary (Ubuntu package with ``.deb`` extension) release of AuthZForce 
-   from `Maven Central Repository <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/|product.version|/>`_. You get a file called ``authzforce-ce-server-dist-|product.version|.deb``:
+#. Each AuthzForce Server version number has the form MAJOR.MINOR.PATH (Semantic Versioning). Identify the latest binary (Ubuntu package with ``.deb`` extension) release of AuthzForce Server
+   on `Maven Central Repository <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/>`_ that matches the MAJOR.MINOR version of this documentation. 
+   This is the current latest software version to which this documentation version applies. 
+   If you want to use a different software version, go to the latest documentation version with matching MAJOR.MINOR and follow instructions there.
+   Else you may download the software version. We will refer to its version number as ``M.m.P`` (please replace accordingly):
     
-    $ wget http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/|product.version|/authzforce-ce-server-dist-|product.version|.deb
+    $ wget http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/M.m.P/authzforce-ce-server-dist-M.m.P.deb
+    
+    You should get a file called ``authzforce-ce-server-dist-M.m.P.deb``.
 #. Copy this file to the host where you want to install the software.
 #. On the host, from the directory where you copied this file, run the following commands::
 
     $ sudo aptitude install gdebi curl
-    $ sudo gdebi authzforce-ce-server-dist-|product.version|.deb
+    $ sudo gdebi authzforce-ce-server-dist-M.m.P.deb
 #. At the end, you will see a message giving optional instructions to go through. Please follow them as necessary.
 
 Note that Tomcat default configuration may specify a very low value for the Java ``Xmx`` flag, causing the Authzforce webapp startup to fail. 
@@ -58,14 +63,15 @@ You can fix it as follows::
 
 Upgrade
 -------
-If you are still using an older version of AuthZForce and wish to migrate your setup to the new version, assuming you made a backup in a separate location, as told previously, please follow these steps:
+If you are still using an older version of AuthzForce and wish to migrate your setup to the new version, assuming you made a backup in a separate location, as told previously, please follow these steps:
 
-#. Download AuthZForce server `upgrader distribution from Maven Central Repository <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-upgrader/|product.version|/authzforce-ce-server-upgrader-|product.version|.tar.gz>`_. 
-You get a file called ``authzforce-ce-server-upgrader-|product.version|.tar.gz``.
-#. Copy this file to the host where the old AuthZForce Server is installed, and unzip it and change directory::
+#. Download AuthzForce server `upgrader distribution (.tar.gz extension) from Maven Central Repository <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-upgrader/>`_ 
+   in the same version as the Server version you want to upgrade to. 
+   You get a file called ``authzforce-ce-server-upgrader-M.m.P.tar.gz`` (replace ``M.m.P`` with the corresponding version).
+#. Copy this file to the host where the old AuthzForce Server is installed, and unzip it and change directory::
 
-    $ tar xvzf authzforce-ce-server-upgrader-|product.version|.tar.gz
-    $ cd authzforce-ce-server-upgrader-|product.version|
+    $ tar xvzf authzforce-ce-server-upgrader-M.m.P.tar.gz
+    $ cd authzforce-ce-server-upgrader-M.m.P
 
 #. Follow the instructions in file ``README.html``.
 
@@ -111,7 +117,7 @@ A major one comes from the `Web3D <http://www.web3d.org/>`_ consortium that is r
 and that `adopted <http://www.web3d.org/documents/specifications/19776-3/V3.3/Part03/concepts.html#Fast-Infoset>`_ Fast Infoset 
 for the serialization and compression of `X3D <http://www.web3d.org/x3d/what-x3d>`_ documents. X3D is a standard for representing 3D scenes and objects using XML.
 
-AuthZForce Server offers experimental support for Fast Infoset (use with caution). This feature is disabled by default. 
+AuthzForce Server offers experimental support for Fast Infoset (use with caution). This feature is disabled by default. 
 To enable Fast Infoset support, change the value of the parameter ``spring.profiles.active`` to ``+fastinfoset`` in the webapp context configuration file ``/etc/tomcat8/Catalina/localhost/authzforce-ce.xml``; 
 then restart Tomcat as shown in the previous section in order to apply changes.
 
@@ -151,12 +157,11 @@ The administrator may change these settings in the various XML files inside the 
   * ``maxPolicyRefDepth``: optional, positive integer that indicates the maximum depth of Policy(Set) reference chaining: ``PolicySet`` 1 -> ``PolicySet`` 2 -> ... -> ``PolicySet`` N; where *->* 
     represents a `XACML PolicySetIdReference`_. No limit if undefined. This property applies only to policies loaded by the PDP, i.e. the root policy 
     and policies referenced from it directly or indirectly via `XACML PolicySetIdReference`_.
-  * ``badRequestStatusDetailLevel``: optional, positive integer (default: 0) that sets the level of detail in the XACML StatusDetail element returned in the Indeterminate Decision Result in case of bad Request 
-  (XACML syntax/content is invalid). 
+  * ``clientRequestErrorVerbosityLevel``: optional, positive integer (default: 0) that sets the level of detail in the XACML StatusDetail element returned in the Indeterminate Decision Result in case of bad Request (XACML syntax/content is invalid). 
     Increasing this value usually helps better pinpoint the reason why a particular Request was rejected by the XACML parser. 
     This only applies to the content of the HTTP request body (XACML), it does not apply to HTTP-level errors (e.g. bad HTTP headers), 
     in which case you get a HTTP status code 400 without any XACML response since the request is rejected before the body is passed to the XACML parser.
- 
+
 * ``policies/cm9vdA/0.1.0.xml``: the default root `XACML PolicySet <http://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html#_Toc325047106>`_ enforced by the PDP on the domain. 
   As an administrator, you may change the content of this policy on two conditions:
   
@@ -232,10 +237,10 @@ Policy administration is part of the Authorization Server API, addressed more ex
 High Availability
 =================
 
-In order to achieve high availability with multiple AuthZForce Server instances (AuthZForce Server cluster), you need to make sure that the following directories are synchronized on all instances:
+In order to achieve high availability with multiple AuthzForce Server instances (AuthzForce Server cluster), you need to make sure that the following directories are synchronized on all instances:
 
 * Configuration directory: ``/opt/authzforce-ce-server/conf``. 
-This directory is not modified by the API but only by administrators having access to the directory, and any change to it requires restarting Tomcat to apply.  
+  This directory is not modified by the API but only by administrators having access to the directory, and any change to it requires restarting Tomcat to apply.  
   Therefore, this directory requires synchronization only after a manual change by a server admin, which should not occur very often. 
   When it occurs, the server administrators may reproduce the changes on each instance manually; or, if there are too many instances for this to be practical, 
   they may use automatic file synchronization solutions, or a distributed filesystems (e.g. NFS) combined with file monitoring solutions. Both kinds of solutions must be capable of executing a specific command, 
@@ -244,8 +249,8 @@ This directory is not modified by the API but only by administrators having acce
 * Data directory: ``/opt/authzforce-ce-server/data``. This is where the Server API persists and retrieves domain data such as policies.
   Therefore, it is critical to keep this directory synchronized across all the nodes in the high availability cluster, using either file synchronization solutions 
   such as `csync2 <http://linuxaria.com/howto/csync2-a-filesystem-syncronization-tool-for-linux>`_, or distributed file systems such as NFS.
-  Besides, for usability and performance reasons, the AuthZForce server caches certain objects in memory such as domains' PDPs and ID-externalId mappings (more info in the *User and Programmers Guide*).
-  Therefore, it is also critical to re-sync the AuthZForce Server cache after certain changes done directly by aforementioned solutions to the local data directory. 
+  Besides, for usability and performance reasons, the AuthzForce server caches certain objects in memory such as domains' PDPs and ID-externalId mappings (more info in the *User and Programmers Guide*).
+  Therefore, it is also critical to re-sync the AuthzForce Server cache after certain changes done directly by aforementioned solutions to the local data directory. 
   There are two ways to do that:
    
   * **REST API**: you can keep the server in sync with the data directory by calling the following API operations, dependending on the type of change:  
@@ -263,7 +268,7 @@ This directory is not modified by the API but only by administrators having acce
     Beware that the ``Content-Length`` returned by a ``HEAD`` is still the same as would be returned by the ``GET`` equivalent.
     In any case, if you opt for the file synchronization solution as mentioned earlier, you would have to make it call one of these operations depending on the type of change detected. 
     If you opt for the distributed file system, you would need a file monitoring solution to detect changes and make such calls.
-  * **Embedded file monitoring threads**: it is possible to enable file monitoring threads embedded in AuthZForce Server. 
+  * **Embedded file monitoring threads**: it is possible to enable file monitoring threads embedded in AuthzForce Server. 
     These threads check for changes to the local data directory periodically, and synchronize the cache automatically. This feature is disabled by default. 
     To enable it, change the value of the parameter ``org.ow2.authzforce.domains.sync.interval`` to a strictly positive integer 
     in the webapp context configuration file ``/etc/tomcat8/Catalina/localhost/authzforce-ce.xml``. 
@@ -383,8 +388,8 @@ Server Security Setup
 For more Tomcat-specific security guidelines, please read `Tomcat 8 Security considerations <https://tomcat.apache.org/tomcat-8.0-doc/security-howto.html>`_.
 
 For security of communications (confidentiality, integrity, client/server authentication), it is also recommended to enable SSL/TLS with PKI certificates. 
-The first step to set up this is to have your Certification Authority (PKI) issue a server certificate for your AuthZForce instance. 
-You can also issue certificates for clients if you want to require client certificate authentication to access the AuthZForce server/API. 
+The first step to set up this is to have your Certification Authority (PKI) issue a server certificate for your AuthzForce instance. 
+You can also issue certificates for clients if you want to require client certificate authentication to access the AuthzForce server/API. 
 If you don't have such a CA at hand, you can create your own (a basic one) with instructions given in the next section.
 
 Certificate Authority Setup
@@ -415,11 +420,14 @@ For Tomcat 8, refer to the `Tomcat 8 SSL/TLS Configuration HOW-TO <https://tomca
 Web Application Secutity
 ++++++++++++++++++++++++
 
-The AuthZForce web application exposes a XML-based API. Therefore it is vulnerable to XML denial-of-service attacks. 
+XML Security
+************
+
+The AuthzForce web application exposes a XML-based API. Therefore it is vulnerable to XML denial-of-service attacks. 
 To mitigate these attacks, there are two solutions:
 
 * **Authzforce native protection**: you can add the following `Environment entries <https://tomcat.apache.org/tomcat-7.0-doc/config/context.html#Environment_Entries>`_ 
-  in Authzfoce webapp context file ``/etc/tomcat8/Catalina/localhost/authzforce-ce.xml`` (if an entry is absent or its value is negative, the default value is used):
+  in Authzforce webapp context file ``/etc/tomcat8/Catalina/localhost/authzforce-ce.xml`` (if an entry is absent or its value is negative, the default value is used):
 
   .. code-block:: xml
    
@@ -468,16 +476,27 @@ as well as `open source <https://www.peerlyst.com/posts/resource-a-list-of-open-
 However, beware that this solution is not compatible with Fast Infoset, unless the WAF itself supports Fast Infoset. 
 Similarly, if you want to use TLS, then the WAF or some proxy in front of it must support TLS to be the TLS server endpoint.
 
+Disabling unused features
+*************************
+
+You can disable all PAP features, i.e. make the REST API read-only by setting the ``enablePdpOnly`` `environment entry <https://tomcat.apache.org/tomcat-7.0-doc/config/context.html#Environment_Entries>`_ 
+ to ``true`` in Authzforce webapp context file ``/etc/tomcat8/Catalina/localhost/authzforce-ce.xml`` (if an entry is absent or its value is negative, the default value is used):
+
+  .. code-block:: xml
+   
+     <Environment name="org.ow2.authzforce.domains.enablePdpOnly" value="true" type="java.lang.Boolean" override="false" 
+     description="Enable PDP only, i.e. disable all PAP (or other administration) features iff true" />
+
 User and Role Management Setup
 ++++++++++++++++++++++++++++++
 In production, access to the API must be restricted and explicitly authorized. To control which clients can do what on which resources, 
-we need to have access to user identity and attributes and assign proper roles to them. These user and role management features are no longer supported by the AuthZForce server itself, 
+we need to have access to user identity and attributes and assign proper roles to them. These user and role management features are no longer supported by the AuthzForce server itself, 
 but should be delegated to the Identity Management GE. 
 
 Domain Role Assignment
 ++++++++++++++++++++++
 In production, access to the API must be restricted and explicitly authorized. To control which clients can do what on what parts of API, 
-we need to have access to user identity and attributes and assign proper roles to them. These user role assignment features are no longer supported by the AuthZForce server itself, 
+we need to have access to user identity and attributes and assign proper roles to them. These user role assignment features are no longer supported by the AuthzForce server itself, 
 but should be delegated to the Identity Management GE. 
 
 Performance Tuning

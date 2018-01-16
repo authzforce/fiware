@@ -1,11 +1,11 @@
 # FIWARE-specific documentation and Docker distribution 
 This project is part of [FIWARE](https://www.fiware.org). More info on the [FIWARE catalogue](http://catalogue.fiware.org/enablers/authorization-pdp-authzforce).
 
-This project provides the source of various FIWARE-specific documents and packaging related to AuthZForce Server. AuthZForce Server is FIWARE Authorization PDP GEri (Generic Enabler Reference Implementation):
-- Technical specifications of the FIWARE Authorization PDP Generic Enabler (GE)'s API that AuthZForce implements in various forms:
+This project provides the source of various FIWARE-specific documents and packaging related to AuthzForce Server. AuthzForce Server is FIWARE Authorization PDP GEri (Generic Enabler Reference Implementation):
+- Technical specifications of the FIWARE Authorization PDP Generic Enabler (GE)'s API that AuthzForce implements in various forms:
   - WADL and XML schemas (the reference);
   - Apiary blueprint (the HTML output is available in [Apiary style](http://docs.authorizationpdp.apiary.io) and [FIWARE style](http://authzforce.github.io/fiware/) ).
-- The source of the GEri's documentation: Installation and Administration guide, User and Programmer Guide, etc. The generated documentation is available for each AuthZForce Server release as standalone HTML/PDF from the [Server release page](https://github.com/authzforce/server/releases), or online on [readthedocs.org](http://readthedocs.org/projects/authzforce-ce-fiware/versions/);
+- The source of the GEri's documentation: Installation and Administration guide, User and Programmer Guide, etc. The generated documentation is available for each AuthzForce Server release as standalone HTML/PDF from the [Server release page](https://github.com/authzforce/server/releases), or online on [readthedocs.org](http://readthedocs.org/projects/authzforce-ce-fiware/versions/);
 - The source of the GEri's Docker image published in FIWARE Docker hub.
 
 The actual source code of the GEri is in [server component's repository](https://github.com/authzforce/server).
