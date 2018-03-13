@@ -804,7 +804,7 @@ The steps to make your own Attribute Datatype extension for AuthzForce go as fol
    
       ... <dependencies>
        <dependency>
-        <groupId>org.ow2.authzforce</groupId> <artifactId>authzforce-ce-core-pdp-api</artifactId> <version>7.1.1</version>
+        <groupId>org.ow2.authzforce</groupId> <artifactId>authzforce-ce-core-pdp-api</artifactId> <version>12.1.0</version>
        </dependency>
       ... </dependencies> ...
 
@@ -825,11 +825,11 @@ Now you have an Attribute Datatype extension ready for integration into AuthzFor
 Integrating an Attribute Datatype extension into AuthzForce Server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This section assumes you have an Attribute Datatype extension in form of a JAR, typically produced by the process described in the previous section. You may use AuthzForce PDP Core Tests JAR if you only wish to test the examples in this documentation. This JAR is `available on Maven Central <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core/5.0.2/authzforce-ce-core-5.0.2-tests.jar>`_.
+This section assumes you have an Attribute Datatype extension in form of a JAR, typically produced by the process described in the previous section. You may use AuthzForce PDP Core Tests JAR if you only wish to test the examples in this documentation. This JAR is `available on Maven Central <http://central.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core-pdp-testutils/10.1.0/authzforce-ce-core-pdp-testutils-10.1.0.jar>`_.
 
 The steps to integrate the extension into the AuthzForce Server go as follows:
 
-#. Make the JAR - and any extra dependency - visible from the AuthzForce webapp in Tomcat. One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-5.0.2-tests.jar`` in our example) into ``/opt/authzforce-ce-server/webapp/WEB-INF/lib``. For other ways, please refer to `Tomcat HowTo <http://wiki.apache.org/tomcat/HowTo#How_do_I_add_JARs_or_classes_to_the_common_classloader_without_adding_them_to_.24CATALINA_HOME.2Flib.3F>`_.
+#. Make the JAR - and any extra dependency - visible from the AuthzForce webapp in Tomcat. One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-pdp-testutils-10.1.0.jar`` in our example) into ``/opt/authzforce-ce-server/webapp/WEB-INF/lib``. For other ways, please refer to `Tomcat HowTo <http://wiki.apache.org/tomcat/HowTo#How_do_I_add_JARs_or_classes_to_the_common_classloader_without_adding_them_to_.24CATALINA_HOME.2Flib.3F>`_.
 
 #. Finally, restart Tomcat to apply changes.
 
