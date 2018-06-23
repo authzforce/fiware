@@ -1,19 +1,19 @@
 # Copyright (C) 2012-2018 Thales Services SAS.
 #
-# This file is part of AuthzForce CE.
+# This file is part of AuthZForce CE.
 #
-# AuthzForce CE is free software: you can redistribute it and/or modify
+# AuthZForce CE is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 # 
-# AuthzForce CE is distributed in the hope that it will be useful,
+# AuthZForce CE is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 # 
 # You should have received a copy of the GNU General Public License
-# along with AuthzForce CE.  If not, see <http://www.gnu.org/licenses/>.
+# along with AuthZForce CE.  If not, see <http://www.gnu.org/licenses/>.
 
 # Best practices for writing Dockerfiles:
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/
@@ -24,7 +24,7 @@
 # The alternative is to use FROM ubuntu:* then install tomcat ubuntu package and use upstart/sysctl init script but this is not the way to go:
 # https://github.com/docker/docker/issues/6800
 FROM tomcat:8-jre8
-MAINTAINER Cyril Dangerville (Contact via http://catalogue.fiware.org/enablers/authorization-pdp-authzforce)
+MAINTAINER AuthzForce Team (contact mailing list: http://scr.im/azteam)
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -37,9 +37,9 @@ ENV DEBIAN_FRONTEND noninteractive
 #ENV HTTP_PROXY 'http://user:password@proxy-host:proxy-port'
 #ENV HTTPS_PROXY 'http://user:password@proxy-host:proxy-port'
 
-ENV JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Djavax.xml.accessExternalSchema=http -Xms1024m -Xmx1024m -XX:+UseConcMarkSweepGC -server"
+ENV JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Djavax.xml.accessExternalSchema=all -Xms1024m -Xmx2048m -XX:+UseConcMarkSweepGC -server"
 
-ENV AUTHZFORCE_SERVER_VERSION="6.0.0"
+ENV AUTHZFORCE_SERVER_VERSION="8.0.1"
 ENV AUTHZFORCE_SERVER_DOWNLOAD_URL="http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/$AUTHZFORCE_SERVER_VERSION/authzforce-ce-server-dist-$AUTHZFORCE_SERVER_VERSION.deb"
 
 # Download and install Authzforce Server (service starts automatically)
