@@ -783,9 +783,9 @@ Non-core (not defined in XACML 3.0 Core standard) PDP behavior and features may 
 * Attribute Datatypes: to support extra XACML datatypes, e.g. from DLP/NAC Profile;
 * Functions: to support extra XACML functions, e.g. from DLP/NAC Profile;
 * Attribute Providers: to customize the way attribute value are retrieved outside the PEP's Request.
-
-.. * Request preprocessor: to customize the processing of individual decision requests;
-.. * Combining algorithms: Additional alg profile
+* Request filter: to customize the processing of individual decision requests;
+* Result filter: to customize the processing of XACML Results in Response;
+* Combining algorithms: to add custom policy or rule combining algorithms.
 
 Attribute Datatype extensions
 #############################
@@ -1182,8 +1182,7 @@ The steps to integrate the extension into the AuthzForce Server go as follows:
    .. code-block:: xml
       :linenos:
 
-      <uri 
-       name="http://authzforce.github.io/core/xmlns/test/3" uri="classpath:org.ow2.authzforce.core.test.xsd"/>
+     <uri name="http://authzforce.github.io/core/xmlns/test/3" uri="classpath:org.ow2.authzforce.core.pdp.testutil.ext.xsd"/>
 
 #. Finally, restart Tomcat to apply changes.
 
