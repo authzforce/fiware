@@ -1107,28 +1107,35 @@ The steps to make your own PDP Attribute Provider extension for AuthzForce go as
 
 #. Create a Maven project with ``jar`` packaging type.
 
-#. Create an XML schema file with ``.xsd`` extension in the ``src/main/resources`` folder of your Maven project. Make sure this filename is potentially unique on a Java classpath, like your usual Java class names. One way to make sure is to use a filename prefix following the same conventions as the `Java package naming conventions <https://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html>`_. In this schema file, define an XML type for your attribute provider configuration format. This type must extend ``AbstractAttributeProvider`` from namespace ``http://authzforce.github.io/xmlns/pdp/ext/3``. You may use the `schema of AuthzForce Test Attribute Provider <https://github.com/authzforce/core/blob/release-5.0.2/src/test/resources/org.ow2.authzforce.core.test.xsd>`_ (used for AuthzForce unit tests only) as an example. In this example, the XSD filename is ``org.ow2.authzforce.core.test.xsd`` and the defined XML type extending ``AbstractAttributeProvider`` is ``TestAttributeProvider``.
+#. Create an XML schema file with ``.xsd`` extension in the ``src/main/resources`` folder of your Maven project. Make sure this filename is potentially unique on a Java classpath, like your usual Java class names. One way to make sure is to use a filename prefix following the same conventions as the `Java package naming conventions <https://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html>`_. In this schema file, define an XML type for your attribute provider configuration format. This type must extend ``AbstractAttributeProvider`` from namespace ``http://authzforce.github.io/xmlns/pdp/ext/3``. You may use the `schema of AuthzForce Test Attribute Provider <https://github.com/authzforce/core/blob/release-10.1.0/pdp-testutils/src/main/resources/org.ow2.authzforce.core.pdp.testutil.ext.xsd>`_ (used for AuthzForce unit tests only) as an example. In this example, the XSD filename is ``org.ow2.authzforce.core.pdp.testutil.ext.xsd`` and the defined XML type extending ``AbstractAttributeProvider`` is ``TestAttributeProvider``.
 
-#. Copy the files ``bindings.xjb`` and ``catalog.xml`` `from Authzforce source code <https://github.com/authzforce/core/blob/release-5.0.2/src/main/jaxb>`_ into the ``src/main/jaxb`` folder (you have to create this folder first) of your Maven project.
+#. Copy the files ``bindings.xjb`` and ``catalog.xml`` `from Authzforce source code <https://github.com/authzforce/core/tree/release-10.1.0/pdp-engine/src/main/jaxb>`_ into the ``src/main/jaxb`` folder (you have to create this folder first) of your Maven project.
 
 #. Add the following Maven dependency and build plugin configuration to your Maven POM:
   
    .. code-block:: xml
       :linenos:
  
-      ... <dependencies>
+      ...
+      <dependencies>
        <dependency>
-        <groupId>org.ow2.authzforce</groupId> <artifactId>authzforce-ce-core-pdp-api</artifactId> <version>7.1.1</version>
-       </dependency> ...
-      </dependencies> ...
+        <groupId>org.ow2.authzforce</groupId> 
+        <artifactId>authzforce-ce-core-pdp-api</artifactId> 
+        <version>12.1.0</version>
+        <scope>provided</scope>
+       </dependency> 
+       ...
+      </dependencies> 
+      ...
 
       <build>
-       ... <plugins>
+       ... 
+       <plugins>
         <plugin>
          <groupId>org.jvnet.jaxb2.maven2</groupId> <artifactId>maven-jaxb2-plugin</artifactId> <version>0.13.0</version> <configuration>
           <debug>false</debug> <strict>false</strict> <verbose>false</verbose> <removeOldOutput>true</removeOldOutput> <extension>true</extension> <useDependenciesAsEpisodes>false</useDependenciesAsEpisodes> <episodes>
            <episode>
-            <groupId>org.ow2.authzforce</groupId> <artifactId>authzforce-ce-pdp-ext-model</artifactId> <version>3.4.0</version>
+            <groupId>org.ow2.authzforce</groupId> <artifactId>authzforce-ce-pdp-ext-model</artifactId> <version>7.1.0</version>
            </episode>
           </episodes> <catalog>src/main/jaxb/catalog.xml</catalog> <bindingDirectory>src/main/jaxb</bindingDirectory> <schemaDirectory>src/main/resources</schemaDirectory>
          </configuration> <executions>
@@ -1144,9 +1151,9 @@ The steps to make your own PDP Attribute Provider extension for AuthzForce go as
 
 #. Run Maven ``generate-sources``. This will generate the JAXB-annotated class(es) from the XML schema into the folder ``target/generated-sources/xjc``, one of which corresponds to your attribute provider XML type defined in the second step, therefore has the same name and also extends ``org.ow2.authzforce.xmlns.pdp.ext.AbstractAttributeProvider`` class corresponding to ``AbstractAttributeProvider`` type in the XML schema. For example, in the case of the Authzforce *Test Attribute Provider* aforementioned, the corresponding generated class is ``org.ow2.authzforce.core.xmlns.test.TestAttributeProvider``. In your case and in general, we will refer to it as your *Attribute Provider Model Class*.
 
-#. Create your Attribute Provider factory and concrete implementation class (as in the *Factory* design pattern). The factory class must be public, and extend ``org.ow2.authzforce.core.pdp.api.CloseableAttributeProviderModule.FactoryBuilder<APM>``, where ``APM`` stands for your *Attribute Provider Model Class*; and the factory class must have a public no-argument constructor or no constructor. You may use the `AuthzForce TestAttributeProviderModule class <https://github.com/authzforce/core/blob/release-5.0.2/src/test/java/org/ow2/authzforce/core/test/custom/TestAttributeProviderModule.java>`_ (used for AuthzForce unit tests only) as an example. In this example, the static nested class ``Factory`` is the one extending ``CloseableAttributeProviderModule.FactoryBuilder<TestAttributeProvider>``. Such a class has a factory method ``getInstance(APM configuration)`` (``getInstance(TestAttributeProvider conf)`` in the example) that, from an instance of your ``APM`` representing the XML input (``TestAttributeProvider`` in the example), creates an instance of your Attribute Provider implementation class (``TestAttributeProviderModule`` in the example). Indeed, your Attribute Provider implementation class must implement the interface ``CloseableAttributeProviderModule`` (package ``org.ow2.authzforce.core.pdp.api``). To facilitate the implementation process, instead of implementing this interface directly, you should extend ``BaseAttributeProviderModule`` (same package) in your implementation class, whenever possible. This class already implements the required interface. There are cases where it is not possible; for instance, since ``BaseAttributeProviderModule`` is an abstract class, if your implementation needs to extend another abstract class, you have no choice but to implement the interface directly, because a Java class cannot extend multiple abstract classes. In any case, as mandated by the interface, your implementation class must implement the method ``get(attributeGUID, attributeDatatype, context))`` in charge of actually retrieving the extra attributes (``TestAttributeProviderModule#get(...)`` in the example). The ``attributeGUID`` identifies an XACML attribute category, ID and Issuer that the PDP is requesting from your attribute provider; the ``attributeDatatype`` is the expected attribute datatype; and ``context`` is the request context, including the content from the current XACML Request and possibly extra attributes retrieved so far by other Attribute Providers.
+#. Create your Attribute Provider factory and concrete implementation class (as in the *Factory* design pattern). The factory class must be public, and extend ``org.ow2.authzforce.core.pdp.api.CloseableAttributeProviderModule.FactoryBuilder<APM>``, where ``APM`` stands for your *Attribute Provider Model Class*; and the factory class must have a public no-argument constructor or no constructor. You may use `org.ow2.authzforce.core.pdp.testutil.ext.TestAttributeProvider class <https://github.com/authzforce/core/blob/release-10.1.0/pdp-testutils/src/main/java/org/ow2/authzforce/core/pdp/testutil/ext/TestAttributeProvider.java>`_ (used for AuthzForce unit tests only) as an example. In this example, the static nested class ``Factory`` is the one extending ``CloseableDesignatedAttributeProvider.FactoryBuilder<org.ow2.authzforce.core.pdp.testutil.ext.xmlns.TestAttributeProvider>``. Such a class has a factory method ``getInstance(APM configuration)`` (``getInstance(TestAttributeProvider conf)`` in the example) that, from an instance of your ``APM`` representing the XML input (``org.ow2.authzforce.core.pdp.testutil.ext.xmlns.TestAttributeProvider`` in the example), creates an instance of your Attribute Provider implementation class (``org.ow2.authzforce.core.pdp.testutil.ext.TestAttributeProviderModule`` in the example, which is a different class from the APM class, different package!). Indeed, your Attribute Provider implementation class must implement the interface ``CloseableDesignatedAttributeProvider`` (package ``org.ow2.authzforce.core.pdp.api``). To facilitate the implementation process, instead of implementing this interface directly, you should extend ``BaseDesignatedAttributeProvider`` (same package) in your implementation class, whenever possible. This class already implements the required interface. There are cases where it is not possible; for instance, since ``BaseDesignatedAttributeProvider`` is an abstract class, if your implementation needs to extend another abstract class, you have no choice but to implement the interface directly, because a Java class cannot extend multiple abstract classes. In any case, as mandated by the interface, your implementation class must implement the method ``get(attributeGUID, attributeDatatype, context))`` in charge of actually retrieving the extra attributes (``TestAttributeProvider#get(...)`` in the example). The ``attributeGUID`` identifies an XACML attribute category, ID and Issuer that the PDP is requesting from your attribute provider; the ``attributeDatatype`` is the expected attribute datatype; and ``context`` is the request context, including the content from the current XACML Request and possibly extra attributes retrieved so far by other Attribute Providers.
 
-#. When your implementation class is ready, create a text file ``org.ow2.authzforce.core.pdp.api.PdpExtension`` in folder ``src/main/resources/META-INF/services`` (you have to create the folder first) and put the fully qualified name of your implementation class on the first line of this file, like in the `example from Authzforce source code <https://github.com/authzforce/core/blob/release-5.0.2/src/test/resources/META-INF/services/org.ow2.authzforce.core.pdp.api.PdpExtension>`_.
+#. When your implementation class is ready, create a file ``org.ow2.authzforce.core.pdp.api.PdpExtension`` in folder ``src/main/resources/META-INF/services`` (you have to create the folder first) and put the fully qualified name of your implementation class on the first line of this file, like in the `example from Authzforce source code <hhttps://github.com/authzforce/core/blob/release-10.1.0/pdp-testutils/src/main/resources/META-INF/services/org.ow2.authzforce.core.pdp.api.PdpExtension>`_.
    
 
 #. Run Maven ``package`` to produce a JAR from the Maven project.
@@ -1157,20 +1164,20 @@ Now you have an Attribute Provider extension ready for integration into AuthzFor
 Integrating an Attribute Provider into AuthzForce Server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This section assumes you have an Attribute Provider extension in form of a JAR, typically produced by the process in the previous section. You may use AuthzForce PDP Core Tests JAR if you only wish to test the examples in this documentation. This JAR is `available on Maven Central <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core/5.0.2/authzforce-ce-core-5.0.2-tests.jar>`_.
+This section assumes you have an Attribute Provider extension in form of a JAR, typically produced by the process in the previous section. You may use AuthzForce PDP Core Tests JAR if you only wish to test the examples in this documentation. This JAR is `available on Maven Central <https://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core-pdp-testutils/10.1.0/authzforce-ce-core-pdp-testutils-10.1.0.jar>`_.
 
 The steps to integrate the extension into the AuthzForce Server go as follows:
 
-#. Make the JAR - and any extra dependency - visible from the AuthzForce webapp in Tomcat. One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-5.0.2-tests.jar`` in our example) into ``/opt/authzforce-ce-server/webapp/WEB-INF/lib``. For other ways, please refer to `Tomcat HowTo <http://wiki.apache.org/tomcat/HowTo#How_do_I_add_JARs_or_classes_to_the_common_classloader_without_adding_them_to_.24CATALINA_HOME.2Flib.3F>`_.
+#. Make the JAR - and any extra dependency - visible from the AuthzForce webapp in Tomcat. One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-pdp-testutils-10.1.0.jar`` in our example) into ``/opt/authzforce-ce-server/webapp/WEB-INF/lib``. For other ways, please refer to `Tomcat HowTo <http://wiki.apache.org/tomcat/HowTo#How_do_I_add_JARs_or_classes_to_the_common_classloader_without_adding_them_to_.24CATALINA_HOME.2Flib.3F>`_.
 
-#. Import your attribute provider XML schema in the XML schema file ``/opt/authzforce-ce-server/conf/authzforce-ext.xsd``, using ``namespace`` **only** (no ``schemaLocation``), like in the `example from Authzforce code <https://github.com/authzforce/server/blob/release-5.4.1/webapp/src/test/server.conf/authzforce-ce/authzforce-ext.xsd>`_ with this schema import for Authzforce ``TestAttributeProvider``:
+#. Import your attribute provider XML schema in the XML schema file ``/opt/authzforce-ce-server/conf/authzforce-ext.xsd``, using ``namespace`` **only** (no ``schemaLocation``), like in the `example from Authzforce code <hhttps://github.com/authzforce/server/blob/release-8.0.1/webapp/src/test/resources/authzforce-ce-server/conf/authzforce-ext.xsd>`_ with this schema import for Authzforce ``TestAttributeProvider``:
 
    .. code-block:: xml
       :linenos:
 
       <xs:import namespace="http://authzforce.github.io/core/xmlns/test/3" />
 
-#. Add a ``uri`` element to XML catalog file ``/opt/authzforce-ce-server/conf/catalog.xml``, with your attribute Provider XML namespace as ``name`` attribute value, and, the location of your XML schema file within the JAR, as ``uri`` attribute value, prefixed by ``classpath:``. For example, in the `sample XML catalog from Authzforce source code <https://github.com/authzforce/server/blob/release-5.4.1/webapp/src/test/server.conf/authzforce-ce/catalog.xml>`_, we add the following line for Authzforce ``TestAttributeProvider``:
+#. Add a ``uri`` element to XML catalog file ``/opt/authzforce-ce-server/conf/catalog.xml``, with your attribute Provider XML namespace as ``name`` attribute value, and, the location of your XML schema file within the JAR, as ``uri`` attribute value, prefixed by ``classpath:``. For example, in the `sample XML catalog from Authzforce source code <https://github.com/authzforce/server/blob/release-8.0.1/webapp/src/test/resources/authzforce-ce-server/conf/catalog.xml>`_, we add the following line for Authzforce ``TestAttributeProvider``:
 
    .. code-block:: xml
       :linenos:
