@@ -37,6 +37,7 @@ if on_rtd:
             'https://media.readthedocs.org/css/sphinx_rtd_theme.css',
             'https://media.readthedocs.org/css/readthedocs-doc-embed.css',
             'https://fiware.org/style/fiware_readthedocs.css',
+            'https://fiware.org/style/fiware_readthedocs_security.css',
         ],
     }
 else:
