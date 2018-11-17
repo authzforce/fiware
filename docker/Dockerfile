@@ -68,8 +68,10 @@ RUN curl --silent --output authzforce-ce-server.deb --location $AUTHZFORCE_SERVE
  rm -rf /opt/authzforce-ce-server/data/domains/* && \
  rm -rf /root/authzforce && \
  rm -f authzforce-ce-server.deb
+
+VOLUME /opt/authzforce-ce-server/data
+
 CMD ["catalina.sh", "run"]
 
 ### Exposed ports
-# - App server
-EXPOSE 8080
+EXPOSE ${AUTHZFORCE_PORT:-8080}
