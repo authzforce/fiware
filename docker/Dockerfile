@@ -70,6 +70,7 @@ RUN curl --silent --output authzforce-ce-server.deb --location $AUTHZFORCE_SERVE
  rm -f authzforce-ce-server.deb
 
 VOLUME /opt/authzforce-ce-server/data
+VOLUME /usr/local/tomcat/conf
 
 CMD ["catalina.sh", "run"]
 
