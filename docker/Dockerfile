@@ -75,4 +75,5 @@ VOLUME /usr/local/tomcat/conf
 CMD ["catalina.sh", "run"]
 
 ### Exposed ports
-EXPOSE ${AUTHZFORCE_PORT:-8080}
+# - App server
+EXPOSE 8080
