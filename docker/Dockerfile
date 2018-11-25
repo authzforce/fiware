@@ -68,6 +68,10 @@ RUN curl --silent --output authzforce-ce-server.deb --location $AUTHZFORCE_SERVE
  rm -rf /opt/authzforce-ce-server/data/domains/* && \
  rm -rf /root/authzforce && \
  rm -f authzforce-ce-server.deb
+
+VOLUME /opt/authzforce-ce-server/data
+VOLUME /usr/local/tomcat/conf
+
 CMD ["catalina.sh", "run"]
 
 ### Exposed ports
