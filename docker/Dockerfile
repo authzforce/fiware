@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2018 Thales Services SAS.
+# Copyright (C) 2012-2019 THALES.
 #
 # This file is part of AuthZForce CE.
 #
@@ -39,7 +39,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 ENV JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Djavax.xml.accessExternalSchema=all -Xms1024m -Xmx2048m -XX:+UseConcMarkSweepGC -server"
 
-ENV AUTHZFORCE_SERVER_VERSION="8.0.1"
+ENV AUTHZFORCE_SERVER_VERSION="8.1.0"
 ENV AUTHZFORCE_SERVER_DOWNLOAD_URL="http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/$AUTHZFORCE_SERVER_VERSION/authzforce-ce-server-dist-$AUTHZFORCE_SERVER_VERSION.deb"
 
 # Download and install Authzforce Server (service starts automatically)
