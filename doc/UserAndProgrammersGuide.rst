@@ -4,7 +4,7 @@ User and Programmers Guide
 
 This guide explains how to use the API to manage XACML-based access control policies and provide authorization decisions based on such policies and the context of a given access request.
 
-**If you have been using a previous version of AuthzForce, check the** `release notes <https://github.com/authzforce/server/blob/release-5.4.1/CHANGELOG.md#5.4.1>`_ **to know what is changed and what is new.**
+**If you have been using a previous version of AuthzForce, check the** `release notes <https://github.com/authzforce/server/blob/release-8.1.0/CHANGELOG.md#8.1.0>`_ **to know what is changed and what is new.**
 
 Background and Detail
 =====================
@@ -26,7 +26,7 @@ AuthzForce provides the following APIs:
 * PDP API (PDP = Policy Decision Point in the XACML terminology): provides an API for getting authorization decisions computed by a XACML-compliant access control engine;
 * PAP API (PAP = Policy Administration Point in XACML terminology): provides API for managing XACML policies to be handled by the Authorization Service PDP.
 
-The full API (RESTful) is described by a document written in the Web Application Description Language format (WADL) and associated XML schema files available in `Authzforce rest-api-model project files <https://github.com/authzforce/rest-api-model/tree/release-5.3.1/src/main/resources>`_.
+The full API (RESTful) is described by a document written in the Web Application Description Language format (WADL) and associated XML schema files available in `Authzforce rest-api-model project files <https://github.com/authzforce/rest-api-model/tree/release-5.7.0/src/main/resources>`_.
 
 XACML is the main international OASIS standard for access control language and request-response formats, that addresses most use cases of access control. AuthzForce supports the full core XACML 3.0 language; therefore it allows to enforce generic and complex access control policies.
 
@@ -799,24 +799,61 @@ The steps to make your own Attribute Datatype extension for AuthzForce go as fol
 
 #. Create a Maven project with ``jar`` packaging type and following Maven dependency:
 
-   .. code-block:: xml
-      :linenos:
+   ```xml
    
-      ... <dependencies>
+      ...
+      <dependencies>
+      ...
        <dependency>
-        <groupId>org.ow2.authzforce</groupId> <artifactId>authzforce-ce-core-pdp-api</artifactId> <version>12.1.0</version>
+        <groupId>org.ow2.authzforce</groupId>
+        <artifactId>authzforce-ce-core-pdp-api</artifactId>
+        <!-- Make sure the version matches the one used by the `authzforce-ce-core-pdp-engine` version you are using.-->
+        <version>15.3.0</version>
+        <scope>provided<scope>
        </dependency>
-      ... </dependencies> ...
-
-#. Create your attribute datatype factory and value instance class (as in the *Factory* design pattern). The factory class must be public, and implement interface ``org.ow2.authzforce.core.pdp.api.value.DatatypeFactory<AV>``, where ``AV`` stands for your *AttributeValue Implementation Class*, i.e. the concrete attribute value implementation class; and the factory class must have a public no-argument constructor or no constructor.
+      ...
+      </dependencies> 
+      ...
+   ```
    
-   To facilitate the implementation process, instead of implementing this ``DatatypeFactory`` interface directly, you should extend one of the following ``DatatypeFactory`` sub-classes when it applies:
-   
-   * ``org.ow2.authzforce.core.pdp.api.value.SimpleValue.StringContentOnlyFactory<AV>``: to be extended for implementing text-only primitive datatypes (equivalent to simple XML types). You may use `AuthzForce TestDNSNameWithPortValue class <https://github.com/authzforce/core/blob/release-5.0.2/src/test/java/org/ow2/authzforce/core/test/custom/TestDNSNameWithPortValue.java>`_ (used for AuthzForce unit tests) as an example. This example provides a test implementation of datatype ``dnsName-value`` defined in `XACML Data Loss Prevention / Network Access Control (DLP/NAC) Profile Version 1.0 <http://docs.oasis-open.org/xacml/xacml-3.0-dlp-nac/v1.0/xacml-3.0-dlp-nac-v1.0.html>`_. In this example, the static nested class ``Factory`` is the one extending ``org.ow2.authzforce.core.pdp.api.value.SimpleValue.StringContentOnlyFactory<TestDNSNameWithPortValue>``. Such a class has a factory method (``TestDNSNameWithPortValue getInstance(String val)``) that takes a string argument corresponding to the text in the XACML AttributeValue (which must not contain any XML element or attribute).
-   * ``org.ow2.authzforce.core.pdp.api.value.SimpleValue.Factory<AV>``: to be extended for implementing primitive XACML datatypes with XML attributes (equivalent to complex XML types with simple content). An example of such datatype is ``xpathExpression`` which requires an XML attribute named ``XPathCategory``. Note that the datatype ``xpathExpression`` is natively supported but enabled only if feature ``urn:ow2:authzforce:feature:pdp:core:xpath-eval`` is enabled, as mentioned in section `Policy Decision (PDP) Properties`_.
-   * ``org.ow2.authzforce.core.pdp.api.value.BaseDatatypeFactory<AV>``: to be extended for implementing `structured attributes (XACML 3.0 Core, §8.2) <http://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html#_Toc325047203>`_ (equivalent to complex XML types with complex content). You may use `AuthzForce TestXACMLPolicyAttributeValue class <https://github.com/authzforce/core/blob/release-5.0.2/src/test/java/org/ow2/authzforce/core/test/custom/TestXACMLPolicyAttributeValue.java>`_ (used for AuthzForce unit tests) as an example. In this example, the static nested class ``Factory`` is the one extending ``org.ow2.authzforce.core.pdp.api.value.BaseDatatypeFactory<TestXACMLPolicyAttributeValue>``. Such a class has a factory method ``TestXACMLPolicyAttributeValue getInstance(List<Serializable> content, Map<QName, String> otherAttributes, ...)`` that creates an instance of your *AttributeValue Implementation Class*, i.e. ``TestXACMLPolicyAttributeValue`` in this case. where the argument ``otherAttributes`` represents the XML attributes and argument ``content`` the mixed content of a XACML AttributeValue `parsed by JAXB <https://jaxb.java.net/tutorial/section_2_2_12_7-Mixed-Content.html>`_. 
+   **Make sure the version matches the one used by the ``authzforce-ce-core-pdp-engine`` version you are using.**
 
-#. When your implementation class is ready, create a text file ``org.ow2.authzforce.core.pdp.api.PdpExtension`` in folder ``src/main/resources/META-INF/services`` (you have to create the folder first) and put the fully qualified name of your implementation class on the first line of this file, like in the `example from Authzforce source code <https://github.com/authzforce/core/blob/release-5.0.2/src/test/resources/META-INF/services/org.ow2.authzforce.core.pdp.api.PdpExtension>`_.
+#. Create your attribute datatype factory and value instance class (as in the *Factory* design pattern). The factory class must be public, and implement interface
+   ``org.ow2.authzforce.core.pdp.api.value.DatatypeFactory<AV>``, where ``AV`` stands for
+   your *AttributeValue Implementation Class*, i.e. the concrete attribute value implementation class; 
+   and the factory class must have a public no-argument constructor or no constructor.
+   
+   To facilitate the implementation process, 
+   instead of implementing this ``DatatypeFactory`` interface directly, you should extend one of the following ``DatatypeFactory`` sub-classes when it applies:
+   
+   * ``org.ow2.authzforce.core.pdp.api.value.SimpleValue.StringContentOnlyFactory<AV>``: to be extended for implementing text-only primitive datatypes 
+     (equivalent to simple XML types).
+     You may use 
+     `AuthzForce TestDNSNameWithPortValue class <https://github.com/authzforce/core/blob/release-13.3.1/pdp-testutils/src/main/java/org/ow2/authzforce/core/pdp/testutil/ext/TestDnsNameWithPortValue.java>`_
+     (used for AuthzForce unit tests) as an example. This example provides a test implementation of datatype ``dnsName-value`` defined in 
+     `XACML Data Loss Prevention / Network Access Control (DLP/NAC) Profile Version 1.0 <http://docs.oasis-open.org/xacml/xacml-3.0-dlp-nac/v1.0/xacml-3.0-dlp-nac-v1.0.html>`_. 
+     In this example, the static nested class ``Factory`` is the one
+     extending ``org.ow2.authzforce.core.pdp.api.value.SimpleValue.StringContentOnlyFactory<TestDNSNameWithPortValue>``. Such a class has a factory
+     method (``TestDNSNameWithPortValue getInstance(String val)``) that takes a string argument corresponding to the text in the XACML AttributeValue (which must not contain any XML element or attribute).
+   * ``org.ow2.authzforce.core.pdp.api.value.SimpleValue.Factory<AV>``: to be extended for implementing primitive XACML datatypes with XML attributes
+     (equivalent to complex XML types with simple content). An example of such datatype is ``xpathExpression`` which requires an XML attribute named ``XPathCategory``. 
+     Note that the datatype ``xpathExpression`` is natively supported but enabled only if feature ``urn:ow2:authzforce:feature:pdp:core:xpath-eval`` is enabled in the PDP configuration.
+   * ``org.ow2.authzforce.core.pdp.api.value.BaseDatatypeFactory<AV>``: to be extended for implementing
+     `structured attributes (XACML 3.0 Core, §8.2) <http://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html#_Toc325047203>`_ 
+     (equivalent to complex XML types with complex content).
+     You may use
+     `AuthzForce TestXACMLPolicyAttributeValue class <https://github.com/authzforce/core/blob/release-13.3.1/pdp-testutils/src/main/java/org/ow2/authzforce/core/pdp/testutil/ext/TestXacmlPolicyAttributeValue.java>`_
+     (used for AuthzForce unit tests) as an example. In this example, the static nested class ``Factory`` is the one
+     extending ``org.ow2.authzforce.core.pdp.api.value.BaseDatatypeFactory<TestXACMLPolicyAttributeValue>``. Such a class has a factory method 
+     ``TestXACMLPolicyAttributeValue getInstance(List<Serializable> content, Map<QName, String> otherAttributes, ...)`` 
+     that creates an instance of your *AttributeValue Implementation Class*, i.e. ``TestXACMLPolicyAttributeValue`` in this case.
+     where the argument ``otherAttributes`` represents the XML attributes and argument ``content`` the mixed content of a XACML AttributeValue 
+     `parsed by JAXB <https://jaxb.java.net/tutorial/section_2_2_12_7-Mixed-Content.html>`_. 
+
+#. When your implementation class is ready, create a text file ``org.ow2.authzforce.core.pdp.api.PdpExtension`` in
+   folder ``src/main/resources/META-INF/services`` (you have to create the folder first) and put the fully qualified
+   name of your implementation class on the first line of this file, like in the
+   `example from AuthzForce source code <https://github.com/authzforce/core/blob/release-13.3.1/pdp-testutils/src/main/resources/META-INF/services/org.ow2.authzforce.core.pdp.api.PdpExtension>`_.
    
 #. Run Maven ``package`` to produce a JAR from the Maven project.
 
@@ -825,11 +862,11 @@ Now you have an Attribute Datatype extension ready for integration into AuthzFor
 Integrating an Attribute Datatype extension into AuthzForce Server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This section assumes you have an Attribute Datatype extension in form of a JAR, typically produced by the process described in the previous section. You may use AuthzForce PDP Core Tests JAR if you only wish to test the examples in this documentation. This JAR is `available on Maven Central <http://central.maven.org/maven2/org/ow2/authzforce/authzforce-ce-core-pdp-testutils/10.1.0/authzforce-ce-core-pdp-testutils-10.1.0.jar>`_.
+This section assumes you have an Attribute Datatype extension in form of a JAR, typically produced by the process described in the previous section. You may use AuthzForce PDP Core Tests JAR if you only wish to test the examples in this documentation. This JAR is available on Maven Central: groupId=``org.ow2.authzforce``, artifactId=``authzforce-ce-core-pdp-testutils``, version=``13.3.1``.
 
 The steps to integrate the extension into the AuthzForce Server go as follows:
 
-#. Make the JAR - and any extra dependency - visible from the AuthzForce webapp in Tomcat. One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-pdp-testutils-10.1.0.jar`` in our example) into ``/opt/authzforce-ce-server/webapp/WEB-INF/lib``. For other ways, please refer to `Tomcat HowTo <http://wiki.apache.org/tomcat/HowTo#How_do_I_add_JARs_or_classes_to_the_common_classloader_without_adding_them_to_.24CATALINA_HOME.2Flib.3F>`_.
+#. Make the JAR - and any extra dependency - visible from the AuthzForce webapp in Tomcat. One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-pdp-testutils-13.3.1.jar`` in our example) into ``/opt/authzforce-ce-server/webapp/WEB-INF/lib``. For other ways, please refer to `Tomcat HowTo <http://wiki.apache.org/tomcat/HowTo#How_do_I_add_JARs_or_classes_to_the_common_classloader_without_adding_them_to_.24CATALINA_HOME.2Flib.3F>`_.
 
 #. Finally, restart Tomcat to apply changes.
 
