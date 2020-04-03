@@ -799,11 +799,9 @@ The steps to make your own Attribute Datatype extension for AuthzForce go as fol
 
 #. Create a Maven project with ``jar`` packaging type and following Maven dependency:
 
-   ```xml
-   
-      ...
-      <dependencies>
-      ...
+.. code-block:: xml
+   :linenos:
+      
        <dependency>
         <groupId>org.ow2.authzforce</groupId>
         <artifactId>authzforce-ce-core-pdp-api</artifactId>
@@ -811,10 +809,6 @@ The steps to make your own Attribute Datatype extension for AuthzForce go as fol
         <version>15.3.0</version>
         <scope>provided<scope>
        </dependency>
-      ...
-      </dependencies> 
-      ...
-   ```
    
    **Make sure the version matches the one used by the ``authzforce-ce-core-pdp-engine`` version you are using.**
 
@@ -862,7 +856,7 @@ Now you have an Attribute Datatype extension ready for integration into AuthzFor
 Integrating an Attribute Datatype extension into AuthzForce Server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This section assumes you have an Attribute Datatype extension in form of a JAR, typically produced by the process described in the previous section. You may use AuthzForce PDP Core Tests JAR if you only wish to test the examples in this documentation. This JAR is available on Maven Central: groupId=``org.ow2.authzforce``, artifactId=``authzforce-ce-core-pdp-testutils``, version=``13.3.1``.
+This section assumes you have an Attribute Datatype extension in form of a JAR, typically produced by the process described in the previous section. You may use AuthzForce PDP Core Tests JAR if you only wish to test the examples in this documentation. This JAR is available on Maven Central: groupId= ``org.ow2.authzforce``, artifactId= ``authzforce-ce-core-pdp-testutils``, version= ``13.3.1``.
 
 The steps to integrate the extension into the AuthzForce Server go as follows:
 
