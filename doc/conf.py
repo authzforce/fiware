@@ -93,9 +93,9 @@ author = u'Cyril Dangerville, THALES'
 # built documents.
 #
 # The short X.Y version.
-version = '8.1.0'
+version = '9.0.1'
 # The full version, including alpha/beta/rc tags.
-release = '8.1.0'
+release = '9.0.1'
 
 rst_epilog = """
     .. |product.version| replace:: {0}
