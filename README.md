@@ -9,7 +9,7 @@
 
 This project is part of [FIWARE](https://www.fiware.org). More info on the [FIWARE catalogue](http://catalogue.fiware.org/enablers/authorization-pdp-authzforce).
 
-This project provides the source of various FIWARE-specific documents and packaging related to AuthzForce Server. AuthzForce Server is FIWARE Authorization PDP GEri (Generic Enabler Reference Implementation):
+This project provides the source of various FIWARE-specific documents to AuthzForce Server. AuthzForce Server is FIWARE Authorization PDP GEri (Generic Enabler Reference Implementation):
 - Technical specifications of the FIWARE Authorization PDP Generic Enabler (GE)'s API that AuthzForce implements in various forms:
   - WADL and XML schemas (the reference);
   - Apiary blueprint (the HTML output is available in [Apiary style](http://docs.authorizationpdp.apiary.io) and [FIWARE style](http://authzforce.github.io/fiware/) ).
@@ -41,16 +41,15 @@ make clean latexpdf
 
 # Release
 
-In order to make a release for a new AuthzForce server version, do as follows:
+After any new release of AuthzForce server on authzforce/server repository, do the documentation release here as follows:
 
 1. Update `version` and `release` variables in [Sphinx configuration](doc/conf.py), to match the new AuthzForce server version.
 1. Update manuals: [Installation and Administration Guide](doc/InstallationAndAdministrationGuide.rst) and [User and Programmer's Guide](doc/UserAndProgrammersGuide.rst); especially version numbers when they occur.
-1. Update the [Dockerfile](docker/Dockerfile) with the new link to the .deb package on Maven central.
+1. Update the [README](docker/README.md) for fiware repository on Docker Hub with the new version on Maven central.
 1. Update FILAB deployment scripts: [install.sh](filab.deploy/install.sh), [verif.sh](filab.deploy/verif.sh); especially the package version to match the new AuthzForce server version.
-1. Update the [changelog](CHANGELOG.md) with the new version.
 1. Commit and push all changes
-1. Test the Dockerfile by triggering Docker build with tag name *latest-unstable* (from git branch *master*) on [authzforce-ce-server's Docker repository](https://hub.docker.com/r/fiware/authzforce-ce-server/) (*Build Settings*). Check the result in *Build Details*.
-1. After Docker build is OK, test the readthedocs.org HTML/PDF output by building the version *latest* from the [readthedocs.org repository](https://readthedocs.org/projects/authzforce-ce-fiware/builds/).
+1. Re-publish the Docker image on Docker Hub from [authzforce/server repository](https://hub.docker.com/r/authzforce/server/) to [fiware/authzforce-ce-server Docker repository](https://hub.docker.com/r/fiware/authzforce-ce-server/).
+1. Test the readthedocs.org HTML/PDF output by building the version *latest* from the [readthedocs.org repository](https://readthedocs.org/projects/authzforce-ce-fiware/builds/).
 1. After the readthedocs.org build is OK, create a release on Github with same tag name as the matching release of the AuthzForce [server](https://github.com/authzforce/server/releases/latest), e.g. `release-1.2.3`.
 1. Create a Docker tag in [build settings of authzforce-ce-server's Docker repository](https://hub.docker.com/r/fiware/authzforce-ce-server/) with the new release tag as *Name*, e.g. `release-1.2.3`, save changes and trigger the build.
 1. Trigger readthedocs.org to fetch the new release tag by updating something in the [authzforce-ce-fiware project Settings in Admin menu](https://readthedocs.org/dashboard/authzforce-ce-fiware/edit/) such as the *Description*.
