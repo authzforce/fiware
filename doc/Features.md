@@ -393,6 +393,11 @@ Note that the [algorithms planned for future deprecation](http://docs.oasis-open
 |urn:oasis:names:tc:xacml:1.0:function:rfc822Name-set-equals|M|Y|
 |urn:oasis:names:tc:xacml:3.0:function:access-permitted|O|N|
 
+#### XACML JSON Profile
+AuthzForce supports [XACML v3.0 - JSON Profile Version 1.0](http://docs.oasis-open.org/xacml/xacml-json-http/v1.0/xacml-json-http-v1.0.html), with extra security features:
+-   JSON schema [Draft v6](https://tools.ietf.org/html/draft-wright-json-schema-01) validation;
+-   DoS mitigation: JSON parser variant checking max JSON string size, max number of JSON keys/array items and max JSON object depth.
+
 #### XACML RBAC Profile
 AuthzForce supports [XACML v3.0 Core and Hierarchical Role Based Access Control (RBAC) Profile Version 1.0](http://docs.oasis-open.org/xacml/3.0/rbac/v1.0/xacml-3.0-rbac-v1.0.html), except section [2.5 HasPrivilegesOfRole Policies and Requests](http://docs.oasis-open.org/xacml/3.0/rbac/v1.0/cs02/xacml-3.0-rbac-v1.0-cs02.html#_Toc396296374).
 
@@ -443,9 +448,14 @@ AuthzForce provides experimental support for [XACML 3.0 Additional Combining Alg
 * **Attribute Datatypes**: you may extend the PDP engine with custom XACML attribute datatypes;
 * **Functions**: you may extend the PDP engine with custom XACML functions;
 * **Combining Algorithms**: you may extend the PDP engine with custom XACML policy/rule combining algorithms;
-* **Attribute Providers**: you may plug custom attribute providers into the PDP engine to allow it to retrieve attributes from other attribute sources (e.g. remote service) than the input XACML Request during evaluation; 
-* **Request Filter**: you may customize the processing of XACML Requests before evaluation by the PDP core engine (e.g. used for implementing [XACML v3.0 Multiple Decision Profile Version 1.0 - Repeated attribute categories](http://docs.oasis-open.org/xacml/3.0/multiple/v1.0/cs02/xacml-3.0-multiple-v1.0-cs02.html#_Toc388943334));
-* **Result Filter**: you may customize the processing of XACML Results after evaluation by the PDP engine (e.g. used for implementing [XACML v3.0 Multiple Decision Profile Version 1.0 - Requests for a combined decision](http://docs.oasis-open.org/xacml/3.0/xacml-3.0-multiple-v1-spec-cd-03-en.html#_Toc260837890));
+* **Attribute Providers** aka PIPs (Policy Information Points): you may plug custom attribute providers into the PDP engine to allow it to retrieve attributes from other attribute sources (e.g. remote service) than the input XACML Request during evaluation; 
+* **Request Preprocessor**: you may customize the processing of XACML Requests before evaluation by the PDP core engine (e.g. used for implementing [XACML v3.0 Multiple Decision Profile Version 1.0 - Repeated attribute categories](http://docs.oasis-open.org/xacml/3.0/multiple/v1.0/cs02/xacml-3.0-multiple-v1.0-cs02.html#_Toc388943334);
+* **Result Postprocessor**: you may customize the processing of XACML Results after evaluation by the PDP engine (e.g. used for implementing [XACML v3.0 Multiple Decision Profile Version 1.0 - Requests for a combined decision](http://docs.oasis-open.org/xacml/3.0/xacml-3.0-multiple-v1-spec-cd-03-en.html#_Toc260837890);
+
+### PIPs (Policy Information Points)
+
+AuthzForce provides XACML PIP features in the form of _Attribute Providers_.
+More information in the previous section.
 
 ## PAP (Policy Administration Point)
 
@@ -462,7 +472,12 @@ AuthzForce provides experimental support for [XACML 3.0 Additional Combining Alg
 * Provides access to all PAP/PDP features mentioned in previous sections.
 * Multi-tenant: allows to have multiple domains/tenants, each with its own PAP/PDP, in particular its own policy repository.
 * Conformance with [REST Profile of XACML v3.0 Version 1.0](http://docs.oasis-open.org/xacml/xacml-rest/v1.0/xacml-rest-v1.0.html) 
-* [Fast Infoset](http://www.itu.int/en/ITU-T/asn1/Pages/Fast-Infoset.aspx) support for requests/responses.
+* Supported data formats, aka content types:
+    - `application/xml`: XML based on API schema; 
+    - `application/fastinfoset`: [Fast Infoset](http://www.itu.int/en/ITU-T/asn1/Pages/Fast-Infoset.aspx) based on API's XML schema; 
+    - `application/json`: JSON based on API's XMLschema with a generic XML-to-JSON mapping convention 
+    - `application/xacml+xml`: XACML content only, as defined by [RFC 7061](https://tools.ietf.org/html/rfc7061) 
+    - `application/xacml+json`: JSON format for XACML Request/Response on PDP only, as defined by [XACML v3.0 - JSON Profile Version 1.0](http://docs.oasis-open.org/xacml/xacml-json-http/v1.0/xacml-json-http-v1.0.html)
 
 ## High availability and load-balancing
 
