@@ -680,7 +680,8 @@ Supported PDP features (IDs) by ``type``:
       xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" ReturnPolicyIdList="false" CombinedDecision="false"> <Attributes Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
          <Attribute AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" IncludeInResult="false">
             <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">CSO</AttributeValue>
-         </Attribute> <Attribute AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" IncludeInResult="false">
+         </Attribute> 
+         <Attribute AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" IncludeInResult="false">
             <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">CTO</AttributeValue>
          </Attribute> ...
       </Attributes> ...   
