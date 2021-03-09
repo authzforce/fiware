@@ -14,10 +14,10 @@ The system requirements are the following:
 * RAM: 4GB min
 * Disk space: 10 GB min
 * File system: ext4
-* Operating System: Ubuntu 18.04 LTS 
+* Operating System: Ubuntu 18.04 LTS or later
 * Java environment: 
 
-    * JRE 8 either from OpenJDK or Oracle; 
+    * JRE 11 either from OpenJDK or Oracle; 
     * Tomcat 9.x.
 
 Installation
@@ -29,14 +29,12 @@ finally, proceed with the `Upgrade`_ section that follows, to transfer data from
 Minimal setup
 -------------
 
-#. Install a JRE 8 if you don't have one already, using either of these two methods depending on your JDK preference:
+#. Install a JRE 11 if you don't have one already, using either of these two methods depending on your JDK preference:
 
-   * If you prefer OpenJDK: ``$ sudo apt install openjdk-8-jre``
-   * If you prefer Oracle JDK, follow the instructions from `WEB UPD8 <http://www.webupd8.org/2012/09/install-oracle-java-8-in-ubuntu-via-ppa.html>`_. 
-     In the end, you should have the package ``oracle-java8-installer`` installed.
+   * For OpenJDK: ``$ sudo apt install openjdk-11-jre``
 #. Install Tomcat 9: ``$ sudo apt install tomcat9``.
 #. Each AuthzForce Server version number has the form MAJOR.MINOR.PATH (Semantic Versioning). Identify the latest binary (Ubuntu package with ``.deb`` extension) release of AuthzForce Server
-   on `Maven Central Repository <http://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/>`_ that matches the MAJOR.MINOR version of this documentation. 
+   on `Maven Central Repository <https://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/>`_ that matches the MAJOR.MINOR version of this documentation. 
    This is the current latest software version to which this documentation version applies. 
    If you want to use a different software version, go to the latest documentation version with matching MAJOR.MINOR and follow instructions there.
    Else you may download the software version. We will refer to its version number as ``M.m.P`` (please replace accordingly):
@@ -92,12 +90,12 @@ Tomcat
 
 For configuring and managing Tomcat, please refer to the `official user guide <http://tomcat.apache.org/tomcat-9.0-doc/index.html>`_.
 
-Authzforce webapp
+AuthzForce webapp
 -----------------
 
-The Authzforce webapp configuration directory is located here: ``/opt/authzforce-ce-server/conf``. 
+The AuthzForce webapp configuration directory is located here: ``/opt/authzforce-ce-server/conf``. 
 
-In particular, the file ``logback.xml`` configures the logging for the webapp (independently from Tomcat). By default, Authzforce-specific logs go to ``/var/log/tomcat9/authzforce-ce/error.log``.
+In particular, the file ``logback.xml`` configures the logging for the webapp (independently from Tomcat). By default, AuthzForce-specific logs go to ``/var/log/tomcat9/authzforce-ce/error.log``.
 
 Restart Tomcat to apply any configuration change::
  
@@ -132,7 +130,7 @@ The Concept of Policy Domain
 The application is multi-tenant, i.e. it allows users or organizations to work on authorization policies in complete isolation from each other. In this document, we use the term *domain* instead of *tenant*. 
 In this context, a policy domain consists of:
 
-* Various metadata about the domain: ID assigned by the Authzforce API, external ID (assigned by the provisioning client), description;
+* Various metadata about the domain: ID assigned by the AuthzForce API, external ID (assigned by the provisioning client), description;
 * A policy repository;
 * Attribute Providers configuration: attribute providers provide attributes that the PEP does NOT directly provide in the XACML <Request>. 
   For example, an attribute provider may get attribute values from an external database. 
@@ -284,9 +282,9 @@ Sanity check procedures
 The Sanity Check Procedures are the steps that a System Administrator will take to verify that the installation is ready to be tested. 
 This is therefore a preliminary set of tests to ensure that obvious or basic malfunctioning is fixed before proceeding to unit tests, integration tests and user validation.
 
-End to End testing
+End-to-End testing
 ------------------
-To check the proper deployment and operation of the Authorization Server, perform the following steps:
+To check the proper deployment and operation of the AuthzForce Server, perform the following steps:
 
 #. Get the list of policy administration domains by doing the following HTTP request, replacing ``${host}`` with the server hostname, and ``${port}`` with the HTTP port of the server, for example with ``curl`` tool::
 
@@ -420,8 +418,8 @@ For Tomcat 9, refer to the `Tomcat 9 SSL/TLS Configuration HOW-TO <https://tomca
 Web Application Secutity
 ++++++++++++++++++++++++
 
-XML Security
-************
+XML and JSON Security
+*********************
 
 The AuthzForce web application exposes a XML-based API. Therefore it is vulnerable to XML denial-of-service attacks. 
 To mitigate these attacks, there are two solutions:
@@ -433,14 +431,14 @@ To mitigate these attacks, there are two solutions:
    
      <Environment 
       name="org.apache.cxf.stax.maxChildElements"
-      description="Maximum number of child elements in an input XML element. Default: 50000." 
+      description="Maximum number of child elements (resp. properties) in an input XML element (resp. JSON)." 
       type="java.lang.Integer"
       value="1000" 
       override="false" />
     
      <Environment 
       name="org.apache.cxf.stax.maxElementDepth"
-      description="Maximum depth of an element in input XML. Default: 100." 
+      description="Maximum depth of an element (resp. JSON object) in input XML (resp. JSON)." 
       type="java.lang.Integer"
       value="100" 
       override="false" />
@@ -449,24 +447,31 @@ To mitigate these attacks, there are two solutions:
      (more info: https://issues.apache.org/jira/browse/CXF-6848) --> 
      <Environment 
       name="org.apache.cxf.stax.maxAttributeCount"
-      description="Maximum number of attributes per element in input XML. Default: 500." 
+      description="Maximum number of attributes per element in input XML." 
       type="java.lang.Integer"
       value="100" 
       override="false" />
    
      <Environment 
       name="org.apache.cxf.stax.maxAttributeSize"
-      description="Maximum size of a single attribute in input XML. Default: 65536 (= 64*1024)." 
+      description="Maximum size of a single attribute in input XML." 
       type="java.lang.Integer"
       value="1000" 
       override="false" />
     
      <Environment 
       name="org.apache.cxf.stax.maxTextLength"
-      description="Maximum size of XML text node in input XML. Default: 134217728 (= 128*1024*1024)." 
+      description="Maximum size of XML text node (resp. JSON string)  in input XML (resp. JSON)." 
       type="java.lang.Integer"
       value="1000" 
       override="false" />
+
+    <Environment 
+      name="org.ow2.authzforce.domains.xacmlJsonSchemaRelativePath" 
+		 description="Path to JSON schema file for XACML JSON Profile's Request validation, relative to ${org.ow2.authzforce.config.dir} (if undefined/empty value, the Request.schema.json file from authzforce-ce-xacml-json-model project is used by default). This property applies if and only if 'org.ow2.authzforce.domains.enableXacmlJsonProfile' is true." 
+     type="java.lang.String"
+     value="" 
+     override="false" />
     
   Restart Tomcat to apply changes.
 * **Dedicated WAF**: for better mitigation, we recommend using a WAF (Web Application Firewall) with XML attack mitigation features in front of the Authzforce server. 

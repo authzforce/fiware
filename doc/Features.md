@@ -434,6 +434,10 @@ Conformance table according to [section 5](http://docs.oasis-open.org/xacml/xacm
 #### XACML Additional Combining Algorithms Profile
 AuthzForce provides experimental support for [XACML 3.0 Additional Combining Algorithms Profile Version 1.0](http://docs.oasis-open.org/xacml/xacml-3.0-combalgs/v1.0/xacml-3.0-combalgs-v1.0.html), i.e.  `on-permit-apply-second` policy combining algorithm.
 
+#### GeoXACML
+[GeoXACML](http://portal.opengeospatial.org/files/?artifact_id=42734) (Open Geospatial Consortium) is supported as an AuthzForce plugin from [SecureDimensions](https://github.com/securedimensions/authzforce-geoxacml-basic).
+
+
 ### Safety & Security 
 
 * Detection of circular XACML policy references (PolicySetIdReference); 
