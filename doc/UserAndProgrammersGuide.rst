@@ -4,7 +4,7 @@ User and Programmers Guide
 
 This guide explains how to use the API to manage XACML-based access control policies and provide authorization decisions based on such policies and the context of a given access request.
 
-**If you have been using a previous version of AuthzForce, check the** `release notes <https://github.com/authzforce/server/blob/release-10.0.0/CHANGELOG.md#1000>`_ **to know what is changed and what is new.**
+**If you have been using a previous version of AuthzForce, check the** `release notes <https://github.com/authzforce/server/blob/release-10.1.0/CHANGELOG.md#1010>`_ **to know what is changed and what is new.**
 
 Background and Detail
 =====================
@@ -1351,14 +1351,14 @@ The steps to integrate the extension into the AuthzForce Server go as follows:
 
 #. Make the JAR - and any extra dependency - visible from the AuthzForce webapp in Tomcat. One way to do it consists to copy the JAR (e.g. ``authzforce-ce-core-pdp-testutils-13.3.1.jar`` in our example) into ``/opt/authzforce-ce-server/webapp/WEB-INF/lib``. For other ways, please refer to `Tomcat HowTo <http://wiki.apache.org/tomcat/HowTo#How_do_I_add_JARs_or_classes_to_the_common_classloader_without_adding_them_to_.24CATALINA_HOME.2Flib.3F>`_.
 
-#. Import your attribute provider XML schema in the XML schema file ``/opt/authzforce-ce-server/conf/authzforce-ext.xsd``, using ``namespace`` **only** (no ``schemaLocation``), like in the `example from Authzforce code <https://github.com/authzforce/server/blob/release-10.0.0/webapp/src/test/resources/authzforce-ce-server/conf/authzforce-ext.xsd>`_ with this schema import for AuthzForce ``TestAttributeProvider``:
+#. Import your attribute provider XML schema in the XML schema file ``/opt/authzforce-ce-server/conf/authzforce-ext.xsd``, using ``namespace`` **only** (no ``schemaLocation``), like in the `example from Authzforce code <https://github.com/authzforce/server/blob/release-10.1.0/webapp/src/test/resources/authzforce-ce-server/conf/authzforce-ext.xsd>`_ with this schema import for AuthzForce ``TestAttributeProvider``:
 
    .. code-block:: xml
       :linenos:
 
       <xs:import namespace="http://authzforce.github.io/core/xmlns/test/3" />
 
-#. Add a ``uri`` element to XML catalog file ``/opt/authzforce-ce-server/conf/catalog.xml``, with your attribute Provider XML namespace as ``name`` attribute value, and, the location of your XML schema file within the JAR, as ``uri`` attribute value, prefixed by ``classpath:``. For example, in the `sample XML catalog from Authzforce source code <https://github.com/authzforce/server/blob/release-10.0.0/webapp/src/test/resources/authzforce-ce-server/conf/catalog.xml>`_, we add the following line for AuthzForce ``TestAttributeProvider``:
+#. Add a ``uri`` element to XML catalog file ``/opt/authzforce-ce-server/conf/catalog.xml``, with your attribute Provider XML namespace as ``name`` attribute value, and, the location of your XML schema file within the JAR, as ``uri`` attribute value, prefixed by ``classpath:``. For example, in the `sample XML catalog from Authzforce source code <https://github.com/authzforce/server/blob/release-10.1.0/webapp/src/test/resources/authzforce-ce-server/conf/catalog.xml>`_, we add the following line for AuthzForce ``TestAttributeProvider``:
 
    .. code-block:: xml
       :linenos:
