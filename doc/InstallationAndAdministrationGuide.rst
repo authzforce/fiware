@@ -251,16 +251,16 @@ In order to achieve high availability with multiple AuthzForce Server instances 
   Therefore, it is also critical to re-sync the AuthzForce Server cache after certain changes done directly by aforementioned solutions to the local data directory. 
   There are two ways to do that:
    
-  * **REST API**: you can keep the server in sync with the data directory by calling the following API operations, dependending on the type of change:  
+  * **REST API**: you can keep the server in sync with the data directory by calling the following API operations, dependending on the type of change (``encoded_domainId`` is the result of encoding the ``domainId`` using the "URL and Filename safe Base64 Alphabet" specified in Table 2 of RFC 4648):  
     
     * HEAD ``/domains``: to be used after any global change to the data directory. 
       Inappropriate and largely suboptimal if there are many domains but changes concern only one or a few of them, in which case the next operations should be preferred.
-    * HEAD ``/domains/{domainId}``: to be used after a specific domain directory ``/opt/authzforce-ce-server/data/domains/{domainId}`` is created. 
-    * DELETE ``/domains/{domainId}``: to be used after a specific domain directory ``/opt/authzforce-ce-server/data/domains/{domainId}`` is deleted.
-    * HEAD ``/domains/{domainId}/properties``: to be used after a specific domain's properties file ``/opt/authzforce-ce-server/data/domains/{domainId}/properties.xml`` is modified 
+    * HEAD ``/domains/{domainId}``: to be used after a specific domain directory ``/opt/authzforce-ce-server/data/domains/{encoded_domainId}`` is created. 
+    * DELETE ``/domains/{domainId}``: to be used after a specific domain directory ``/opt/authzforce-ce-server/data/domains/{encoded_domainId}`` is deleted.
+    * HEAD ``/domains/{domainId}/properties``: to be used after a specific domain's properties file ``/opt/authzforce-ce-server/data/domains/{encoded_domainId}/properties.xml`` is modified 
       (especially the ``externalId`` property).
-    * HEAD ``/domains/{domainId}/pap/pdp.properties``: to be used after a specific domain's PDP configuration file ``/opt/authzforce-ce-server/data/domains/{domainId}/pdp.xml`` 
-      or policies directory ``/opt/authzforce-ce-server/data/domains/{domainId}/policies`` is modified.
+    * HEAD ``/domains/{domainId}/pap/pdp.properties``: to be used after a specific domain's PDP configuration file ``/opt/authzforce-ce-server/data/domains/{encoded_domainId}/pdp.xml`` 
+      or policies directory ``/opt/authzforce-ce-server/data/domains/{encoded_domainId}/policies`` is modified.
         
     In these operations, you may use ``GET`` method instead of ``HEAD`` as well. However, ``HEAD`` is recommended for better performances as it does not return any content (response body), on the contrary to ``GET``.
     Beware that the ``Content-Length`` returned by a ``HEAD`` is still the same as would be returned by the ``GET`` equivalent.
