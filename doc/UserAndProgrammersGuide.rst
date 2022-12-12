@@ -700,12 +700,12 @@ Supported PDP features (IDs) by ``type``:
       </Attributes> ...   
      </Request>
         
-  Available request preprocessor IDs: 
+  Built-in request preprocessor IDs: 
 
-   * *urn:ow2:authzforce:feature:pdp:request-preproc:default-lax* and *urn:ow2:authzforce:feature:pdp:request-preproc:default-strict*: supports only XACML Request elements marked as *mandatory* in `XACML 3.0 Core specification (§10.2.1) <http://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html#_Toc325047227>`_ (in particular, **no** support for Multiple Decision Profile);
-   * *urn:ow2:authzforce:feature:pdp:request-preproc:multiple:repeated-attribute-categories-lax* and *urn:ow2:authzforce:feature:pdp:request-preproc:multiple:repeated-attribute-categories-strict*: Provides the functionality identified by *urn:oasis:names:tc:xacml:3.0:profile:multiple:repeated-attribute-categories* in `XACML v3.0 Multiple Decision Profile Version 1.0 (§3.3) <http://docs.oasis-open.org/xacml/3.0/multiple/v1.0/cs02/xacml-3.0-multiple-v1.0-cs02.html#_Toc388943334>`_
+   * *urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:default-lax* (resp. *urn:ow2:authzforce:feature:pdp:request-preproc:xacml-json:default-lax*) and *urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:default-strict* (resp. *urn:ow2:authzforce:feature:pdp:request-preproc:xacml-json:default-strict*): supports only XACML/XML (resp. XACML/JSON) Request elements marked as *mandatory* in `XACML 3.0 Core specification (§10.2.1) <http://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html#_Toc325047227>`_ (in particular, **no** support for Multiple Decision Profile);
+   * *urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:multiple:repeated-attribute-categories-lax* (resp. *urn:ow2:authzforce:feature:pdp:request-preproc:xacml-json:multiple:repeated-attribute-categories-lax*) and *urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:multiple:repeated-attribute-categories-lax* (resp. *urn:ow2:authzforce:feature:pdp:request-preproc:xacml-json:multiple:repeated-attribute-categories-lax*): Provides the functionality identified by *urn:oasis:names:tc:xacml:3.0:profile:multiple:repeated-attribute-categories* in `XACML v3.0 Multiple Decision Profile Version 1.0 (§3.3) <http://docs.oasis-open.org/xacml/3.0/multiple/v1.0/cs02/xacml-3.0-multiple-v1.0-cs02.html#_Toc388943334>`_ for XACML/XML (resp. XACML/JSON) requests.
    
-  **Only one request preprocessor may be enabled at at time.** 
+  **Only one request preprocessor may be enabled for XML (resp. JSON) input at at time, i.e. input Java type for the RequestPreprocessor class is *oasis.names.tc.xacml._3_0.core.schema.wd_17.Request* (resp. *org.json.JSONObject*).**  
 
 * Types ``urn:ow2:authzforce:feature-type:pdp:data-type`` and ``urn:ow2:authzforce:feature-type:pdp:function``: PDP extensions providing *non-core* XACML data types and functions respectively, i.e. not specified in XACML 3.0 Core standard §10.2.7 and §10.2.8 respectively. More information in next section `PDP Extensions`_.
 
