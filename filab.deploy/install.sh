@@ -3,7 +3,7 @@
 # The script is aborted if any command fails. If it is OK that a command fails,
 # use ./mycommand || true
 
-export PACKAGE_VERSION=11.0.0
+export PACKAGE_VERSION=12.0.1
 
 export DEBIAN_FRONTEND=noninteractive
 sudo -E apt-get update --assume-yes -qq
@@ -18,5 +18,5 @@ sudo -E apt-get install --assume-yes ./authzforce-ce-server-dist-${PACKAGE_VERSI
 # https://ask.openstack.org/en/question/51617/launching-apache-tomcat-inside-vm-takes-up-to-47-minutes/
 # https://bugs.launchpad.net/ubuntu/+source/tomcat7/+bug/1269073 - Long-term fix not yet available
 # WORKAROUND used here: see stackoverflow discussion linked from https://ask.openstack.org/en/question/51617/launching-apache-tomcat-inside-vm-takes-up-to-47-minutes/ 
-sudo sed -i 's|^JAVA_OPTS\s*=.*$|JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Xms1024m -Xmx1024m -XX:+UseConcMarkSweepGC -XX:MaxNewSize=384m -XX:MaxPermSize=128m -server"|' /etc/default/tomcat
-sudo systemctl restart tomcat9
+sudo sed -i 's|^JAVA_OPTS\s*=.*$|JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Xms1024m -Xmx1024m -XX:MaxNewSize=384m -XX:MaxPermSize=128m -server"|' /etc/default/tomcat
+sudo systemctl restart tomcat10

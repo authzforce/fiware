@@ -4,8 +4,35 @@ Installation and Administration Guide
 
 This guide provides the procedure to install the `AuthzForce server <https://github.com/authzforce/server>`_, including system requirements and troubleshooting instructions. 
 
+Installation via Docker (container image)
+=========================================
+
+See `docker/README.md on Github <https://github.com/authzforce/fiware/blob/master/docker/README.md>`_.
+
+Manual installation via tar.gz
+==============================
+
+System requirements:
+
+* CPU frequency: 2.6 GHz min
+* CPU architecture: i686/x86_64
+* RAM: 4GB min
+* Disk space: 10 GB min
+* File system: ext4
+* Operating System: Ubuntu 20.04 or later
+* Java environment: 
+
+    * JRE 17 LTS either from OpenJDK or Oracle; 
+    * Tomcat 10.x or later.
+
+See `tar/README.md on Github <https://github.com/authzforce/server/blob/release-12.0.1/dist/src/tar/README.md>`_.
+
+
+Installation via APT (Ubuntu .deb package)
+==========================================
+
 System Requirements
-===================
+*******************
 
 The system requirements are the following:
 
@@ -14,14 +41,15 @@ The system requirements are the following:
 * RAM: 4GB min
 * Disk space: 10 GB min
 * File system: ext4
-* Operating System: Ubuntu 18.04 LTS or later
+* Operating System: Ubuntu 23.04 or later (Tomcat 10 package not available yet on latest LTS)
 * Java environment: 
 
-    * JRE 11 either from OpenJDK or Oracle; 
-    * Tomcat 9.x.
+    * JRE 17 LTS either from OpenJDK or Oracle; 
+    * Tomcat 10.x or later.
 
 Installation
-============
+************
+
 If you are already using an older version of AuthzForce and wish to migrate your setup to the new version, 
 please backup the folder ``/opt/authzforce-ce-server`` first because it will be overwritten by the new version, then proceed with the `Minimal setup`_ below, to install the new version; 
 finally, proceed with the `Upgrade`_ section that follows, to transfer data from the old version.
@@ -29,10 +57,10 @@ finally, proceed with the `Upgrade`_ section that follows, to transfer data from
 Minimal setup
 -------------
 
-#. Install a JRE 11 if you don't have one already, using either of these two methods depending on your JDK preference:
+#. Install a JRE 17 LTS if you don't have one already, using either of these two methods depending on your JDK preference:
 
-   * For OpenJDK: ``$ sudo apt install openjdk-11-jre``
-#. Install Tomcat 9: ``$ sudo apt install tomcat9``.
+   * For OpenJDK: ``$ sudo apt install openjdk-17-jre``
+#. Install Tomcat 10 (Ubuntu 23.04 or later): ``$ sudo apt install tomcat10``.
 #. Each AuthzForce Server version number has the form MAJOR.MINOR.PATH (Semantic Versioning). Identify the latest binary (Ubuntu package with ``.deb`` extension) release of AuthzForce Server
    on `Maven Central Repository <https://repo1.maven.org/maven2/org/ow2/authzforce/authzforce-ce-server-dist/>`_ that matches the MAJOR.MINOR version of this documentation. 
    This is the current latest software version to which this documentation version applies. 
@@ -54,7 +82,7 @@ In that case, make sure Tomcat with ``Xmx`` at 1 Go or more (2 Go recommended).
 You can fix it as follows::
  
  $ sudo sed -i "s/-Xmx128m/-Xmx1024m/" /etc/default/tomcat
- $ sudo systemctl restart tomcat9
+ $ sudo systemctl restart tomcat10
  
 **Known issue: lack of entropy may cause delays in Tomcat start up on virtual machines in particular**: 
 `more info on Entropy Source issue <https://wiki.apache.org/tomcat/HowTo/FasterStartUp#Entropy_Source>`_. **So beware.**
@@ -88,18 +116,18 @@ Administration
 Tomcat
 ------
 
-For configuring and managing Tomcat, please refer to the `official user guide <http://tomcat.apache.org/tomcat-9.0-doc/index.html>`_.
+For configuring and managing Tomcat, please refer to the `official user guide <http://tomcat.apache.org/tomcat-10.0-doc/index.html>`_.
 
 AuthzForce webapp
 -----------------
 
 The AuthzForce webapp configuration directory is located here: ``/opt/authzforce-ce-server/conf``. 
 
-In particular, the file ``logback.xml`` configures the logging for the webapp (independently from Tomcat). By default, AuthzForce-specific logs go to ``/var/log/tomcat9/authzforce-ce/error.log``.
+In particular, the file ``logback.xml`` configures the logging for the webapp (independently from Tomcat). By default, AuthzForce-specific logs go to ``/var/log/tomcat10/authzforce-ce/error.log``.
 
 Restart Tomcat to apply any configuration change::
  
-   $ sudo systemctl restart tomcat9
+   $ sudo systemctl restart tomcat10
 
 
 .. _adminGuideFastInfoset:
@@ -116,7 +144,7 @@ and that `adopted <http://www.web3d.org/documents/specifications/19776-3/V3.3/Pa
 for the serialization and compression of `X3D <http://www.web3d.org/x3d/what-x3d>`_ documents. X3D is a standard for representing 3D scenes and objects using XML.
 
 AuthzForce Server offers experimental support for Fast Infoset (use with caution). This feature is disabled by default. 
-To enable Fast Infoset support, change the value of the parameter ``spring.profiles.active`` to ``+fastinfoset`` in the webapp context configuration file ``/etc/tomcat9/Catalina/localhost/authzforce-ce.xml``; 
+To enable Fast Infoset support, change the value of the parameter ``spring.profiles.active`` to ``+fastinfoset`` in the webapp context configuration file ``/etc/tomcat10/Catalina/localhost/authzforce-ce.xml``; 
 then restart Tomcat as shown in the previous section in order to apply changes.
 
 .. _adminGuideDomainAdmin:
@@ -269,7 +297,7 @@ In order to achieve high availability with multiple AuthzForce Server instances 
   * **Embedded file monitoring threads**: it is possible to enable file monitoring threads embedded in AuthzForce Server. 
     These threads check for changes to the local data directory periodically, and synchronize the cache automatically. This feature is disabled by default. 
     To enable it, change the value of the parameter ``org.ow2.authzforce.domains.sync.interval`` to a strictly positive integer 
-    in the webapp context configuration file ``/etc/tomcat9/Catalina/localhost/authzforce-ce.xml``. 
+    in the webapp context configuration file ``/etc/tomcat10/Catalina/localhost/authzforce-ce.xml``. 
     The parameter value indicates the period between two checks for changes, in seconds. 
     Beware that this feature creates one extra thread per domain. Therefore, the impact on memory and CPU usage increases with the number of domains.
     Last but not least, **use this feature only on filesystems that support millisecond or higher resolution of file timestamps**, such as ``ext4`` (supports nanosecond resolution).
@@ -328,18 +356,18 @@ Diagnosis Procedures
 #. Perform the test described in `End to End testing`_.
 #. If you get a Connection Refused/Error, check whether Tomcat is started::
 
-    $ sudo systemctl status tomcat9
+    $ sudo systemctl status tomcat10
 #. If status stopped, start Tomcat::
 
-    $ sudo systemctl start tomcat9
-#. If Tomcat fails to start, check for any Tomcat high-level error in Tomcat log directory: ``/var/log/tomcat9``
+    $ sudo systemctl start tomcat10
+#. If Tomcat fails to start, check for any Tomcat high-level error in Tomcat log directory: ``/var/log/tomcat10``
 #. If Tomcat is successfully started (no error in server logs), perform the test described in `End to End testing`_ again.
 #. If you still get a Connection Refused/error, check whether Tomcat is not listening on a different port::
    
     $ sudo netstat -lataupen|grep java
 #. If you still get a connection refused/error, especially if you are connecting remotely, check whether you are able to connect locally, then check the network link, 
    i.e. whether any network filtering is in place on the host or on the access network, or other network issue: network interface status, DNS/IP adress resolution, routing, etc.
-#. If you get an error ``404 Not Found``, make sure the webapp is deployed and enabled in Tomcat. Check for any webapp deployment error in file: ``/var/log/tomcat9/authzforce-ce/error.log``.
+#. If you get an error ``404 Not Found``, make sure the webapp is deployed and enabled in Tomcat. Check for any webapp deployment error in file: ``/var/log/tomcat10/authzforce-ce/error.log``.
 
 
 Resource availability
@@ -383,7 +411,7 @@ For instance, the *NIST Guide to General Server Security* (SP 800-123) is a good
 
 Server Security Setup
 +++++++++++++++++++++
-For more Tomcat-specific security guidelines, please read `Tomcat 9 Security considerations <https://tomcat.apache.org/tomcat-9.0-doc/security-howto.html>`_.
+For more Tomcat-specific security guidelines, please read `Tomcat 9 Security considerations <https://tomcat.apache.org/tomcat-10.0-doc/security-howto.html>`_.
 
 For security of communications (confidentiality, integrity, client/server authentication), it is also recommended to enable SSL/TLS with PKI certificates. 
 The first step to set up this is to have your Certification Authority (PKI) issue a server certificate for your AuthzForce instance. 
@@ -412,7 +440,7 @@ use the ``pathlen`` parameter to restrict number of subordinate CA, ``pathlen=0`
 
 Server SSL Certificate Setup
 ++++++++++++++++++++++++++++
-For Tomcat 9, refer to the `Tomcat 9 SSL/TLS Configuration HOW-TO <https://tomcat.apache.org/tomcat-9.0-doc/ssl-howto.html>`_.
+For Tomcat 9, refer to the `Tomcat 9 SSL/TLS Configuration HOW-TO <https://tomcat.apache.org/tomcat-10.0-doc/ssl-howto.html>`_.
 
 
 Web Application Secutity
@@ -424,8 +452,8 @@ XML and JSON Security
 The AuthzForce web application exposes a XML-based API. Therefore it is vulnerable to XML denial-of-service attacks. 
 To mitigate these attacks, there are two solutions:
 
-* **AuthzForce native protection**: you can add the following `Environment entries <https://tomcat.apache.org/tomcat-9.0-doc/config/context.html#Environment_Entries>`_ 
-  in AuthzForce webapp context file ``/etc/tomcat9/Catalina/localhost/authzforce-ce.xml`` (if an entry is absent or its value is negative, the default value is used):
+* **AuthzForce native protection**: you can add the following `Environment entries <https://tomcat.apache.org/tomcat-10.0-doc/config/context.html#Environment_Entries>`_ 
+  in AuthzForce webapp context file ``/etc/tomcat10/Catalina/localhost/authzforce-ce.xml`` (if an entry is absent or its value is negative, the default value is used):
 
   .. code-block:: xml
    
@@ -484,8 +512,8 @@ Similarly, if you want to use TLS, then the WAF or some proxy in front of it mus
 Disabling unused features
 *************************
 
-You can disable all PAP features, i.e. make the REST API read-only by setting the ``enablePdpOnly`` `environment entry <https://tomcat.apache.org/tomcat-9.0-doc/config/context.html#Environment_Entries>`_ 
- to ``true`` in AuthzForce webapp context file ``/etc/tomcat9/Catalina/localhost/authzforce-ce.xml`` (if an entry is absent or its value is negative, the default value is used):
+You can disable all PAP features, i.e. make the REST API read-only by setting the ``enablePdpOnly`` `environment entry <https://tomcat.apache.org/tomcat-10.0-doc/config/context.html#Environment_Entries>`_ 
+ to ``true`` in AuthzForce webapp context file ``/etc/tomcat10/Catalina/localhost/authzforce-ce.xml`` (if an entry is absent or its value is negative, the default value is used):
 
   .. code-block:: xml
    

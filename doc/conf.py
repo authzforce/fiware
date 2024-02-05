@@ -85,7 +85,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'AuthzForce CE'
-copyright = u'2015-2021, THALES'
+copyright = u'2015-2024, THALES'
 author = u'Cyril Dangerville, THALES'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -93,9 +93,9 @@ author = u'Cyril Dangerville, THALES'
 # built documents.
 #
 # The short X.Y version.
-version = '11.0.0'
+version = '12.0.1'
 # The full version, including alpha/beta/rc tags.
-release = '11.0.0'
+release = '12.0.1'
 
 rst_epilog = """
     .. |product.version| replace:: {0}

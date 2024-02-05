@@ -45,7 +45,6 @@ After any new release of AuthzForce server on authzforce/server repository, do t
 
 1. Update `version` and `release` variables in [Sphinx configuration](doc/conf.py), to match the new AuthzForce server version.
 1. Update manuals: [Installation and Administration Guide](doc/InstallationAndAdministrationGuide.rst) and [User and Programmer's Guide](doc/UserAndProgrammersGuide.rst); especially version numbers when they occur.
-1. Update the [README](docker/README.md) for fiware repository on Docker Hub with the new version on Maven central.
 1. Update FILAB deployment scripts: [install.sh](filab.deploy/install.sh), [verif.sh](filab.deploy/verif.sh); especially the package version to match the new AuthzForce server version.
 1. Commit and push all changes
 1. Re-publish the Docker image on Docker Hub from [authzforce/server repository](https://hub.docker.com/r/authzforce/server/) to [fiware/authzforce-ce-server Docker repository](https://hub.docker.com/r/fiware/authzforce-ce-server/).
