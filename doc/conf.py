@@ -36,8 +36,8 @@ if on_rtd:
         'css_files': [
             'https://media.readthedocs.org/css/sphinx_rtd_theme.css',
             'https://media.readthedocs.org/css/readthedocs-doc-embed.css',
-            'https://www.fiware.org/style/fiware_readthedocs.css',
-            'https://www.fiware.org/style/fiware_readthedocs_security.css',
+#            'https://www.fiware.org/style/fiware_readthedocs.css',
+#            'https://www.fiware.org/style/fiware_readthedocs_security.css',
         ],
     }
 else:
