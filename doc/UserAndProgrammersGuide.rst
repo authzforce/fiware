@@ -1038,7 +1038,7 @@ Once you have deployed the extension on Authzforce, following previous instructi
 
 
 Request Preprocessor Extensions
-#########################
+###############################
 
 With AuthzForce *Request Preprocessor* extensions, you can support new ways of processing XACML Requests before evaluation by the PDP engine (e.g. used for implementing `XACML v3.0 Multiple Decision Profile Version 1.0 - Repeated attribute categories (§3.3) <http://docs.oasis-open.org/xacml/3.0/multiple/v1.0/cs02/xacml-3.0-multiple-1.0-cs02.html#_Toc388943334>`_ ), for example support alternative request formats/syntax that can be translated to XACML.
 
@@ -1054,7 +1054,7 @@ If you wish to test the example provided by AuthzForce or if you have another on
 `Enabling a Request Preprocessor extension on a domain`_.
 
 Making a Request Preprocessor extension
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The steps to make your own Request Preprocessor extension for AuthzForce go as follows:
 
@@ -1090,7 +1090,7 @@ The steps to make your own Request Preprocessor extension for AuthzForce go as f
 Now you have a Request Preprocessor extension ready for integration into AuthzForce Server, as explained in the next section.
 
 Integrating a Request Preprocessor extension into AuthzForce Server
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This section assumes you have a Request Preprocessor extension in form of a JAR, typically produced by the process described in the previous section. The steps to integrate the extension into the AuthzForce Server go as follows:
 
@@ -1099,13 +1099,13 @@ This section assumes you have a Request Preprocessor extension in form of a JAR,
 #. Finally, restart Tomcat to apply changes.
 
 Enabling a Request Preprocessor extension on a domain
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Once you have deployed the extension on Authzforce, following previous instructions, you are ready to enable it on a specific domain's PDP by updating the PDP properties with an enabled ``feature`` of type ``urn:ow2:authzforce:feature-type:pdp:request-preproc`` and value equal to the ID returned by the method ``getId()`` of the extension's factory implementation class. Please refer to `Policy Decision (PDP) Properties`_ for examples.
 
 
 Result Postprocessor Extensions
-########################
+###############################
 
 With AuthzForce *Result Postprocessors* extensions, you can support new ways of processing XACML Results after evaluation by the PDP engine (e.g. used for implementing `XACML v3.0 Multiple Decision Profile Version 1.0 - Requests for a combined decision <http://docs.oasis-open.org/xacml/3.0/xacml-3.0-multiple-v1-spec-cd-03-en.html#_Toc260837890>`_ ).
 
@@ -1117,7 +1117,7 @@ If you wish to test the example provided by AuthzForce or if you have another on
 `Enabling a Result Postprocessor extension on a domain`_.
 
 Making a Result Postprocessors extension
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The steps to make your own Result Postprocessors extension go as follows:
 
@@ -1139,7 +1139,7 @@ The steps to make your own Result Postprocessors extension go as follows:
    `AuthzForce TestCombinedDecisionXacmlJaxbResultPostprocessor class <https://github.com/authzforce/core/blob/release-21.0.1/pdp-testutils/src/main/java/org/ow2/authzforce/core/pdp/testutil/ext/TestCombinedDecisionXacmlJaxbResultPostprocessor.java>`_
    (used for AuthzForce unit tests) as an example. This example provides a test implementation of feature 
    ``urn:oasis:names:tc:xacml:3.0:profile:multiple:combined-decision`` from 
-   `XACML v3.0 Multiple Decision Profile Version 1.0 <http://docs.oasis-open.org/xacml/3.0/multiple/v1.0/xacml-3.0-multiple-v1.0.html>`_.  If you are processing XACML/XML Response, you may extend the more convenient `class org.ow2.authzforce.core.pdp.api.io.BaseXacmlJaxbResultPostprocessor.Factory https://www.javadoc.io/doc/org.ow2.authzforce/authzforce-ce-core-pdp-api/latest/org/ow2/authzforce/core/pdp/api/io/BaseXacmlJaxbResultPostprocessor.Factory.html>_. 
+   `XACML v3.0 Multiple Decision Profile Version 1.0 <http://docs.oasis-open.org/xacml/3.0/multiple/v1.0/xacml-3.0-multiple-v1.0.html>`_.  If you are processing XACML/XML Response, you may extend the more convenient `class org.ow2.authzforce.core.pdp.api.io.BaseXacmlJaxbResultPostprocessor.Factory <https://www.javadoc.io/doc/org.ow2.authzforce/authzforce-ce-core-pdp-api/latest/org/ow2/authzforce/core/pdp/api/io/BaseXacmlJaxbResultPostprocessor.Factory.html>`_. 
 
 #. When your implementation class is ready, create a text file ``org.ow2.authzforce.core.pdp.api.PdpExtension`` in
    folder ``src/main/resources/META-INF/services`` (you have to create the folder first) and put the fully qualified
@@ -1151,7 +1151,7 @@ The steps to make your own Result Postprocessors extension go as follows:
 Now you have a Result Postprocessor extension ready for integration into AuthzForce Server, as explained in the next section.
 
 Integrating a Result Postprocessor extension into AuthzForce Server
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This section assumes you have a Combining Algorithm extension in form of a JAR, typically produced by the process described in the previous section. You may use AuthzForce PDP Core Tests JAR if you only wish to test the examples in this documentation. This JAR is available on Maven Central: groupId= ``org.ow2.authzforce``, artifactId= ``authzforce-ce-core-pdp-testutils``, version= ``21.0.1``.
 
@@ -1162,7 +1162,7 @@ The steps to integrate the extension into the AuthzForce Server go as follows:
 #. Finally, restart Tomcat to apply changes.
 
 Enabling a Result Postprocessor extension on a domain
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Once you have deployed the extension on Authzforce, following previous instructions, you are ready to enable it on a specific domain's PDP by updating the PDP properties with an enabled ``feature`` of type ``urn:ow2:authzforce:feature-type:pdp:result-postproc``. The following example enables Authzforce combined decision result postprocessor (implementing the feature ``urn:oasis:names:tc:xacml:3.0:profile:multiple:combined-decision`` from `XACML v3.0 Multiple Decision Profile Version 1.0`_ for testing) on the PDP, provided that the AuthzForce PDP Core Tests JAR has been deployed (see previous section):
 
@@ -1187,7 +1187,7 @@ Attribute Providers
 The API allows to manage PDP attribute providers. These are PDP extensions that enable the PDP to get attributes from other sources than PEPs' requests. Such sources may be remote services, databases, etc. The AuthzForce Server distribution does not provide attribute providers out of the box, but allows you to plug in custom-made one(s) from your own invention or from third parties. The AuthzForce project also provides a separate Attribute Provider example, for testing and documentation purposes only. If you wish to make your own attribute provider, read on the next section. If you wish to test the example provided by AuthzForce or have another one ready for use, you may jump to the section `Integrating an Attribute Provider into AuthzForce Server`_.
 
 Making an Attribute Provider
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The steps to make your own PDP Attribute Provider extension for
 AuthzForce go as follows:

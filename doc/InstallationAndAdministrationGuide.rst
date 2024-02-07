@@ -114,12 +114,12 @@ Administration
 ==============
 
 Tomcat
-------
+******
 
 For configuring and managing Tomcat, please refer to the `official user guide <http://tomcat.apache.org/tomcat-10.0-doc/index.html>`_.
 
 AuthzForce webapp
------------------
+*****************
 
 The AuthzForce webapp configuration directory is located here: ``/opt/authzforce-ce-server/conf``. 
 
@@ -133,7 +133,7 @@ Restart Tomcat to apply any configuration change::
 .. _adminGuideFastInfoset:
 
 Fast Infoset mode
------------------
+*****************
 
 Fast Infoset is an `ITU-T/ISO standard <http://www.itu.int/en/ITU-T/asn1/Pages/Fast-Infoset.aspx>`_ for representing XML (XML Information Set to be accurate) using binary encodings, 
 designed for use cases to provide smaller encoding sizes and faster processing than a W3C XML representation as text. 
@@ -150,10 +150,10 @@ then restart Tomcat as shown in the previous section in order to apply changes.
 .. _adminGuideDomainAdmin:
 
 Policy Domain Administration
-----------------------------
+****************************
 
 The Concept of Policy Domain
-++++++++++++++++++++++++++++
+----------------------------
                   
 The application is multi-tenant, i.e. it allows users or organizations to work on authorization policies in complete isolation from each other. In this document, we use the term *domain* instead of *tenant*. 
 In this context, a policy domain consists of:
@@ -169,7 +169,7 @@ The reasons for creating different domains:
 * The same user or organization may want to work on different domains for different use cases; e.g. work with one policy for production environment, another for testing, another for a specific use case project, etc.
 
 Default Domain Settings
-+++++++++++++++++++++++
+-----------------------
 
 Administrators can set default settings for all domains to make sure domains are created in a proper configuration according to an administrative policy, or, in more simple terms, the administrator's preferences.
 The administrator may change these settings in the various XML files inside the folder ``/opt/authzforce-ce-server/conf/domain.tmpl``:
@@ -202,7 +202,7 @@ The administrator may change these settings in the various XML files inside the 
   
 
 Domain Creation
-+++++++++++++++
+---------------
 
 You create a domain by doing a HTTP POST request with XML payload to URL: ``http://${SERVER_NAME}:${PORT}/authzforce-ce/domains``. Replace ``${SERVER_NAME}`` and ``${PORT}`` with your server hostname and port for HTTP. 
 You can do it with ``curl`` tool with the the following content in a XML file (``domainProperties.xml`` in this example) as the HTTP request body::
@@ -247,7 +247,7 @@ So use it only if you need to dump the outgoing (and incoming) data, in particul
 The ``href`` value in the response above gives you the domain ID (in the form of a Base64-encoded UUID) assigned by the API. You need this ID for any further operation on the domain.
 
 Domain Removal
-++++++++++++++
+--------------
 
 You remove a domain by doing a HTTP DELETE request with XML payload to URL: ``http://${SERVER_NAME}:${PORT}/authzforce-ce/domains/{domain_ID}``. 
 For example with ``curl`` tool::
@@ -307,11 +307,12 @@ In order to achieve high availability with multiple AuthzForce Server instances 
 
 Sanity check procedures
 =======================
+
 The Sanity Check Procedures are the steps that a System Administrator will take to verify that the installation is ready to be tested. 
 This is therefore a preliminary set of tests to ensure that obvious or basic malfunctioning is fixed before proceeding to unit tests, integration tests and user validation.
 
 End-to-End testing
-------------------
+******************
 To check the proper deployment and operation of the AuthzForce Server, perform the following steps:
 
 #. Get the list of policy administration domains by doing the following HTTP request, replacing ``${host}`` with the server hostname, and ``${port}`` with the HTTP port of the server, for example with ``curl`` tool::
@@ -337,23 +338,27 @@ in the WADL (Web Application Description Language) document available at the fol
     http://${host}:${port}/authzforce-ce/?_wadl
 
 List of Running Processes
--------------------------
+*************************
+
 * One or more ``java`` processes for Tomcat.
 
 Network interfaces Up & Open
-----------------------------
+****************************
+
 * TCP 22;
 * TCP 8080.
 
 The port 8080 can be replaced by any other port Tomcat is listening to for HTTP connections to the webapp.
 
 Databases
----------
+*********
+
 None.
 
 Diagnosis Procedures
 ====================
-#. Perform the test described in `End to End testing`_.
+
+#. Perform the test described in `End-to-End testing`_.
 #. If you get a Connection Refused/Error, check whether Tomcat is started::
 
     $ sudo systemctl status tomcat10
@@ -361,7 +366,7 @@ Diagnosis Procedures
 
     $ sudo systemctl start tomcat10
 #. If Tomcat fails to start, check for any Tomcat high-level error in Tomcat log directory: ``/var/log/tomcat10``
-#. If Tomcat is successfully started (no error in server logs), perform the test described in `End to End testing`_ again.
+#. If Tomcat is successfully started (no error in server logs), perform the test described in `End-to-End testing`_ again.
 #. If you still get a Connection Refused/error, check whether Tomcat is not listening on a different port::
    
     $ sudo netstat -lataupen|grep java
@@ -371,7 +376,8 @@ Diagnosis Procedures
 
 
 Resource availability
----------------------
+=====================
+
 To have a healthy enabler, the resource requirements listed in `System Requirements`_ must be satisfied, in particular:
 
 * Minimum RAM: 4GB;
@@ -379,11 +385,13 @@ To have a healthy enabler, the resource requirements listed in `System Requireme
 * Minimum Disk space: 10 GB.
 
 Remote Service Access
----------------------
+*********************
+
 None.
 
 Resource consumption
---------------------
+********************
+
 The resource consumption strongly depends on the number of concurrent clients and requests per client, the number of policy domains (a.k.a. tenants in this context) managed by the Authorization Server, 
 and the complexity of the policies defined by administrators of each domain.
 
@@ -394,7 +402,8 @@ The CPU usage shall remain  under 80% of allocated CPU. See `System Requirements
 As for disk usage, at any time, there should be 1GB free space left on the disk.
 
 I/O flows
----------
+*********
+
 * HTTPS flows with possibly large XML payloads to port 8443 or whatever port Tomcat is listening to for HTTPS connections to the webapp;
 * HTTP flows with possibly large XML payloads to port 8080 or whatever port Tomcat is listening to for HTTP connections to the webapp.
 
@@ -403,14 +412,16 @@ Appendix
 ========
 
 Security setup for production
------------------------------
+*****************************
+
 You have to secure the environment of the application server and the server itself. Securing the environment of a server in general will not be addressed here, 
 because it is a large subject for which you can find a lot of public documentation. You will learn about perimeter security, network and transport-level security (firewall, IDS/IPS...), OS security, 
 application-level security (Web Application Firewall), etc.
 For instance, the *NIST Guide to General Server Security* (SP 800-123) is a good start.
 
 Server Security Setup
-+++++++++++++++++++++
+---------------------
+
 For more Tomcat-specific security guidelines, please read `Tomcat 9 Security considerations <https://tomcat.apache.org/tomcat-10.0-doc/security-howto.html>`_.
 
 For security of communications (confidentiality, integrity, client/server authentication), it is also recommended to enable SSL/TLS with PKI certificates. 
@@ -419,7 +430,8 @@ You can also issue certificates for clients if you want to require client certif
 If you don't have such a CA at hand, you can create your own (a basic one) with instructions given in the next section.
 
 Certificate Authority Setup
-+++++++++++++++++++++++++++
+---------------------------
+
 If you have a CA already, you can skip this section.
 So this section is about creating a basic local Certificate Authority (CA) for internal use. This CA will be in charge of issuing certificates to the Authorization Server and clients, 
 for authentication, integrity and confidentiality purposes. 
@@ -439,15 +451,17 @@ use the ``pathlen`` parameter to restrict number of subordinate CA, ``pathlen=0`
 
 
 Server SSL Certificate Setup
-++++++++++++++++++++++++++++
+----------------------------
+
 For Tomcat 9, refer to the `Tomcat 9 SSL/TLS Configuration HOW-TO <https://tomcat.apache.org/tomcat-10.0-doc/ssl-howto.html>`_.
 
 
 Web Application Secutity
-++++++++++++++++++++++++
+------------------------
+
 
 XML and JSON Security
-*********************
++++++++++++++++++++++
 
 The AuthzForce web application exposes a XML-based API. Therefore it is vulnerable to XML denial-of-service attacks. 
 To mitigate these attacks, there are two solutions:
@@ -510,7 +524,7 @@ However, beware that this solution is not compatible with Fast Infoset, unless t
 Similarly, if you want to use TLS, then the WAF or some proxy in front of it must support TLS to be the TLS server endpoint.
 
 Disabling unused features
-*************************
++++++++++++++++++++++++++
 
 You can disable all PAP features, i.e. make the REST API read-only by setting the ``enablePdpOnly`` `environment entry <https://tomcat.apache.org/tomcat-10.0-doc/config/context.html#Environment_Entries>`_ 
  to ``true`` in AuthzForce webapp context file ``/etc/tomcat10/Catalina/localhost/authzforce-ce.xml`` (if an entry is absent or its value is negative, the default value is used):
@@ -522,18 +536,15 @@ You can disable all PAP features, i.e. make the REST API read-only by setting th
 
 User and Role Management Setup
 ++++++++++++++++++++++++++++++
+
 In production, access to the API must be restricted and explicitly authorized. To control which clients can do what on which resources, 
 we need to have access to user identity and attributes and assign proper roles to them. These user and role management features are no longer supported by the AuthzForce server itself, 
 but should be delegated to the Identity Management GE. 
 
-Domain Role Assignment
-++++++++++++++++++++++
-In production, access to the API must be restricted and explicitly authorized. To control which clients can do what on what parts of API, 
-we need to have access to user identity and attributes and assign proper roles to them. These user role assignment features are no longer supported by the AuthzForce server itself, 
-but should be delegated to the Identity Management GE. 
 
 Performance Tuning
-------------------
+******************
+
 For Tomcat and JVM tuning, we strongly recommend reading and applying - when relevant - the guidelines from the following links:
 
 * `Performance tuning best practices for VMware Apache Tomcat <http://kb.vmware.com/kb/2013486>`_;

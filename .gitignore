@@ -1,4 +1,5 @@
 /.project
 /doc/_build
+/doc/build
 /doc/_static
 /doc/_templates
